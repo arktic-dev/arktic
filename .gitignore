@@ -1,5 +1,5 @@
 CACHE/
 *.pyc
-data/*
+data/
 *.log
 __pycache__/

@@ -63,6 +63,7 @@ class Grammar(models.Model):
           print('%s: line %d/%d' % (self.name, i+1, len(lines)), end='\r' if i<len(lines)-1 else '\n')
           tokens = line.split('|') #this can be part of a relfile parser object with delimeter '|'
           transcription_audio_file_name = os.path.basename(tokens[0])
+          grammar_fname = tokens[1]
           confidence = tokens[2]
           utterance = tokens[3].strip() if ''.join(tokens[3].split()) != '' else ''
           value = tokens[4]
@@ -90,6 +91,7 @@ class Grammar(models.Model):
 
             if created:
               transcription.id_token = str(transcription.pk)
+              transcription.grammar_fname = grammar_fname
               transcription.confidence = confidence
               transcription.utterance = utterance
               transcription.value = value
@@ -146,6 +148,7 @@ class Transcription(models.Model):
   audio_file = models.FileField(upload_to='audio')
   audio_time = models.DecimalField(max_digits=8, decimal_places=6, null=True)
   audio_rms = models.TextField()
+  grammar_fname = models.CharField(max_length=255)
   confidence = models.CharField(max_length=255)
   utterance = models.CharField(max_length=255)
   value = models.CharField(max_length=255)
@@ -164,10 +167,10 @@ class Transcription(models.Model):
   def line(self):
     path = self.wav_file.path
     path = './' + path[path.index('2014'):]
-    return '%s|%s|%s|%s|%s|%d\n' % (path, self.grammar.csv_file.file_name, self.confidence, self.revisions.latest().utterance, self.value, int(1000*float(self.confidence_value)) if self.confidence_value else 0)
+    return '%s|%s|%s|%s|%s|%d\n' % (path, self.grammar_fname, self.confidence, self.revisions.latest().utterance, self.value, int(1000*float(self.confidence_value)) if self.confidence_value else 0)
 
   def grammar_name(self):
-    return self.grammar.name if len(self.grammar.name)<50 else self.grammar.name[:46] + '...'
+    return self.grammar_fname if len(self.grammar_fname)<50 else self.grammar_fname[:46] + '...'
 
   def latest_revision_words(self):
     try:
