@@ -62,6 +62,7 @@ class Grammar(models.Model):
         for i, line in enumerate(lines):
           print('%s: line %d/%d' % (self.name, i+1, len(lines)), end='\r' if i<len(lines)-1 else '\n')
           tokens = line.split(',') #this can be part of a relfile parser object with delimeter '|'
+          tokens = tokens[1:] # stupid edit for eckoh stuff
           transcription_audio_file_name = os.path.basename(tokens[0])
           grammar_fname = tokens[1]
           confidence = tokens[2]
