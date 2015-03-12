@@ -31,7 +31,7 @@ def scan_data():
   for name in os.listdir(data_dir):
     client, created = Client.objects.get_or_create(name=name)
 
-    if created: #scan directory for grammars
+    if True: #scan directory for grammars
       client.client_path = os.path.join(data_dir, name)
       client.save()
       print('created client: ' + str(client))
@@ -39,7 +39,7 @@ def scan_data():
     for project_name in [dir_i for dir_i in os.listdir(client.client_path) if os.path.isdir(os.path.join(client.client_path, dir_i))]:
       project, created = client.projects.get_or_create(name=project_name)
 
-      if created:
+      if True:
         project.id_token = generate_id_token(Project)
         project.project_path = os.path.join(client.client_path, project_name)
         project.save()
@@ -60,7 +60,7 @@ def scan_data():
       for i, csv_file in enumerate(project.csv_files.all()):
         grammar, created = project.grammars.get_or_create(client=client, name=csv_file.name)
 
-        if created:
+        if True:
           grammar.csv_file = csv_file
           grammar.id_token = generate_id_token(Grammar)
           print('created grammar ' + str(grammar))
