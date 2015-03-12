@@ -19,11 +19,10 @@ class Command(BaseCommand):
     scan_data()
 
     #projects
-    for project in Project.objects.filter(client__name='sdg'):
+    for project in Project.objects.all():
       print(project)
       project.process_grammars()
       project.process_transcriptions()
-      # project.process_words()
       project.create_jobs()
       project.is_active = True
       project.save()

@@ -61,7 +61,7 @@ class Grammar(models.Model):
         lines = open_relfile.readlines()
         for i, line in enumerate(lines):
           print('%s: line %d/%d' % (self.name, i+1, len(lines)), end='\r' if i<len(lines)-1 else '\n')
-          tokens = line.split('|') #this can be part of a relfile parser object with delimeter '|'
+          tokens = line.split(',') #this can be part of a relfile parser object with delimeter '|'
           transcription_audio_file_name = os.path.basename(tokens[0])
           grammar_fname = tokens[1]
           confidence = tokens[2]
@@ -82,7 +82,6 @@ class Grammar(models.Model):
               self.wav_files.filter(file_name=transcription_audio_file_name)[1:].delete()
             else:
               wav_file = self.wav_files.get(file_name=transcription_audio_file_name)
-
             transcription, created = self.transcriptions.get_or_create(client=self.client, project=self.project, wav_file__file_name=wav_file.file_name)
 
             transcription.wav_file = wav_file
@@ -151,7 +150,7 @@ class Transcription(models.Model):
   grammar_fname = models.CharField(max_length=255)
   confidence = models.CharField(max_length=255)
   utterance = models.CharField(max_length=255)
-  value = models.CharField(max_length=255)
+  value = models.TextField(default='')
   confidence_value = models.DecimalField(max_digits=3, decimal_places=2, null=True)
   requests = models.IntegerField(default=0) #number of times the transcription has been requested.
   date_created = models.DateTimeField(auto_now_add=True)
