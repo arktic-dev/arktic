@@ -31,7 +31,7 @@ def scan_data():
   for name in os.listdir(data_dir):
     client, created = Client.objects.get_or_create(name=name)
 
-    if created: #scan directory for grammars
+    if True: #scan directory for grammars
       client.client_path = os.path.join(data_dir, name)
       client.save()
       print('created client: ' + str(client))
