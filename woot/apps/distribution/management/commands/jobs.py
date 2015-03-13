@@ -15,14 +15,9 @@ class Command(BaseCommand):
   help = ''
 
   def handle(self, *args, **options):
-    # get avilable jobs
-    available_jobs = Job.objects.filter(is_available=True)
 
     # get transcription set
-    available_transcription_set = Transcription.objects.filter(job__is_available=True)
-
-    # delete available jobs
-    available_jobs.delete()
+    available_transcription_set = Transcription.objects.exclude(job__pk__gt=0)
 
     # separate transcriptions into yes, no and other
 
@@ -45,7 +40,7 @@ class Command(BaseCommand):
     total_pk = [t.pk for t in other_set] + [t.pk for t in yes_no_set]
 
     print('creating jobs...')
-    counter = len(all_pk) - 1 if len(all_pk) else 0
+    counter = len(total_pk) - 1 if len(total_pk) else 0
     while counter:
       print('available: %d'%(counter), end='\r')
       job = self.jobs.create(client=self.client, id_token=generate_id_token(Job))
