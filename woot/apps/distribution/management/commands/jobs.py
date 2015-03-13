@@ -24,15 +24,16 @@ class Command(BaseCommand):
     # available_jobs.delete()
 
     # separate transcriptions into yes, no and other
-    other = available_transcription_set.exclude(utterance__contains__in=['yes ', 'yeah ']).exclude(utterance__contains__in=['no ','nope '])
+
+    other = available_transcription_set.exclude(utterance__contains='yes ').exclude(utterance__contains='yeah ').exclude(utterance__contains='no ').exclude(utterance__contains='nope ')
     yes = available_transcription_set.filter(utterance__contains__in=['yes ', 'yeah '])
     no = available_transcription_set.filter(utterance__contains__in=['no ','nope '])
 
     # conflicts
-    yes_wo_no = yes.exclude(utterance__contains__in=['no ','nope '])
-    no_wo_yes = no.exclude(utterance__contains__in=['yes ', 'yeah '])
+    yes_wo_no = yes.exclude(utterance__contains='no ').exclude(utterance__contains='nope ')
+    no_wo_yes = no.exclude(utterance__contains='yes ').exclude(utterance__contains='yeah ')
 
-    yes_no = available_transcription_set.filter(utterance__contains__in=['no ','nope ']).filter(utterance__contains__in=['yes ', 'yeah '])
+    yes_no = available_transcription_set.filter(utterance__contains='no ').filter(utterance__contains='nope ').filter(utterance__contains='yes ').filter(utterance__contains='yeah ')
 
     # list of pk
     pk_list = [t.pk for t in other] + [t.pk for t in yes_wo_no] + [t.pk for t in no_wo_yes] + [t.pk for t in yes_no]
