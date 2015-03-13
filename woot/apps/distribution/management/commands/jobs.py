@@ -44,10 +44,10 @@ class Command(BaseCommand):
       counter = len(total_pk) - 1 if len(total_pk) else 0
       while counter:
         print('available: %d'%(counter), end='\r')
-        job = self.jobs.create(client=self.client, id_token=generate_id_token(Job))
+        job = p.jobs.create(client=self.client, id_token=generate_id_token(Job))
         lower_bound = counter-settings.NUMBER_OF_TRANSCRIPTIONS_PER_JOB if counter>=settings.NUMBER_OF_TRANSCRIPTIONS_PER_JOB else 0
         job_set = total_pk[lower_bound:counter]
-        job_t_set = Transcription.objects.filter(pk__in=job_set)
+        job_t_set = p.transcriptions.filter(pk__in=job_set)
         job.get_transcription_set(job_t_set)
         job.save()
         counter = lower_bound
