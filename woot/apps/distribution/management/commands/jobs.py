@@ -8,6 +8,7 @@ from apps.transcription.models import Transcription
 
 # util
 import numpy as np
+from libs.utils import generate_id_token
 
 #command
 class Command(BaseCommand):
