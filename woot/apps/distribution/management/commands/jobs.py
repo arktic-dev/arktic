@@ -29,5 +29,13 @@ class Command(BaseCommand):
     no = available_transcription_set.filter(utterance__contains='no')
 
     # conflicts
-    intersection = np.intersect1d([t.pk for t in yes], [t.pk for t in no])
-    print(intersection)
+    yes_wo_no = yes.exclude(utterance__contains='no')
+    no_wo_yes = no.exclude(utterance__contains='yes')
+
+    yes_no = available_transcription_set.filter(utterance__contains='no').filter(utterance__contains='yes')
+
+    # list of pk
+    pk_list = [t.pk for t in other] + [t.pk for t in yes_wo_no] + [t.pk for t in no_wo_yes] + [t.pk for t in yes_no]
+
+    for pk in pk_list:
+      print([pk, Transcription.objects.get(pk=pk).utterance])
