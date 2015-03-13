@@ -38,5 +38,18 @@ class Command(BaseCommand):
     # list of pk
     pk_list = [t.pk for t in other] + [t.pk for t in yes_wo_no] + [t.pk for t in no_wo_yes] + [t.pk for t in yes_no]
 
-    for pk in pk_list:
-      print([pk, Transcription.objects.get(pk=pk).utterance])
+    transcription_set = Transcription.objects.filter(pk__in=pk_list)
+
+
+    # print('creating jobs...')
+    # filter_set = self.transcriptions.filter(is_available=True).order_by('grammar__name').order_by('utterance')
+    # counter = filter_set.count() - 1 if filter_set.count() else 0
+    # while counter:
+    #   print('available: %d'%(counter), end='\r')
+    #   job = self.jobs.create(client=self.client, id_token=generate_id_token(Job))
+    #   lower_bound = counter-settings.NUMBER_OF_TRANSCRIPTIONS_PER_JOB if counter>=settings.NUMBER_OF_TRANSCRIPTIONS_PER_JOB else 0
+    #   job_set = filter_set[lower_bound:counter]
+    #   job.get_transcription_set(job_set)
+    #   job.save()
+    #   counter = lower_bound
+    # print('available: 0')
