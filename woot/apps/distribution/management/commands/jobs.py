@@ -26,8 +26,8 @@ class Command(BaseCommand):
     # separate transcriptions into yes, no and other
 
     other = available_transcription_set.exclude(utterance__contains='yes ').exclude(utterance__contains='yeah ').exclude(utterance__contains='no ').exclude(utterance__contains='nope ')
-    yes = available_transcription_set.filter(utterance__contains__in=['yes ', 'yeah '])
-    no = available_transcription_set.filter(utterance__contains__in=['no ','nope '])
+    yes = available_transcription_set.filter(utterance__contains='yes ').filter(utterance__contains='yeah ')
+    no = available_transcription_set.filter(utterance__contains='no ').filter(utterance__contains='nope ')
 
     # conflicts
     yes_wo_no = yes.exclude(utterance__contains='no ').exclude(utterance__contains='nope ')
