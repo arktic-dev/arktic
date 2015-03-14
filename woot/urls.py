@@ -6,7 +6,7 @@ from django.conf.urls import patterns, include, url
 from settings.common import MEDIA_ROOT
 
 #local
-from apps.pages.views import LoginView, StartView, logout_view
+from apps.pages.views import LoginView, StartView, logout_view, FAQView
 
 #third party
 
@@ -23,6 +23,7 @@ urlpatterns = patterns('',
   url(r'^logout/$', logout_view),
   url(r'^$', StartView.as_view()),
   url(r'^start/$', StartView.as_view()),
+  url(r'^faq/$', FAQView.as_view()),
 
   #transcription
   url(r'^transcription/', include('apps.transcription.urls')),

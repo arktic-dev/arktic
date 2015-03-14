@@ -57,6 +57,10 @@ class StartView(View):
     else:
       return HttpResponseRedirect('/login/')
 
+class FAQView(View):
+  def get(self, request):
+    return render(request, 'pages/faq.html')
+
 def logout_view(request):
   logout(request)
   return HttpResponseRedirect('/login/')
