@@ -61,19 +61,8 @@ class Grammar(models.Model):
         lines = open_relfile.readlines()
         for i, line in enumerate(lines):
           print('%s: line %d/%d' % (self.name, i+1, len(lines)), end='\r' if i<len(lines)-1 else '\n')
-          tokens = line.split(',') #this can be part of a relfile parser object with delimeter '|'
-          tokens = tokens[1:] # stupid edit for eckoh stuff
-          transcription_audio_file_name = os.path.basename(tokens[0])
-          grammar_fname = tokens[1]
-          confidence = tokens[2]
-          utterance = tokens[3].strip() if ''.join(tokens[3].split()) != '' else ''
-          value = tokens[4]
-          confidence_value = tokens[5].rstrip() #chomp newline
-          if confidence_value is not '':
-            confidence_value = float(float(confidence_value)/1000.0) #show as decimal
-          else:
-            confidence_value = 0.0
-
+          transcription_audio_file_name = os.path.basename(line)
+          utterance = ''
           if self.wav_files.filter(file_name=transcription_audio_file_name).count()>0:
             #if .filter returns multiple files, take the first and delete the rest
             if self.wav_files.filter(file_name=transcription_audio_file_name).count()>1:
@@ -91,11 +80,8 @@ class Grammar(models.Model):
 
             if created:
               transcription.id_token = str(transcription.pk)
-              transcription.grammar_fname = grammar_fname
-              transcription.confidence = confidence
               transcription.utterance = utterance
-              transcription.value = value
-              transcription.confidence_value = confidence_value
+              transcription.audio_file_data_path = transcription_audio_file_name
               transcription.save()
 
       self.is_active = True
@@ -148,11 +134,7 @@ class Transcription(models.Model):
   audio_file = models.FileField(upload_to='audio')
   audio_time = models.DecimalField(max_digits=8, decimal_places=6, null=True)
   audio_rms = models.TextField()
-  grammar_fname = models.CharField(max_length=255)
-  confidence = models.CharField(max_length=255)
   utterance = models.CharField(max_length=255)
-  value = models.TextField(default='')
-  confidence_value = models.DecimalField(max_digits=3, decimal_places=2, null=True)
   requests = models.IntegerField(default=0) #number of times the transcription has been requested.
   date_created = models.DateTimeField(auto_now_add=True)
   is_active = models.BooleanField(default=False)
