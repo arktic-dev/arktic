@@ -3,3 +3,4 @@ CACHE/
 data/
 *.log
 __pycache__/
+db
