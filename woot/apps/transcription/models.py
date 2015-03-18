@@ -61,7 +61,7 @@ class Grammar(models.Model):
         lines = open_relfile.readlines()
         for i, line in enumerate(lines):
           print('%s: line %d/%d' % (self.name, i+1, len(lines)), end='\r' if i<len(lines)-1 else '\n')
-          transcription_audio_file_name = os.path.basename(line)
+          transcription_audio_file_name = os.path.basename(line.rstrip())
           utterance = ''
           if self.wav_files.filter(file_name=transcription_audio_file_name).count()>0:
             #if .filter returns multiple files, take the first and delete the rest
@@ -152,7 +152,7 @@ class Transcription(models.Model):
     return '%s|%s|%s|%s|%s|%d\n' % (path, self.grammar_fname, self.confidence, self.revisions.latest().utterance, self.value, int(1000*float(self.confidence_value)) if self.confidence_value else 0)
 
   def grammar_name(self):
-    return self.grammar_fname if len(self.grammar_fname)<50 else self.grammar_fname[:46] + '...'
+    return 'grammar'
 
   def latest_revision_words(self):
     try:
