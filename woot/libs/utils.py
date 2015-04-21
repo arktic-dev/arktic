@@ -11,6 +11,7 @@ import random
 import wave
 import audioop
 import os
+import shutil
 from subprocess import call
 
 #vars
@@ -61,11 +62,15 @@ sampleWidth = 2 # number of bytes in a frame.
 
 def process_audio(input_path):
   # convert a-law wav file to microsoft pcm wav file
-  cmd = ['ffmpeg','-y','-i',input_path,'-f','wav',input_path]
+  temp = os.path.join(settings.DATA_DIR, 'temp', os.path.basename(input_path))
+  cmd = ['ffmpeg','-y','-i',input_path,'-f','wav',temp]
   call(cmd)
 
   # get properties of the pcm wav file
-  seconds, rmsValues = getWAVFileProperties(input_path)
+  seconds, rmsValues = getWAVFileProperties(temp)
+
+  # remove temporary audio file
+  os.remove(temp)
 
   return (seconds, rmsValues)
 
