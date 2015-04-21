@@ -62,7 +62,7 @@ sampleWidth = 2 # number of bytes in a frame.
 
 def process_audio(input_path):
   # convert a-law wav file to microsoft pcm wav file
-  temp = os.path.join(settings.DATA_DIR, 'temp', os.path.basename(input_path))
+  temp = os.path.join(settings.DJANGO_ROOT, 'data', 'temp', os.path.basename(input_path))
   cmd = ['ffmpeg','-y','-i',input_path,'-f','wav',temp]
   call(cmd)
 
