@@ -150,7 +150,7 @@ class Transcription(models.Model):
     path = self.audio_file_data_path
     # path = './' + path[path.index('2014'):]
     if self.revisions.count():
-      return '%s|%s\n' % (path, self.revisions.latest().utterance)
+      return '%s|%s\n' % (os.path.basename(self.audio_file.file.url), self.revisions.latest().utterance)
     else:
       return ''
 
