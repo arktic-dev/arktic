@@ -1,0 +1,17 @@
+p {
+  font: normal 14px Arial, Helvetica, sans-serif;
+}
+
+ol {
+  font: normal 22px Arial, Helvetica, sans-serif;
+  color: #555555;
+}
+
+ol p {
+  font: normal 14px Arial, Helvetica, sans-serif;
+  color: #000000;
+}
+
+ul{
+  padding-left:20px;
+}

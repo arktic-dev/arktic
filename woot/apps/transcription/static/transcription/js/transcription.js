@@ -169,8 +169,12 @@ $(document).ready(function() {
       if (text!='undefined' && text!=='') {
         var active = $('#panel-'+play+' div.modified-panel div.btn-group.modified button.active');
         if (isNaN(text)) {
-          active.after('<button type="button" class="btn btn-default modified active">' + text + '</button>');
-          active.removeClass('active');
+          var words = text.split(" ");
+          for (i=0;i<words.length;i++) {
+            active.after('<button type="button" class="btn btn-default modified active">' + words[i] + '</button>');
+            active.removeClass('active');
+            active = $('#panel-'+play+' div.modified-panel div.btn-group.modified button.active');
+          }
         } else {
           var nums = text.split("");
           for (i=0;i<nums.length;i++) {
