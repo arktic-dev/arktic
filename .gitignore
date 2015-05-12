@@ -1,7 +1,0 @@
-CACHE/
-*.pyc
-data/
-*.log
-__pycache__/
-db
-audio

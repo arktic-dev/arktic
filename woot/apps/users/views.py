@@ -1,5 +1,0 @@
-#users.views
-
-#django
-
-#local
