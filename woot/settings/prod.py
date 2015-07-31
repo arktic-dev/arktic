@@ -37,20 +37,3 @@ SERVER_EMAIL = EMAIL_HOST_USER
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 SECRET_KEY = environ.get('SECRET_KEY', SECRET_KEY)
 ########## END SECRET CONFIGURATION
-
-
-########## DATABASE CONFIGURATION
-DATABASE_PWD = environ.get('DB_PWD')
-
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
-DATABASES = {
-  'default': {
-    'ENGINE': 'mysql.connector.django',
-    'NAME': 'arkaeologic$arktic',
-    'USER': 'arkaeologic',
-    'PASSWORD': DATABASE_PWD,
-    'HOST': 'mysql.server',
-    'PORT': '',
-  }
-}
-########## END DATABASE CONFIGURATION

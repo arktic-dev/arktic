@@ -26,8 +26,28 @@ TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 ########## AUTH
 AUTH_USER_MODEL = 'users.User'
 
-########## AUDIO
+########## PASSWORD CONFIGURATION
+ACCESS_ROOT = join(expanduser('~'),'.djaccess')
+DB_ACCESS = 'arktic_db.json'
+DATA_ACCESS = 'arktic_data.json'
+########## END PASSWORD CONFIGURATION
+
+
+########## DATA CONFIGURATION
+if exists(join(ACCESS_ROOT, DATA_ACCESS)):
+  with open(join(ACCESS_ROOT, DATA_ACCESS), 'r') as data_json:
+    data = json.load(data_json)
+
+DATA_ROOT = data['root'] # pun intended
+########## END DATA CONFIGURATION
+
+
+########## AUDIO CONFIGURATION
+
 NUMBER_OF_AUDIO_FILE_BINS = 100
+AUDIO_SAMPLE_WIDTH = 2
+
+########## END AUDIO CONFIGURATION
 
 ########## ALLOWED HOSTS
 ALLOWED_HOSTS = [
