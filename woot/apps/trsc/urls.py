@@ -1,11 +1,22 @@
-# woot.apps.trsc.urls
+# apps.trsc.urls
 
 # django
+from django.contrib import admin
 from django.conf.urls import patterns, include, url
-from django.views.generic import TemplateView, RedirectView
 
-from .views import *
+# local
+from apps.transcription.views import start_redirect, TranscriptionView, create_new_job, action_register, update_revision, add_word
 
-urlpatterns = patterns('trsc.views',
-       # (r'^example_url/', 'example_view')
+# third party
+
+# See: https://docs.djangoproject.com/en/dev/ref/contrib/admin/#hooking-adminsite-instances-into-your-urlconf
+admin.autodiscover()
+
+# See: https://docs.djangoproject.com/en/dev/topics/http/urls/
+urlpatterns = patterns('',
+  url(r'^$', start_redirect),
+  url(r'^(?P<job_id_token>[A-Z0-9]{8})$', TranscriptionView.as_view()),
+  url(r'^new/$', create_new_job),
+  url(r'^revision/$', update_revision),
+  url(r'^add/$', add_word),
 )

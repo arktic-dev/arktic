@@ -1,19 +1,41 @@
-# arktic.urls
+# woot.urls
 
-from django.conf.urls import patterns, include, url
-from django.views.generic import TemplateView, RedirectView
-
+# django
 from django.contrib import admin
+from django.conf.urls import patterns, include, url
+from settings.common import MEDIA_ROOT
+
+# local
+from apps.trsc.views import LoginView, StartView, logout_view, FAQView
+
+# third party
+
+# See: https://docs.djangoproject.com/en/dev/ref/contrib/admin/#hooking-adminsite-instances-into-your-urlconf
 admin.autodiscover()
 
+# See: https://docs.djangoproject.com/en/dev/topics/http/urls/
 urlpatterns = patterns('',
-    # To enable admin app access
-    url(r'^admin/', include(admin.site.urls)),
+  # Serving media
+  url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': MEDIA_ROOT, 'show_indexes': True }),
 
-    # i18n / l10n
-    (r'^i18n/', include('django.conf.urls.i18n')),
+  # pages
+  url(r'^login/$', LoginView.as_view()),
+  url(r'^logout/$', logout_view),
+  url(r'^$', StartView.as_view()),
+  url(r'^start/$', StartView.as_view()),
+  url(r'^faq/$', FAQView.as_view()),
 
-    # Example to include app-specific urls
-    # url(r'^myapp/', include('myapp.urls')),
+  # transcription
+  url(r'^transcription/', include('apps.transcription.urls')),
+  url(r'^new/', 'apps.transcription.views.create_new_job'),
 
+  #admin
+  url(r'^admin/', include(admin.site.urls)),
 )
+
+#1. make users
+#2. make jobs
+#3. make transcription url work
+#4. make start url work
+#5. latest revision words
+#6.
