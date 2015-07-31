@@ -59,6 +59,14 @@ DATA_ROOT = data['root'] # pun intended
 ########## END DATA CONFIGURATION
 
 
+########## AUDIO CONFIGURATION
+
+NUMBER_OF_AUDIO_FILE_BINS = 100
+AUDIO_SAMPLE_WIDTH = 2
+
+########## END AUDIO CONFIGURATION
+
+
 ########## DEBUG CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#debug
 DEBUG = False

@@ -33,9 +33,6 @@ def random_string():
   return ''.join([random.choice(chars) for _ in range(8)]) #8 character string
 
 ### CONTROLS ###
-sampleWidth = 2 # number of bytes in a frame.
-  # for microsoft 16-bit PCM wav, this is 2.
-
 def process_audio(input_path):
   # convert a-law wav file to microsoft pcm wav file
   temp_path = os.path.join(os.path.dirname(input_path), 'temp')
@@ -69,7 +66,7 @@ def getWAVFileProperties(filePath):
   for i in range(settings.NUMBER_OF_AUDIO_FILE_BINS-1):
     section = a.readframes(framesPerSection)
     count += framesPerSection
-    r = audioop.rms(section, sampleWidth)
+    r = audioop.rms(section, settings.AUDIO_SAMPLE_WIDTH)
     rmsValues.append(r)
 
   # all the truncated time adds up.
@@ -77,7 +74,7 @@ def getWAVFileProperties(filePath):
   # rather than to an integer number of frames.
   last = nFrames - count
   section = a.readframes(last)
-  r = audioop.rms(section, sampleWidth)
+  r = audioop.rms(section, settings.AUDIO_SAMPLE_WIDTH)
   rmsValues.append(r)
 
   return seconds, rmsValues
