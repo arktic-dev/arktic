@@ -1,7 +1,8 @@
 # apps.dstr.util
 
 # django
-from django.db import models
+from django.apps import apps
+from django.conf import settings
 
 # util
 import random
@@ -18,7 +19,7 @@ chars = string.ascii_uppercase + string.digits
 # methods
 def generate_id_token(app_name, obj_name):
 
-  Obj = models.get_model(app_name, obj_name)
+  Obj = apps.get_model(app_label=app_name, model_name=obj_name)
 
   def get_id_token():
     return random_string()
