@@ -11,7 +11,7 @@ from django.db.models import Q, Max, Min
 from apps.users.models import User
 from apps.distribution.models import Project, Job
 from apps.transcription.models import Transcription, Revision
-from libs.utils import generate_id_token
+from apps.distribution.util import generate_id_token
 
 #util
 import random
@@ -33,7 +33,7 @@ class TranscriptionView(View):
         transcription.update()
 
       #words
-      words = json.dumps([word.char for word in job.project.words.filter(Q(char__contains=' ') | Q(tag=True))])
+      words = json.dumps([word.content for word in job.project.words.filter(Q(content__contains=' ') | Q(tag=True))])
 
       #render
       return render(request, 'transcription/transcription.html', {'transcriptions':transcriptions,'words':words,'job_id':job.id_token,})
@@ -59,6 +59,7 @@ def create_new_job(request):
 
         job = project.jobs.create(client=project.client, user=user)
         job.is_available = False
+        job.id_token = generate_id_token('distribution','Job')
         user.jobs.add(job)
         job_transcription_set = project.transcriptions.filter(is_active=True)
         job_transcription_set = job_transcription_set[:settings.NUMBER_OF_TRANSCRIPTIONS_PER_JOB] if len(job_transcription_set)>=settings.NUMBER_OF_TRANSCRIPTIONS_PER_JOB else job_transcription_set
@@ -83,7 +84,7 @@ def update_revision(request):
                                                               job=Job.objects.get(id_token=request.POST['job_id']))
 
     if created:
-      revision.id_token = generate_id_token(Revision)
+      revision.id_token = generate_id_token('transcription', 'Revision')
 
     #split utterance
     revision.utterance = request.POST['utterance']

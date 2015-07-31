@@ -112,10 +112,9 @@ class Revision(models.Model):
     for word in words:
       #many to many relationship
       if not (('[' in word and ']' not in word) or (']' in word and '[' not in word)): #reject with only one bracket
-        w, created = self.job.project.words.get_or_create(char=word) #unique by char to project
+        w, created = self.job.project.words.get_or_create(content=word) #unique by char to project
         if created:
           w.client = self.transcription.client
-          w.grammar = self.transcription.grammar
           w.id_token = generate_id_token(Word)
           w.tag = ('[' in word and ']' in word)
 
