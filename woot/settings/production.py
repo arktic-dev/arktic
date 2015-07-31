@@ -23,7 +23,7 @@ DATABASE_PWD = environ.get('DB_PWD')
 # mysql: https://github.com/PyMySQL/mysqlclient-python
 DATABASES = {
   'default': {
-    'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2' for PG
+    'ENGINE': 'mysql.connector.django', # Add 'postgresql_psycopg2' for PG django.db.backends.mysql
     'NAME': '',
     'USER': '',
     'PASSWORD': '',

@@ -209,15 +209,11 @@ DJANGO_APPS = (
 )
 
 THIRD_PARTY_APPS = (
-  # Asynchronous task scheduling
-  'djcelery',
 
-  # Static file management:
-  'compressor',
 )
 
 LOCAL_APPS = (
-
+  ''
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -261,54 +257,6 @@ LOGGING = {
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#wsgi-application
 WSGI_APPLICATION = 'wsgi.application'
 ########## END WSGI CONFIGURATION
-
-
-########## COMPRESSION CONFIGURATION
-# See: http://django_compressor.readthedocs.org/en/latest/settings/#django.conf.settings.COMPRESS_ENABLED
-COMPRESS_ENABLED = True
-
-# See: http://django-compressor.readthedocs.org/en/latest/settings/#django.conf.settings.COMPRESS_CSS_HASHING_METHOD
-COMPRESS_CSS_HASHING_METHOD = 'content'
-
-# See: http://django_compressor.readthedocs.org/en/latest/settings/#django.conf.settings.COMPRESS_CSS_FILTERS
-COMPRESS_CSS_FILTERS = [
-    'compressor.filters.template.TemplateFilter',
-]
-
-# See: http://django_compressor.readthedocs.org/en/latest/settings/#django.conf.settings.COMPRESS_JS_FILTERS
-COMPRESS_JS_FILTERS = [
-    'compressor.filters.template.TemplateFilter',
-]
-
-STATICFILES_FINDERS += (
-  'compressor.finders.CompressorFinder',
-)
-########## END COMPRESSION CONFIGURATION
-
-
-########## CELERY CONFIGURATION
-from djcelery import setup_loader
-
-CELERY_RESULT_BACKEND='djcelery.backends.database:DatabaseBackend'
-
-# : Only add pickle to this list if your broker is secured
-# : from unwanted access (see userguide/security.html)
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
-
-# See: http://celery.readthedocs.org/en/latest/configuration.html#celery-task-result-expires
-CELERY_TASK_RESULT_EXPIRES = timedelta(minutes=30)
-
-# See: http://docs.celeryproject.org/en/master/configuration.html#std:setting-CELERY_CHORD_PROPAGATES
-CELERY_CHORD_PROPAGATES = True
-
-# See: http://celery.github.com/celery/django/
-setup_loader()
-
-# rabbitmq: https://www.rabbitmq.com/man/rabbitmqctl.1.man.html
-# celery: https://zapier.com/blog/async-celery-example-why-and-how/
-########## END CELERY CONFIGURATION
 
 
 ########## FILE UPLOAD CONFIGURATION

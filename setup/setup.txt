@@ -1,0 +1,11 @@
+Requirements:
+
+Removing if not needed. This included compression and tasks
+
+Settings:
+1. Database authentication
+2. remove unused apps
+
+Apps:
+
+WSGI:
