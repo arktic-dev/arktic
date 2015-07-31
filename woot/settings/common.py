@@ -4,7 +4,7 @@
 
 #util
 from datetime import timedelta
-from os.path import abspath, basename, dirname, join, normpath
+from os.path import abspath, basename, dirname, join, normpath, expanduser
 from sys import path
 import string
 
@@ -354,3 +354,22 @@ FILE_UPLOAD_HANDLERS = (
   'django.core.files.uploadhandler.TemporaryFileUploadHandler',
 )
 ########## END FILE UPLOAD CONFIGURATION
+
+########## DATABASE CONFIGURATION
+# installed mysql-connector-python from pip install git+https://github.com/multiplay/mysql-connector-python
+# load database details from database config file
+if exists(join(ACCESS_ROOT, DB_ACCESS)):
+  with open(join(ACCESS_ROOT, DB_ACCESS), 'r') as db_json:
+    db_data = json.load(db_json)
+
+DATABASES = {
+  'default': {
+    'ENGINE': db_data['backend'],
+    'NAME': db_data['name'],
+    'USER': db_data['user'],
+    'PASSWORD': db_data['pwd'],
+    'HOST': db_data['host'], # Set to empty string for localhost.
+    'PORT': db_data['port'], # Set to empty string for default.
+  }
+}
+########## END DATABASE CONFIGURATION
