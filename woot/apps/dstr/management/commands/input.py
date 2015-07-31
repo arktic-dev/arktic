@@ -22,7 +22,7 @@ class Command(BaseCommand):
   args = ''
   help = ''
 
-  def handle(self, *args):
+  def handle(self, *args, **options):
     root = settings.DATA_ROOT
 
     # 1. for each client name in root:
@@ -42,7 +42,7 @@ class Command(BaseCommand):
         # 4. list all files in the project directory and create transcriptions
         if project_created:
           audio_root = os.path.join(root, client_name, project_name)
-          audio_files = [f for f in os.listdir(os.path.join()) if '.wav' in f]
+          audio_files = [f for f in os.listdir(os.path.join(audio_root)) if '.wav' in f]
 
           for i, audio_file in enumerate(audio_files):
             audio_file_path = os.path.join(audio_root, audio_file)
