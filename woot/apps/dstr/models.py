@@ -31,7 +31,7 @@ class Project(models.Model):
   date_created = models.DateTimeField(auto_now_add=True)
   is_active = models.BooleanField(default=False)
   project_path = models.TextField(max_length=255)
-  completed_project_file = models.FileField(upload_to='completed_projects')
+  completed_project_file = models.FileField(upload_to='completed_projects', null=True)
 
   # methods
   def __str__(self):

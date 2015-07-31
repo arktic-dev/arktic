@@ -5,6 +5,7 @@ from django.db import models
 
 # local
 from apps.dstr.models import Client, Project, Job
+from apps.users.models import User
 
 # util
 
@@ -14,7 +15,7 @@ class Transcription(models.Model):
   #connections
   client = models.ForeignKey(Client, related_name='transcriptions')
   project = models.ForeignKey(Project, related_name='transcriptions')
-  job = models.ManyToManyField(Job, related_name='transcriptions', null=True)
+  job = models.ManyToManyField(Job, related_name='transcriptions')
 
   #properties
   id_token = models.CharField(max_length=8)
