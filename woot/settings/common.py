@@ -263,7 +263,7 @@ WSGI_APPLICATION = 'wsgi.application'
 # load database details from database config file
 if os.path.exists(os.path.join(ACCESS_ROOT, DB_ACCESS)):
   with open(os.path.join(ACCESS_ROOT, DB_ACCESS), 'r') as db_json:
-    db_data = json.loads(db_json)
+    db_data = json.load(db_json)
 
 DATABASES = {
   'default': {
