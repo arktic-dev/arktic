@@ -177,56 +177,9 @@ class Word(models.Model):
 
   #properties
   id_token = models.CharField(max_length=8)
-  char = models.CharField(max_length=255)
+  content = models.CharField(max_length=255)
   tag = models.BooleanField(default=False)
 
   #methods
   def __str__(self):
     return self.char
-
-class Action(models.Model): #lawsuit
-  #connections
-  client = models.ForeignKey(Client, related_name='actions')
-  user = models.ForeignKey(User, related_name='actions')
-  job = models.ForeignKey(Job, related_name='actions')
-  transcription = models.ForeignKey(Transcription, related_name='actions')
-  revision = models.ForeignKey(Revision, related_name='actions', null=True)
-
-  #properties
-  id_token = models.CharField(max_length=8)
-  date_created = models.DateTimeField(auto_now_add=True)
-  char = models.CharField(max_length=255, default='')
-  audio_time = models.DecimalField(max_digits=8, decimal_places=6, null=True) #time at which the audio was skipped: next
-
-  #methods
-  def __str__(self):
-    return '%s > %s > %s'%(self.job.id_token, self.user, self.char)
-
-### File paths
-class CSVFile(models.Model):
-  #connections
-  client = models.ForeignKey(Client, related_name='csv_files')
-  project = models.ForeignKey(Project, related_name='csv_files')
-
-  #properties
-  name = models.CharField(max_length=255)
-  path = models.TextField(max_length=255)
-  file_name = models.TextField(max_length=255)
-
-  #methods
-  def __str__(self):
-    return '%s > %s > %s > %d:%s'%(self.client.name, self.project.name, self.grammar.name, self.pk, self.file_name)
-
-class WavFile(models.Model):
-  #connections
-  client = models.ForeignKey(Client, related_name='wav_files')
-  project = models.ForeignKey(Project, related_name='wav_files')
-  transcription = models.OneToOneField(Transcription, related_name='wav_file')
-
-  #properties
-  path = models.TextField(max_length=255)
-  file_name = models.TextField(max_length=255)
-
-  #methods
-  def __str__(self):
-    return '%s > %s > %s > %d:%s'%(self.client.name, self.project.name, self.grammar.name, self.pk, self.file_name)
