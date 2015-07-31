@@ -28,7 +28,7 @@ class Transcription(models.Model):
 
   #properties
   id_token = models.CharField(max_length=8)
-  audio_file_data_path = models.CharField(max_length=255) #temporary
+  audio_file_name = models.CharField(max_length=255) #temporary
   audio_file = models.FileField(upload_to='audio')
   audio_time = models.DecimalField(max_digits=8, decimal_places=6, null=True)
   audio_rms = models.TextField()
@@ -79,45 +79,8 @@ class Transcription(models.Model):
       self.latest_revision_done_by_current_user = False
     self.save()
 
-  def process(self):
-    #1. process audio file -> IRREVERSIBLE
-    if len(self.audio_rms)<10:
-      (seconds, rms_values) = process_audio(self.wav_file.path)
-      self.audio_time = seconds
-
-      max_rms = max(rms_values)
-      rms_values = [float(value)/float(max_rms) for value in rms_values]
-
-      self.audio_rms = json.dumps(rms_values)
-
-      #2. add open audio file to transcription
-      with open(self.wav_file.path, 'rb') as open_audio_file:
-        self.audio_file = File(open_audio_file)
-        self.save()
-
-    self.is_active = True
-    self.is_available = True
-    self.save()
-
   def unpack_rms(self):
     return [(int(rms*31+1), 32-int(rms*31+1)) for rms in json.loads(self.audio_rms)]
-
-  def process_words(self):
-    if self.words.count()==0:
-      words = self.utterance.split()
-      for word in words:
-        tag = ('[' in word or ']' in word)
-
-        #many to many relationship
-        if tag and not (('[' in word and ']' not in word) or (']' in word and '[' not in word)):
-          w, created = self.project.words.get_or_create(char=word) #unique by char to project
-          if created:
-            w.client = self.client
-            w.grammar = self.grammar
-            w.id_token = generate_id_token(Word)
-            w.tag = True
-            self.words.add(w)
-            w.save()
 
 class Revision(models.Model):
   #connections

@@ -79,26 +79,6 @@ class Project(models.Model):
     ''' Export prepares all of the individual relfiles to be packaged and be available for download. '''
     pass
 
-  def process_grammars(self):
-    '''
-    Wrapper for processing done by grammars.
-    '''
-    print('processing grammars...')
-    count = self.grammars.count()
-    for i, grammar in enumerate(self.grammars.all()):
-      print('grammar %d/%d'%(i+1, count), end='\r' if i<count-1 else '\n')
-      grammar.process()
-
-  def process_transcriptions(self):
-    '''
-    Wrapper for individual processing done by transcriptions.
-    '''
-    print('processing transcriptions...')
-    count = self.transcriptions.count()
-    for i, transcription in enumerate(self.transcriptions.all()):
-      print('transcription %d/%d'%(i+1, count), end='\r' if i<count-1 else '\n')
-      transcription.process()
-
   def process_words(self):
     '''
     Wrapper for transcription word processing.
@@ -136,7 +116,7 @@ class Job(models.Model):
   #properties
   is_active = models.BooleanField(default=True)
   is_available = models.BooleanField(default=True)
-  id_token = models.CharField(max_length=8) #a random string of characters to identify the job
+  id_token = models.CharField(max_length=8) # a random string of characters to identify the job
   active_transcriptions = models.IntegerField(editable=False, default=settings.NUMBER_OF_TRANSCRIPTIONS_PER_JOB)
   date_created = models.DateTimeField(auto_now_add=True)
   date_completed = models.DateTimeField(auto_now_add=False, null=True)

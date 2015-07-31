@@ -64,22 +64,6 @@ def create_new_job(request):
 def start_redirect(request):
   return HttpResponseRedirect('/start/')
 
-def action_register(request):
-  if request.user.is_authenticated:
-    #get user object
-    user = User.objects.get(email=request.user)
-    transcription = Transcription.objects.get(id_token=request.POST['transcription_id'])
-
-    #make action object
-    transcription.actions.create(client=transcription.client,
-                                 job=Job.objects.get(id_token=request.POST['job_id']),
-                                 user=user,
-                                 id_token=generate_id_token(Action),
-                                 char=request.POST['action_name'],
-                                 audio_time=float(request.POST['audio_time']))
-
-    return HttpResponse('')
-
 def update_revision(request):
   if request.user.is_authenticated:
     #get user and update revision utterance

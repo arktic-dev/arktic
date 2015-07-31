@@ -17,7 +17,6 @@ urlpatterns = patterns('',
   url(r'^$', start_redirect),
   url(r'^(?P<job_id_token>[A-Z0-9]{8})$', TranscriptionView.as_view()),
   url(r'^new/$', create_new_job),
-  url(r'^action/$', action_register),
   url(r'^revision/$', update_revision),
   url(r'^add/$', add_word),
 )
