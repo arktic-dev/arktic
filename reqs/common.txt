@@ -1,17 +1,17 @@
 # Django
-django>=1.7
+Django==1.8
 
 # Python base libraries commonly used
 Pillow
 scipy
+numpy
 pandas
 
 # Common Django reusable apps
 Sphinx
 
-# Mysql
---allow-external mysql-connector-python
-mysql-connector-python
+# Postgres
+psycopg2
 
 # Tasks
 amqp
@@ -25,12 +25,6 @@ pytz
 
 # Static compression
 django-compressor
-
-# App specific settings
-django-appconf
-
-# Python 2 -> Python 3
-six
 
 # LESS and SASS
 # https://github.com/andreyfedoseev/django-static-precompiler

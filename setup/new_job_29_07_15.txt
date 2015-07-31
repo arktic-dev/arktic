@@ -1,0 +1,4 @@
+List the tasks that need to be completed to get the site live:
+1. Database
+2. Bug fixing
+3. Test set
