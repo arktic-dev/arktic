@@ -46,8 +46,8 @@ path.append(DJANGO_ROOT)
 
 
 ########## PASSWORD CONFIGURATION
-ACCESS_ROOT = '/.djaccess/'
-DB_ACCESS = 'db.json'
+ACCESS_ROOT = join(expanduser('~'),'.djaccess')
+DB_ACCESS = 'arktic_db.json'
 ########## END PASSWORD CONFIGURATION
 
 
@@ -257,6 +257,25 @@ LOGGING = {
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#wsgi-application
 WSGI_APPLICATION = 'wsgi.application'
 ########## END WSGI CONFIGURATION
+
+
+########## DATABASE CONFIGURATION
+# load database details from database config file
+if os.path.exists(os.path.join(ACCESS_ROOT, DB_ACCESS)):
+  with open(os.path.join(ACCESS_ROOT, DB_ACCESS), 'r') as db_json:
+    db_data = json.loads(db_json)
+
+DATABASES = {
+  'default': {
+    'ENGINE': db_data['backend'],
+    'NAME': db_data['name'],
+    'USER': db_data['user'],
+    'PASSWORD': db_data['pwd'],
+    'HOST': db_data['host'], # Set to empty string for localhost.
+    'PORT': db_data['port'], # Set to empty string for default.
+  }
+}
+########## END DATABASE CONFIGURATION
 
 
 ########## FILE UPLOAD CONFIGURATION

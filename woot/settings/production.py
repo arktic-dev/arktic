@@ -16,24 +16,6 @@ TEMPLATE_DEBUG = DEBUG
 ########## END DEBUG CONFIGURATION
 
 
-########## DATABASE CONFIGURATION
-DATABASE_USER = environ.get('DB_USER')
-DATABASE_PWD = environ.get('DB_PWD')
-
-# mysql: https://github.com/PyMySQL/mysqlclient-python
-DATABASES = {
-  'default': {
-    'ENGINE': 'mysql.connector.django', # Add 'postgresql_psycopg2' for PG django.db.backends.mysql
-    'NAME': '',
-    'USER': '',
-    'PASSWORD': '',
-    'HOST': '', # Set to empty string for localhost.
-    'PORT': '', # Set to empty string for default.
-  }
-}
-########## END DATABASE CONFIGURATION
-
-
 ########## CACHE CONFIGURATION
 CACHES = {
   'default': {
