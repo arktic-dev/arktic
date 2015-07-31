@@ -40,11 +40,11 @@ class Command(BaseCommand):
         print('client {}, project {}... {}{}'.format(client_name, project_name, 'already exists.' if not project_created else 'created.', spacer))
 
         # 4. list all files in the project directory and create transcriptions
-        if project_created:
-          audio_root = os.path.join(root, client_name, project_name)
-          audio_files = [f for f in os.listdir(os.path.join(audio_root)) if '.wav' in f]
+        audio_root = os.path.join(root, client_name, project_name)
+        audio_files = [f for f in os.listdir(os.path.join(audio_root)) if '.wav' in f]
 
-          for i, audio_file in enumerate(audio_files):
+        for i, audio_file in enumerate(audio_files):
+          if project.transcriptions.filter(audio_file_name=audio_file).count()==0:
             audio_file_path = os.path.join(audio_root, audio_file)
             (seconds, rms_values) = process_audio(audio_file_path)
 
@@ -59,4 +59,4 @@ class Command(BaseCommand):
                                                                                           audio_rms=audio_rms,
                                                                                           audio_file=File(open_audio_file))
 
-            print('client {}, project {}, file {}... ({}/{})'.format(), end='\r' if i<len(audio_files)-1 else '\n')
+            print('client {}, project {}, file {}... created ({}/{})'.format(), end='\r' if i<len(audio_files)-1 else '\n')

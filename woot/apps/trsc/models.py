@@ -20,6 +20,7 @@ class Transcription(models.Model):
 
   #properties
   id_token = models.CharField(max_length=8)
+  audio_file_name = models.CharField(max_length=255)
   audio_file = models.FileField(upload_to='audio')
   audio_time = models.DecimalField(max_digits=8, decimal_places=6, null=True)
   audio_rms = models.TextField()
