@@ -57,6 +57,8 @@ class Command(BaseCommand):
                                                                                           id_token=generate_id_token('transcription','Transcription'),
                                                                                           audio_time=seconds,
                                                                                           audio_rms=audio_rms,
-                                                                                          audio_file=File(open_audio_file))
+                                                                                          audio_file=File(open_audio_file),
+                                                                                          is_active=True,
+                                                                                          is_available=True)
 
             print('client {}, project {}, file {}... created ({}/{})'.format(client_name, project_name, audio_file, i+1, len(audio_files)), end='\r' if i<len(audio_files)-1 else '\n')

@@ -5,7 +5,7 @@ from django.views.generic import View
 from django.conf import settings
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse, HttpResponseRedirect
-from django.db.models import Q
+from django.db.models import Q, Max, Min
 
 #local
 from apps.users.models import User
@@ -48,12 +48,23 @@ def create_new_job(request):
       #get user object
       user = User.objects.get(email=user)
 
-      #if there are available jobs
-      if Job.objects.filter(is_available=True).count()>0:
-        job = Job.objects.filter(is_available=True)[0]
+      #if there are available transcriptions
+      if Transcription.objects.filter(is_available=True).count()>0:
+
+        # 1. sort projects by age (newest first), and get a set of transcriptions if they exist
+        project = None
+        for P in Project.objects.all().order_by('date_created'):
+          if P.transcriptions.filter(is_available=True).count()>0 and project is None:
+            project = P
+
+        job = project.jobs.create(client=project.client, user=user)
         job.is_available = False
         user.jobs.add(job)
+        job_transcription_set = project.transcriptions.filter(is_active=True)
+        job_transcription_set = job_transcription_set[:settings.NUMBER_OF_TRANSCRIPTIONS_PER_JOB] if len(job_transcription_set)>=settings.NUMBER_OF_TRANSCRIPTIONS_PER_JOB else job_transcription_set
+        job.get_transcription_set(job_transcription_set)
         job.save()
+
         return HttpResponseRedirect('/transcription/' + str(job.id_token))
       else:
         return HttpResponseRedirect('/start/')
