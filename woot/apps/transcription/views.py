@@ -10,7 +10,7 @@ from django.db.models import Q
 #local
 from apps.users.models import User
 from apps.distribution.models import Project, Job
-from apps.transcription.models import Transcription, Revision, Action
+from apps.transcription.models import Transcription, Revision
 from libs.utils import generate_id_token
 
 #util
