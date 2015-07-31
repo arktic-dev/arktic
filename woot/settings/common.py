@@ -46,7 +46,17 @@ path.append(DJANGO_ROOT)
 ########## PASSWORD CONFIGURATION
 ACCESS_ROOT = join(expanduser('~'),'.djaccess')
 DB_ACCESS = 'arktic_db.json'
+DATA_ACCESS = 'arktic_data.json'
 ########## END PASSWORD CONFIGURATION
+
+
+########## DATA CONFIGURATION
+if exists(join(ACCESS_ROOT, DATA_ACCESS)):
+  with open(join(ACCESS_ROOT, DATA_ACCESS), 'r') as data_json:
+    data = json.load(data_json)
+
+DATA_ROOT = data['root'] # pun intended
+########## END DATA CONFIGURATION
 
 
 ########## DEBUG CONFIGURATION
