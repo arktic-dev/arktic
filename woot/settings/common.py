@@ -221,6 +221,8 @@ THIRD_PARTY_APPS = (
 )
 
 LOCAL_APPS = (
+  'apps.dstr',
+  'apps.trsc',
   'apps.users',
 )
 
