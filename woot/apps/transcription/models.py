@@ -20,113 +20,11 @@ import json
 #vars
 
 #classes
-class Grammar(models.Model):
-  ''' Stores all information about a single grammar: relfile, archive, transcriptions '''
-  #types
-  language_choices = (
-    ('en','english'),
-    ('es','spanish'),
-  )
-
-  #connections
-  client = models.ForeignKey(Client, related_name='grammars')
-  project = models.ForeignKey(Project, related_name='grammars')
-
-  #properties
-  is_active = models.BooleanField(default=False)
-  id_token = models.CharField(max_length=8, null=True)
-  name = models.CharField(max_length=255)
-  date_created = models.DateTimeField(auto_now_add=True)
-  date_completed = models.DateTimeField(auto_now_add=False, null=True)
-  language = models.CharField(max_length=255, choices=language_choices, default='english')
-  complete_rel_file = models.FileField(upload_to='completed')
-
-  #methods
-  def __str__(self):
-    return '%s > %s > %d:%s > %s'%(self.client.name, self.project.name, self.pk, self.id_token, self.name)
-
-  def update(self):
-    for transcription in self.transcriptions.all():
-      transcription.update()
-
-    self.is_active = self.transcriptions.filter(is_active=True).count()>0
-    self.save()
-
-  def process(self):
-    '''
-    Open relfile and create transcription objects.
-    '''
-    if self.transcriptions.count()==0:
-      with open(os.path.join(self.csv_file.path, self.csv_file.file_name)) as open_relfile:
-        lines = open_relfile.readlines()
-        for i, line in enumerate(lines):
-          print('%s: line %d/%d' % (self.name, i+1, len(lines)), end='\r' if i<len(lines)-1 else '\n')
-          transcription_audio_file_name = os.path.basename(line.rstrip())
-          utterance = ''
-          if self.wav_files.filter(file_name=transcription_audio_file_name).count()>0:
-            #if .filter returns multiple files, take the first and delete the rest
-            if self.wav_files.filter(file_name=transcription_audio_file_name).count()>1:
-              for wav_file_i in self.wav_files.filter(file_name=transcription_audio_file_name):
-                print(wav_file_i)
-              wav_file = self.wav_files.filter(file_name=transcription_audio_file_name)[0]
-              self.wav_files.filter(file_name=transcription_audio_file_name)[1:].delete()
-            else:
-              wav_file = self.wav_files.get(file_name=transcription_audio_file_name)
-            transcription, created = self.transcriptions.get_or_create(client=self.client, project=self.project, wav_file__file_name=wav_file.file_name)
-
-            transcription.wav_file = wav_file
-            transcription.save()
-            wav_file.save()
-
-            if created:
-              transcription.id_token = str(transcription.pk)
-              transcription.utterance = utterance
-              transcription.audio_file_data_path = transcription_audio_file_name
-              transcription.save()
-
-      self.is_active = True
-      self.save()
-
-  def export(self):
-    '''
-
-    Sample line in relfile that needs to be reproduced:
-    ./2014/10October/01/bshoscar22PCI/311-150-10012014-133918231-20141001134132.wav|c:\\Program Files\\Nortel\\PERIsw30r\\grammars\\927-London.grxml|ok|neasden station|{borough:BRENT borough_code:B0004 code:S0304 location:NEASDEN nhs_code:5K5}|762
-    1. ./2014/10October/01/bshoscar22PCI/311-150-10012014-133918231-20141001134132.wav | (audio file path)
-    2. c:\\Program Files\\Nortel\\PERIsw30r\\grammars\\927-London.grxml | (grammar name)
-    3. ok | (confidence)
-    4. neasden station | (utterance)
-    5. {borough:BRENT borough_code:B0004 code:S0304 location:NEASDEN nhs_code:5K5} | (value?)
-    6. 762 (confidence value)
-
-    How to obtain details from database:
-    1. transcription.wav_file.path:
-
-    path = transcription.wav_file.path
-    path = './' + path[path.index('2014')]
-
-    2. transcription.grammar.name
-    3. transcription.confidence
-    4. transcription.revisions.latest().utterance
-    5. transcription.value
-    6. float(transcription.confidence_value)
-
-    '''
-    completed_dir = os.path.join(settings.MEDIA_ROOT, 'completed', self.client.name)
-
-    if not os.path.exists(completed_dir):
-      os.mkdir(completed_dir)
-
-    with open(os.path.join(completed_dir, '%s.csv'%self.name), 'w+') as csv_file:
-      for t in self.transcriptions.all():
-        csv_file.write(t.line())
-
 class Transcription(models.Model):
   #connections
   client = models.ForeignKey(Client, related_name='transcriptions')
   project = models.ForeignKey(Project, related_name='transcriptions')
-  grammar = models.ForeignKey(Grammar, related_name='transcriptions')
-  job = models.ManyToManyField(Job, related_name='transcriptions', null=True)
+  job = models.ManyToManyField(Job, related_name='transcriptions')
 
   #properties
   id_token = models.CharField(max_length=8)
@@ -274,7 +172,6 @@ class Word(models.Model):
   #connections
   client = models.ForeignKey(Client, related_name='words', null=True)
   project = models.ForeignKey(Project, related_name='words')
-  grammar = models.ForeignKey(Grammar, related_name='words', null=True)
   transcription = models.ManyToManyField(Transcription, related_name='words')
   revision = models.ManyToManyField(Revision, related_name='words')
 
@@ -310,7 +207,6 @@ class CSVFile(models.Model):
   #connections
   client = models.ForeignKey(Client, related_name='csv_files')
   project = models.ForeignKey(Project, related_name='csv_files')
-  grammar = models.OneToOneField(Grammar, related_name='csv_file', null=True)
 
   #properties
   name = models.CharField(max_length=255)
@@ -325,8 +221,7 @@ class WavFile(models.Model):
   #connections
   client = models.ForeignKey(Client, related_name='wav_files')
   project = models.ForeignKey(Project, related_name='wav_files')
-  grammar = models.ForeignKey(Grammar, related_name='wav_files')
-  transcription = models.OneToOneField(Transcription, related_name='wav_file', null=True)
+  transcription = models.OneToOneField(Transcription, related_name='wav_file')
 
   #properties
   path = models.TextField(max_length=255)
