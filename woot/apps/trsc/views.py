@@ -132,9 +132,9 @@ class StartView(View):
       transcriptions_done_by_user = len(np.unique([revision.transcription.pk for revision in user.revisions.all()]))
 
       return render(request, 'trsc/start.html', {'user':user,
-                                                  'active_jobs':active_jobs,
-                                                  'remaining_transcriptions':remaining_transcriptions,
-                                                  'transcriptions_done_by_user':transcriptions_done_by_user,})
+                                                 'active_jobs':active_jobs,
+                                                 'remaining_transcriptions':remaining_transcriptions,
+                                                 'transcriptions_done_by_user':transcriptions_done_by_user,})
     else:
       return HttpResponseRedirect('/login/')
 
