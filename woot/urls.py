@@ -26,8 +26,8 @@ urlpatterns = patterns('',
   url(r'^faq/$', FAQView.as_view()),
 
   # transcription
-  url(r'^transcription/', include('apps.transcription.urls')),
-  url(r'^new/', 'apps.transcription.views.create_new_job'),
+  url(r'^transcription/', include('apps.trsc.urls')),
+  url(r'^new/', 'apps.trsc.views.create_new_job'),
 
   #admin
   url(r'^admin/', include(admin.site.urls)),

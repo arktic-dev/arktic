@@ -5,7 +5,7 @@ from django.contrib import admin
 from django.conf.urls import patterns, include, url
 
 # local
-from apps.transcription.views import start_redirect, TranscriptionView, create_new_job, action_register, update_revision, add_word
+from apps.trsc.views import start_redirect, TranscriptionView, create_new_job, update_revision, add_word
 
 # third party
 

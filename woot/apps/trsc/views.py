@@ -102,7 +102,7 @@ class LoginView(View):
     if request.user.is_authenticated():
       return HttpResponseRedirect('/start/')
     else:
-      return render(request, 'pages/login.html', {})
+      return render(request, 'trsc/login.html', {})
 
   def post(self, request):
     form = LoginForm(request.POST)
@@ -113,9 +113,9 @@ class LoginView(View):
         login(request, user)
         return HttpResponseRedirect('/start/')
       else:
-        return render(request, 'pages/login.html', {'invalid_username_or_password':True})
+        return render(request, 'trsc/login.html', {'invalid_username_or_password':True})
     else:
-      return render(request, 'pages/login.html', {'bad_formatting':True})
+      return render(request, 'trsc/login.html', {'bad_formatting':True})
 
 class StartView(View):
   def get(self, request):
@@ -131,7 +131,7 @@ class StartView(View):
       remaining_transcriptions = Transcription.objects.filter(is_active=True).count()
       transcriptions_done_by_user = len(np.unique([revision.transcription.pk for revision in user.revisions.all()]))
 
-      return render(request, 'pages/start.html', {'user':user,
+      return render(request, 'trsc/start.html', {'user':user,
                                                   'active_jobs':active_jobs,
                                                   'remaining_transcriptions':remaining_transcriptions,
                                                   'transcriptions_done_by_user':transcriptions_done_by_user,})
@@ -140,7 +140,7 @@ class StartView(View):
 
 class FAQView(View):
   def get(self, request):
-    return render(request, 'pages/faq.html')
+    return render(request, 'trsc/faq.html')
 
 def logout_view(request):
   logout(request)
