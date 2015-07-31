@@ -5,12 +5,10 @@
 
 # util
 from datetime import timedelta
-from os.path import abspath, basename, dirname, join, normpath
+from os.path import abspath, basename, dirname, join, normpath, expanduser, exists
 from sys import path
 import string
-
-# util
-
+import json
 
 ########## TEST CONFIGURATION
 TEST_RUNNER = 'django.test.runner.DiscoverRunner'
@@ -213,7 +211,7 @@ THIRD_PARTY_APPS = (
 )
 
 LOCAL_APPS = (
-  ''
+  'apps.users',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -260,9 +258,10 @@ WSGI_APPLICATION = 'wsgi.application'
 
 
 ########## DATABASE CONFIGURATION
+# installed mysql-connector-python from pip install git+https://github.com/multiplay/mysql-connector-python
 # load database details from database config file
-if os.path.exists(os.path.join(ACCESS_ROOT, DB_ACCESS)):
-  with open(os.path.join(ACCESS_ROOT, DB_ACCESS), 'r') as db_json:
+if exists(join(ACCESS_ROOT, DB_ACCESS)):
+  with open(join(ACCESS_ROOT, DB_ACCESS), 'r') as db_json:
     db_data = json.load(db_json)
 
 DATABASES = {
