@@ -6,6 +6,7 @@ from django.db import models
 # local
 from apps.dstr.models import Client, Project, Job
 from apps.users.models import User
+from django.core.files import File
 
 # util
 
@@ -15,7 +16,7 @@ class Transcription(models.Model):
   #connections
   client = models.ForeignKey(Client, related_name='transcriptions')
   project = models.ForeignKey(Project, related_name='transcriptions')
-  job = models.ManyToManyField(Job, related_name='transcriptions')
+  job = models.ManyToManyField(Job, related_name='transcriptions', null=True)
 
   #properties
   id_token = models.CharField(max_length=8)
@@ -27,7 +28,12 @@ class Transcription(models.Model):
   is_active = models.BooleanField(default=False)
   is_available = models.BooleanField(default=False)
   date_last_requested = models.DateTimeField(auto_now_add=False, null=True)
-  latest_revision_done_by_current_user = models.BooleanField(default=False)
+
+  # latest_revision_done_by_current_user = models.BooleanField(default=False)
+
+  # methods
+  def unpack_rms(self):
+    return [(int(rms*31+1), 32-int(rms*31+1)) for rms in json.loads(self.audio_rms)]
 
 class Revision(models.Model):
   #connections
