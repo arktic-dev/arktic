@@ -1,0 +1,7 @@
+putting ffmpeg up on pythonanywhere server
+
+1. download static binary from http://johnvansickle.com/ffmpeg/
+2. unpack
+3. upload ffmpeg binary to /home/arkaeologic/bin directory
+4. remember permissions: chmod a+x /home/arkaeologic/bin/ffmpeg
+5. done.
