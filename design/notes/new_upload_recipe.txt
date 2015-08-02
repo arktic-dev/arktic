@@ -17,5 +17,7 @@ Pythonanywhere
 8. Ensure project directory: ~$ cd arktic
 9. Ensure virtualenv: ~$ workon arktic.com
 10. Run input command: ~$ dm input
-11. wait for "created" messages to finish
-12. done.
+11. Wait for "created" messages to finish
+12. Navigate to Pythonanywhere -> Web tab
+13. Click reload app + wait
+14. Done.
