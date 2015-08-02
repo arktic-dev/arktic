@@ -1,0 +1,21 @@
+1. download directory or archive from ftp
+2. unzip archive
+3. log on to pythonanywhere ftp
+  a. ssh.pythonanywhere.com
+  b. SFTP
+  c. Normal logon
+  d. email me for username and password
+
+4. transfer directory to data directory (currently: /home/arkaeologic/data)
+5. put in correct client directory (/eckoh/) -> (/home/arkaeologic/data/eckoh)
+
+Pythonanywhere
+6. Log on to pythonanywhere
+  a. email for user/pass
+
+7. Open a bash shell
+8. Ensure project directory: ~$ cd arktic
+9. Ensure virtualenv: ~$ workon arktic.com
+10. Run input command: ~$ dm input
+11. wait for "created" messages to finish
+12. done.

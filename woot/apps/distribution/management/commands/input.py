@@ -44,7 +44,7 @@ class Command(BaseCommand):
         audio_files = [f for f in os.listdir(os.path.join(audio_root)) if '.wav' in f]
 
         for i, audio_file in enumerate(audio_files):
-          if project.transcriptions.filter(audio_file_name=audio_file).count()==0:
+          if project.transcriptions.filter(audio_file__name='audio/{}'.format(audio_file)).count()==0:
             audio_file_path = os.path.join(audio_root, audio_file)
             (seconds, rms_values) = process_audio(audio_file_path)
 
@@ -62,3 +62,6 @@ class Command(BaseCommand):
                                                                                           is_available=True)
 
             print('client {}, project {}, file {}... created ({}/{})'.format(client_name, project_name, audio_file, i+1, len(audio_files)), end='\r' if i<len(audio_files)-1 else '\n')
+
+          else:
+            print('client {}, project {}, file {}... already exists. ({}/{})'.format(client_name, project_name, audio_file, i+1, len(audio_files)), end='\r' if i<len(audio_files)-1 else '\n')
