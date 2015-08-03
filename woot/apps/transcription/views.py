@@ -106,7 +106,7 @@ def add_word(request):
     transcription = Transcription.objects.get(id_token=transcription_id)
     client = transcription.client
     if client.words.filter(project=transcription.project, content=word).count()==0 and not (('[' in word and ']' not in word) or (']' in word and '[' not in word)):
-      client.words.create(project=transcription.project, grammar=transcription.grammar, content=word, tag=(('[' in word and ']' in word)))
+      client.words.create(project=transcription.project, content=word, tag=(('[' in word and ']' in word)))
 
     return HttpResponse('')
 

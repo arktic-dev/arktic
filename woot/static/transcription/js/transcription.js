@@ -412,7 +412,7 @@ $(document).ready(function() {
         text = '[hesitation]';
       } else if (e.keyCode === 66) { //B
         e.preventDefault()
-        text = '[breath noise]';
+        text = '[breath-noise]';
       } else if (e.keyCode === 68) {
         e.preventDefault()
         text = '[dtmf]';
@@ -433,25 +433,25 @@ $(document).ready(function() {
         text = '[pause]';
       } else if (e.keyCode === 83) {
         e.preventDefault()
-        text = '[side speech]';
+        text = '[side-speech]';
       } else if (e.keyCode === 85) {
         e.preventDefault()
         text = '[unintelligible]';
       } else if (e.keyCode === 90) {
         e.preventDefault()
-        text = '[background noise]';
+        text = '[background-noise]';
       } else if (e.keyCode === 67) {
         e.preventDefault()
-        text = '[bad audio]';
+        text = '[bad-audio]';
       } else if (e.keyCode === 69) {
         e.preventDefault()
         text = '[english]';
       } else if (e.keyCode === 79) {
         e.preventDefault()
-        text = '[no speech]';
+        text = '[no-speech]';
       } else if (e.keyCode === 86) {
         e.preventDefault()
-        text = '[non native]';
+        text = '[non-native]';
       } else if (e.keyCode === 82) {
         e.preventDefault()
         text = '[spanish]';
