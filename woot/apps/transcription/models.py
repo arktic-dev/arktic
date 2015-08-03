@@ -144,4 +144,4 @@ class Word(models.Model):
 
   #methods
   def __str__(self):
-    return self.char
+    return self.content
