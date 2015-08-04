@@ -51,6 +51,7 @@ class Command(BaseCommand):
   def handle(self, *args, **options):
     root = settings.DATA_ROOT
     client_name = options['client']
+    client_root = os.path.join(root, client_name)
     project_name = options['project']
 
     if client_name!='':
@@ -62,8 +63,12 @@ class Command(BaseCommand):
 
         number_of_transcriptions = project.transcriptions.count()
         revisions = Revision.objects.filter(transcription__project=project)
-        for i, revision in enumerate(revisions):
-          print('Exporting {}/{}...     '.format(i+1, revisions.count()), end='\r' if i+1<revisions.count() else '\n')
+
+        with open(os.path.join(client_root, '{}.csv'.format(project.name))) as csv_file:
+          for i, revision in enumerate(revisions):
+            # print('Exporting {}/{}...     '.format(i+1, revisions.count()), end='\r' if i+1<revisions.count() else '\n')
+            # csv_file.write('{},{},{}\n'.format(i, revision.transcription.audio_file.name, revision.utterance))
+            print('{},{},{}'.format(i, revision.transcription.audio_file.name, revision.utterance))
 
       else:
         print('Exporting all projects from client {}'.format(client_name))
@@ -75,6 +80,7 @@ class Command(BaseCommand):
 
     else:
       print('Listing clients and projects in order of age. Add "--completed" flag to exclude active projects.')
+      print('Nothing will be exported.')
       for client in Client.objects.all():
         print('client {}'.format(client.name))
         for project in client.projects.all():
