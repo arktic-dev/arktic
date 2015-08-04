@@ -53,20 +53,29 @@ def create_new_job(request):
 
         # 1. sort projects by age (newest first), and get a set of transcriptions if they exist
         project = None
-        for P in Project.objects.all().order_by('-date_created'):
-          if P.transcriptions.filter(is_available=True).count()>0 and project is None:
+        for P in Project.objects.all().order_by('date_created'):
+          if P.transcriptions.filter(is_available=True).count()>0 and project is None and project.name!='20150731':
             project = P
 
-        job = project.jobs.create(client=project.client, user=user)
-        job.is_available = False
-        job.id_token = generate_id_token('distribution','Job')
-        user.jobs.add(job)
-        job_transcription_set = project.transcriptions.filter(is_available=True)
-        job_transcription_set = job_transcription_set[:settings.NUMBER_OF_TRANSCRIPTIONS_PER_JOB] if len(job_transcription_set)>=settings.NUMBER_OF_TRANSCRIPTIONS_PER_JOB else job_transcription_set
-        job.get_transcription_set(job_transcription_set)
-        job.save()
+        if project is not None:
+          job = project.jobs.create(client=project.client, user=user)
+          job.is_available = False
+          job.id_token = generate_id_token('distribution','Job')
+          user.jobs.add(job)
+          job_transcription_set = project.transcriptions.filter(is_available=True)
+          if job_transcription_set.count()!=0:
+            job_transcription_set = job_transcription_set[:settings.NUMBER_OF_TRANSCRIPTIONS_PER_JOB] if len(job_transcription_set)>=settings.NUMBER_OF_TRANSCRIPTIONS_PER_JOB else job_transcription_set
+            job.get_transcription_set(job_transcription_set)
+            job.save()
 
-        return HttpResponseRedirect('/transcription/' + str(job.id_token))
+            return HttpResponseRedirect('/transcription/' + str(job.id_token))
+            
+          else:
+            return HttpResponseRedirect('/start/')
+
+        else:
+          return HttpResponseRedirect('/start/')
+
       else:
         return HttpResponseRedirect('/start/')
 
