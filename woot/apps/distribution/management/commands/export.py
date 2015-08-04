@@ -66,21 +66,27 @@ class Command(BaseCommand):
 
         t_pk = list(set([r.transcription.pk for r in revisions]))
 
-        # with open(os.path.join(client_root, '{}.csv'.format(project.name)), 'w+') as csv_file:
-        for i, pk in enumerate(t_pk):
-          transcription = project.transcriptions.get(pk=pk)
-          revision = transcription.revisions.latest()
-          # print('Exporting {}/{}...     '.format(i+1, revisions.count()), end='\r' if i+1<revisions.count() else '\n')
-          # csv_file.write('{},{},{}\n'.format(i, revision.transcription.audio_file.name, revision.utterance))
-          print('{},{},{}'.format(i, os.path.basename(revision.transcription.audio_file.name), revision.utterance))
+        with open(os.path.join(client_root, '{}.csv'.format(project.name)), 'w+') as csv_file:
+          for i, pk in enumerate(t_pk):
+            transcription = project.transcriptions.get(pk=pk)
+            revision = transcription.revisions.latest()
+            print('Exporting {}/{}...     '.format(i+1, len(t_pk)), end='\r' if i+1<len(t_pk) else '\n')
+            csv_file.write('{},{},{}'.format(i, os.path.basename(revision.transcription.audio_file.name), revision.utterance))
 
       else:
         print('Exporting all projects from client {}'.format(client_name))
         for project in client.projects.all():
           number_of_transcriptions = project.transcriptions.count()
           revisions = Revision.objects.filter(transcription__project=project)
-          for i, revision in enumerate(revisions):
-            print('Exporting {} {}/{}...     '.format(project.name, i+1, revisions.count()), end='\r' if i+1<revisions.count() else '\n')
+
+          t_pk = list(set([r.transcription.pk for r in revisions]))
+
+          with open(os.path.join(client_root, '{}.csv'.format(project.name)), 'w+') as csv_file:
+            for i, pk in enumerate(t_pk):
+              transcription = project.transcriptions.get(pk=pk)
+              revision = transcription.revisions.latest()
+              print('Exporting {}/{}...     '.format(i+1, len(t_pk)), end='\r' if i+1<len(t_pk) else '\n')
+              csv_file.write('{},{},{}'.format(i, os.path.basename(revision.transcription.audio_file.name), revision.utterance))
 
     else:
       print('Listing clients and projects in order of age. Add "--completed" flag to exclude active projects.')
