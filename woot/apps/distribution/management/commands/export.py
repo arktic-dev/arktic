@@ -7,6 +7,7 @@ from django.core.files import File
 
 # local
 from apps.distribution.models import Client
+from apps.transcription.models import Revision
 from apps.distribution.util import generate_id_token, process_audio
 
 # util
@@ -59,4 +60,4 @@ class Command(BaseCommand):
       for client in Client.objects.all():
         print('client {}'.format(client.name))
         for project in client.projects.all():
-          print('client {}, project {}, {}/{} completed transcriptions'.format(client.name, project.name, project.transcriptions.filter(revisions__count=1).count(), project.transcriptions.count()))
+          print('client {}, project {}, {}/{} completed transcriptions'.format(client.name, project.name, Revision.objects.filter(transcription__project=project).count(), project.transcriptions.count()))
