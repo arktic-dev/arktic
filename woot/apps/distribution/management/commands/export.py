@@ -60,4 +60,10 @@ class Command(BaseCommand):
       for client in Client.objects.all():
         print('client {}'.format(client.name))
         for project in client.projects.all():
-          print('client {}, project {}, {}/{} completed transcriptions'.format(client.name, project.name, Revision.objects.filter(transcription__project=project).count(), project.transcriptions.count()))
+          number_of_revisions = Revision.objects.filter(transcription__project=project).count()
+          number_of_transcriptions = project.transcriptions.count()
+          if options['completed']:
+            if number_of_revisions==number_of_transcriptions:
+              print('client {}, project {}, {}/{} completed transcriptions'.format(client.name, project.name, number_of_revisions, number_of_transcriptions))
+          else:
+            print('client {}, project {}, {}/{} completed transcriptions'.format(client.name, project.name, number_of_revisions, number_of_transcriptions))
