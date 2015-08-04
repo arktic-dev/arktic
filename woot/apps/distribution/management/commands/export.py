@@ -71,7 +71,7 @@ class Command(BaseCommand):
             transcription = project.transcriptions.get(pk=pk)
             revision = transcription.revisions.latest()
             print('Exporting {}/{}...     '.format(i+1, len(t_pk)), end='\r' if i+1<len(t_pk) else '\n')
-            csv_file.write('{}|{}|{}\n'.format(i, os.path.basename(revision.transcription.audio_file.name), revision.utterance))
+            csv_file.write('{}|{}\n'.format(os.path.basename(revision.transcription.audio_file.name), revision.utterance))
 
       else:
         print('Exporting all projects from client {}'.format(client_name))
@@ -86,7 +86,7 @@ class Command(BaseCommand):
               transcription = project.transcriptions.get(pk=pk)
               revision = transcription.revisions.latest()
               print('Exporting {}/{}...     '.format(i+1, len(t_pk)), end='\r' if i+1<len(t_pk) else '\n')
-              csv_file.write('{}|{}|{}\n'.format(i, os.path.basename(revision.transcription.audio_file.name), revision.utterance))
+              csv_file.write('{}|{}\n'.format(os.path.basename(revision.transcription.audio_file.name), revision.utterance))
 
     else:
       print('Listing clients and projects in order of age. Add "--completed" flag to exclude active projects.')
