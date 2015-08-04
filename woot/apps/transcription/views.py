@@ -54,7 +54,7 @@ def create_new_job(request):
         # 1. sort projects by age (newest first), and get a set of transcriptions if they exist
         project = None
         for P in Project.objects.all().order_by('date_created'):
-          if P.transcriptions.filter(is_available=True).count()>0 and project is None and project.name!='20150731':
+          if P.transcriptions.filter(is_available=True).count()>0 and project is None and P.name!='20150731':
             project = P
 
         if project is not None:
