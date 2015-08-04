@@ -64,7 +64,7 @@ class Command(BaseCommand):
         number_of_transcriptions = project.transcriptions.count()
         revisions = Revision.objects.filter(transcription__project=project)
 
-        with open(os.path.join(client_root, '{}.csv'.format(project.name))) as csv_file:
+        with open(os.path.join(client_root, '{}.csv'.format(project.name)), 'w+') as csv_file:
           for i, revision in enumerate(revisions):
             # print('Exporting {}/{}...     '.format(i+1, revisions.count()), end='\r' if i+1<revisions.count() else '\n')
             # csv_file.write('{},{},{}\n'.format(i, revision.transcription.audio_file.name, revision.utterance))
