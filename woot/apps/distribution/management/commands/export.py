@@ -57,14 +57,6 @@ class Command(BaseCommand):
       client = Client.objects.get(name=client_name)
 
       if project_name!='':
-        print('Exporting all projects from client {}'.format(client_name))
-        for project in client.projects.all():
-          number_of_transcriptions = project.transcriptions.count()
-          revisions = Revision.objects.filter(transcription__project=project)
-          for i, revision in enumerate(revisions):
-            print('Exporting {}/{}...     '.format(i+1, revisions.count()), end='\r' if i+1<revisions.count() else 'n')
-
-      else:
         print('Exporting project {} from client {}...'.format(project_name, client_name))
         project = client.projects.get(name=project_name)
 
@@ -72,6 +64,15 @@ class Command(BaseCommand):
         revisions = Revision.objects.filter(transcription__project=project)
         for i, revision in enumerate(revisions):
           print('Exporting {}/{}...     '.format(i+1, revisions.count()), end='\r' if i+1<revisions.count() else 'n')
+
+      else:
+
+        print('Exporting all projects from client {}'.format(client_name))
+        for project in client.projects.all():
+          number_of_transcriptions = project.transcriptions.count()
+          revisions = Revision.objects.filter(transcription__project=project)
+          for i, revision in enumerate(revisions):
+            print('Exporting {}/{}...     '.format(i+1, revisions.count()), end='\r' if i+1<revisions.count() else 'n')
 
     else:
       print('Listing clients and projects in order of age. Add "--completed" flag to exclude active projects.')
