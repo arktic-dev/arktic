@@ -59,4 +59,4 @@ class Command(BaseCommand):
       for client in Client.objects.all():
         print('client {}'.format(client.name))
         for project in client.projects.all():
-          print('client {}, project {}, {}/{} completed transcriptions'.format(client.name, project.name, project.transcriptions.filter(revision__isnull=False).count(), project.transcriptions.count()))
+          print('client {}, project {}, {}/{} completed transcriptions'.format(client.name, project.name, project.transcriptions.filter(revisions__count=1).count(), project.transcriptions.count()))
