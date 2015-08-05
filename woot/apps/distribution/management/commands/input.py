@@ -33,7 +33,7 @@ class Command(BaseCommand):
       print('client {}... {}{}'.format(client_name, 'already exists.' if not client_created else 'created.', spacer))
 
       # 3. for each project name in client dir:
-      for project_name in [f for f in os.listdir(os.path.join(root, client_name)) if '.DS' not in f]:
+      for project_name in [f for f in os.listdir(os.path.join(root, client_name)) if os.path.isdir(os.path.join(root, client_name, f))]:
 
         # 3. get or create project
         project, project_created = client.projects.get_or_create(name=project_name)
