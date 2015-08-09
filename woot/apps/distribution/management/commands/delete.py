@@ -11,6 +11,7 @@ from apps.distribution.models import Client
 # util
 import os
 from os.path import join, exists
+from shutil import rmtree
 import json
 import time
 from optparse import make_option
@@ -58,7 +59,7 @@ class Command(BaseCommand):
       project_path = join(settings.DATA_ROOT, client_name, project_name)
       if exists(project_path):
         print('Removing project folder from input directory: {}'.format(project_path))
-        os.rmdir(project_path)
+        rmtree(project_path)
       else:
         print('Project folder already removed from input directory: {}'.format(project_path))
 
