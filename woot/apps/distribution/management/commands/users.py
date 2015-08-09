@@ -69,7 +69,7 @@ class Command(BaseCommand):
       if project_name!='':
         # for each client, print details
         print('Client details ---')
-        client = Client.objects.get(name=client_name):
+        client = Client.objects.get(name=client_name)
         print('---')
         print('Name: {}'.format(client.name))
         # total transcriptions
@@ -82,7 +82,7 @@ class Command(BaseCommand):
         # total projects
         print('{} {}'.format(client.projects.count(), 'project' if client.projects.count()==1 else 'projects'))
 
-        project = client.projects.get(name=project_name):
+        project = client.projects.get(name=project_name)
         print('  ---')
         print('  Name: {}'.format(project.name))
         # total transcriptions
@@ -113,7 +113,7 @@ class Command(BaseCommand):
 
         # for each client, print details
         print('Client details ---')
-        client = Client.objects.get(name=client_name):
+        client = Client.objects.get(name=client_name)
         print('---')
         print('Name: {}'.format(client.name))
         # total transcriptions
