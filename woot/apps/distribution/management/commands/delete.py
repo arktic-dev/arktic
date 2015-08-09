@@ -58,15 +58,15 @@ class Command(BaseCommand):
       project_path = join(settings.DATA_ROOT, client_name, project_name)
       if exists(project_path):
         print('Removing project folder from input directory: {}'.format(project_path))
-        # os.rmdir(project_path)
+        os.rmdir(project_path)
       else:
         print('Project folder already removed from input directory: {}'.format(project_path))
 
       # 2. Delete all audio files in the database along with the files that they reference
       for transcription in project.transcriptions.all():
         file_url = join(settings.DJANGO_ROOT, transcription.audio_file.url[1:])
-        print(settings.DJANGO_ROOT)
-        print(file_url)
+        print('Removing file {}...'.format(file_url))
+        os.remove(file_url)
 
     else:
       print('Please enter both a client name and a project name.')
