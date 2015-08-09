@@ -8,7 +8,7 @@ from django.core.files import File
 # local
 from apps.distribution.models import Client
 from apps.users.models import User
-from apps.transcriptions.models import Transcription, Revision
+from apps.transcription.models import Transcription, Revision
 
 # util
 import os
