@@ -65,6 +65,7 @@ class Command(BaseCommand):
       # 2. Delete all audio files in the database along with the files that they reference
       for transcription in project.transcriptions.all():
         file_url = join(settings.DJANGO_ROOT, transcription.audio_file.url)
+        print(settings.DJANGO_ROOT)
         print(file_url)
 
     else:
