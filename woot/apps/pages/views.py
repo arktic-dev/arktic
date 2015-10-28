@@ -47,7 +47,7 @@ class StartView(View):
       active_jobs = user.jobs.filter(is_active=True)
 
       #total remaining transcriptions
-      remaining_transcriptions = Transcription.objects.filter(is_active=True).count()
+      remaining_transcriptions = Transcription.objects.filter(is_active=True, client__is_demo=user.is_demo).count()
       transcriptions_done_by_user = len(np.unique([revision.transcription.pk for revision in user.revisions.all()]))
 
       return render(request, 'pages/start.html', {'user':user,
