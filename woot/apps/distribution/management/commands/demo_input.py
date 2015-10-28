@@ -29,7 +29,10 @@ class Command(BaseCommand):
     for client_name in [f for f in os.listdir(root) if '.DS' not in f]:
 
       # 2. get or create client
-      client, client_created = Client.objects.get_or_create(name=client_name, is_demo=True)
+      client, client_created = Client.objects.get_or_create(name=client_name)
+      if client_created:
+        client.is_demo=True
+        client.save()
       print('client {}... {}{}'.format(client_name, 'already exists.' if not client_created else 'created.', spacer))
 
       # 3. for each project name in client dir:

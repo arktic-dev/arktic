@@ -15,6 +15,7 @@ from django.utils.encoding import force_str
 from django.utils.six.moves import input
 from django.utils.text import capfirst
 
+from apps.users.models import User
 
 class NotRunningInTTYException(Exception):
     pass
@@ -146,8 +147,10 @@ class Command(BaseCommand):
         if username:
             user_data[self.UserModel.USERNAME_FIELD] = username
             user_data['password'] = password
-						user_data['is_demo'] = True
             self.UserModel._default_manager.db_manager(database).create_superuser(**user_data)
+            user = User.objects.get(email=username)
+            user.is_demo = True
+            user.save()
             if options['verbosity'] >= 1:
                 self.stdout.write("Superuser created successfully.")
 
