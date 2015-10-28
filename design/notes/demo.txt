@@ -1,0 +1,19 @@
+To add a demo client:
+
+1. Make sure that the client to be added is the only new client folder in the data directory. Each
+   client found when running "demo_input" will be made a "is_demo" client.
+
+2. With the client in the data directory, run "dm demo_input"
+3. Done.
+
+To add a demo user:
+
+1. A bit messy at the moment, but just run "dm createsuperuser" as normal.
+2. "dm shell"
+3. "from apps.users.models import User"
+4. "user = User.objects.get(email='<email you just created>')"
+5. "user.is_demo = True"
+6. "user.save()"
+7. Done. Sorry. Needs a better way.
+
+Delete user and client to start process again.
