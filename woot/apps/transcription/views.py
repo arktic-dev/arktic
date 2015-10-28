@@ -55,7 +55,10 @@ def create_new_job(request):
         project = None
         for P in Project.objects.all().order_by('date_created'):
           if P.transcriptions.filter(is_available=True).count()>0 and project is None:
-            project = P
+						if user.is_demo:
+	            project = P if P.client.is_demo else None
+						else:
+							project = P
 
         if project is not None:
           job_transcription_set = project.transcriptions.filter(is_available=True)

@@ -22,6 +22,7 @@ class Client(models.Model):
   #properties
   name = models.CharField(max_length=255)
   client_path = models.TextField(max_length=255)
+	is_demo = models.BooleanField(default=False)
 
   #methods
   def __str__(self):
