@@ -69,7 +69,7 @@ class Transcription(models.Model):
 
   def deactivation_condition(self):
     ''' Has at least one revision with an utterance'''
-    return (self.revisions.exclude(utterance='').count()>0 and not self.client.is_demo)
+    return (self.revisions.exclude(utterance='').count()>0)
 
   def set_latest_revision_done_by_current_user(self, user):
     if self.revisions.count()>0:

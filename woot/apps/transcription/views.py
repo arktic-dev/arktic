@@ -64,7 +64,7 @@ def create_new_job(request):
           job_transcription_set = project.transcriptions.filter(is_available=True)
           if job_transcription_set.count()!=0:
             job = project.jobs.create(client=project.client, user=user)
-            job.is_available = job.project.client.is_demo
+            job.is_available = False
             job.id_token = generate_id_token('distribution','Job')
             user.jobs.add(job)
             job_transcription_set = job_transcription_set[:settings.NUMBER_OF_TRANSCRIPTIONS_PER_JOB] if len(job_transcription_set)>=settings.NUMBER_OF_TRANSCRIPTIONS_PER_JOB else job_transcription_set
