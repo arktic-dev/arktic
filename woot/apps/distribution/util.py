@@ -41,6 +41,7 @@ def process_audio(input_path):
     os.makedirs(temp_path)
 
   temp = os.path.join(temp_path, os.path.basename(input_path))
+	print(temp)
 
   cmd = 'ffmpeg -y -i {} -f wav {} 2> /dev/null'.format(input_path, temp)
   call(cmd, shell=True)
