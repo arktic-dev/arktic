@@ -48,7 +48,7 @@ class Command(BaseCommand):
         relfile_dictionary = {}
         with open(relfile_path, 'r') as open_relfile:
           # super complicated dictionary comprehension
-          relfile_dictionary = {os.path.basename(path):{'utterance':utterance, 'path':path} for line in open_relfile.readlines() for path, utterance in line.rstrip().split('|')}
+          relfile_dictionary = {os.path.basename(path):{'utterance':utterance, 'path':path} for line in open_relfile.readlines() for path, utterance in tuple(line.rstrip().split('|'))}
 
         for i, audio_file in enumerate(audio_files):
           if project.transcriptions.filter(audio_file='audio/{}'.format(audio_file)).count()==0:
