@@ -43,8 +43,8 @@ def process_audio(input_path):
   temp = os.path.join(temp_path, os.path.basename(input_path))
 
   # cmd = '../bin/ffmpeg -y -i {} -f wav {} 2> /dev/null'.format(input_path, temp)
-	cmd = ['../bin/ffmpeg','-y','-i','{}'.format(input_path),'-f','wav','{}'.format(temp)]
-  Popen(cmd)
+  cmd = ['../bin/ffmpeg','-y','-i','{}'.format(input_path),'-f','wav','{}'.format(temp)]
+  Popen(cmd, shell=True)
 
   # get properties of the pcm wav file
   seconds, rmsValues = getWAVFileProperties(temp)
