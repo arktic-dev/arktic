@@ -44,8 +44,7 @@ def process_audio(input_path):
 
   # cmd = '../bin/ffmpeg -y -i {} -f wav {} 2> /dev/null'.format(input_path, temp)
   cmd = ['../bin/ffmpeg','-y','-i','{}'.format(input_path),'-f','wav','{}'.format(temp)]
-  p = Popen(cmd, shell=True)
-  print(p.args)
+  p = call(cmd, shell=True)
 
   # get properties of the pcm wav file
   seconds, rmsValues = getWAVFileProperties(temp)
