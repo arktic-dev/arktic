@@ -76,6 +76,7 @@ class Command(BaseCommand):
 
     elif client_name!='' and project_name=='':
       client_name = options['client']
+      client = Client.objects.get(name=client_name)
 
       # delete all projects
       for project in client.projects.all():
