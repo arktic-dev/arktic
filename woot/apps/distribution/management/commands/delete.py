@@ -58,9 +58,12 @@ class Command(BaseCommand):
       # 2. Delete all audio files in the database along with the files that they reference
       for transcription in project.transcriptions.all():
         file_url = join(settings.DJANGO_ROOT, transcription.audio_file.url[1:])
-        print('Removing file {}...'.format(file_url))
+        media_file_url = join(settings.MEDIA_ROOT, 'audio', transcription.audio_file.url[1:])
         if exists(file_url):
+          print('Removing file {}...'.format(file_url))
+          print('Removing media file {}...'.format(media_file_url))
           os.remove(file_url)
+          os.remove(media_file_url)
         transcription.delete()
 
       project.delete()
@@ -85,6 +88,11 @@ class Command(BaseCommand):
 
       # delete client
       client.delete()
+
+      client_path = join(settings.DATA_ROOT, client.name)
+      if exists(client_path):
+        print('Removing client folder {}...'.format(client_path))
+        rmtree(client_path)
 
     else:
       print('Please enter a client name and a project name.')
