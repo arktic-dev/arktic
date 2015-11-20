@@ -54,7 +54,7 @@ class Command(BaseCommand):
           if project.transcriptions.filter(audio_file='audio/{}'.format(audio_file)).count()==0:
             audio_file_path = relfile_dictionary[audio_file]['path']
             utterance = relfile_dictionary[audio_file]['utterance']
-            (seconds, rms_values) = process_audio(audio_file_path)
+            (seconds, rms_values) = process_audio(audio_file)
 
             max_rms = max(rms_values)
             rms_values = [float(value)/float(max_rms) for value in rms_values]
