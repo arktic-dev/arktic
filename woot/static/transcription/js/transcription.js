@@ -14,6 +14,11 @@ $(document).ready(function() {
     $('#indicator-loading-'+play).hide();
   });
 
+  // stalled audio
+  $('audio').on('stalled', function () {
+    this.load();
+  });
+
   //bind audio player end
   $('audio').on('ended', function(){
     var play = $(this).attr('id');

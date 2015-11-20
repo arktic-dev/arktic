@@ -16,7 +16,7 @@
             {% for transcription in transcriptions %}
             <li id="li-{{transcription.id_token}}" index="{{forloop.counter}}" class="list-group-item audio">
                 <!-- -->
-                <audio id="{{transcription.id_token}}">
+                <audio id="{{transcription.id_token}}" preload="auto">
                     <source src="{{ transcription.audio_file.url }}" type="audio/wav">
                 </audio>
                 <!-- -->

@@ -45,18 +45,10 @@ class Command(BaseCommand):
 
   def handle(self, *args, **options):
 
-    client_name = options['client']
-    project_name = options['project']
-
-    # test with: 20150730_1
-
-    if client_name!='' and project_name!='':
-      client = Client.objects.get(name=client_name)
-      project = client.projects.get(name=project_name)
-
+    def delete_project(client, project):
       # to permanently remove a project from storage:
       # 1. Delete all files in the input directory
-      project_path = join(settings.DATA_ROOT, client_name, project_name)
+      project_path = join(settings.DATA_ROOT, client.name, project.name)
       if exists(project_path):
         print('Removing project folder from input directory: {}'.format(project_path))
         rmtree(project_path)
@@ -68,6 +60,29 @@ class Command(BaseCommand):
         file_url = join(settings.DJANGO_ROOT, transcription.audio_file.url[1:])
         print('Removing file {}...'.format(file_url))
         os.remove(file_url)
+        transcription.delete()
+
+      project.delete()
+
+    client_name = options['client']
+    project_name = options['project']
+
+    if client_name!='' and project_name!='':
+      client = Client.objects.get(name=client_name)
+      project = client.projects.get(name=project_name)
+
+      # delete single project
+      delete_project(client, project)
+
+    elif client_name!='' and project_name=='':
+      client_name = options['client']
+
+      # delete all projects
+      for project in client.projects.all():
+        delete_project(client, project)
+
+      # delete client
+      client.delete()
 
     else:
-      print('Please enter both a client name and a project name.')
+      print('Please enter a client name and a project name.')
