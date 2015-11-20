@@ -38,7 +38,7 @@ def process_audio(input_path):
   # convert a-law wav file to microsoft pcm wav file
   temp_path = os.path.join(os.path.dirname(input_path), 'temp')
   if not os.path.exists(temp_path):
-    os.mkdir(temp_path)
+    os.makedirs(temp_path)
 
   temp = os.path.join(temp_path, os.path.basename(input_path))
 
