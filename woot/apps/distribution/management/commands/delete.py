@@ -59,7 +59,8 @@ class Command(BaseCommand):
       for transcription in project.transcriptions.all():
         file_url = join(settings.DJANGO_ROOT, transcription.audio_file.url[1:])
         print('Removing file {}...'.format(file_url))
-        os.remove(file_url)
+        if exists(file_url):
+          os.remove(file_url)
         transcription.delete()
 
       project.delete()
