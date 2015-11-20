@@ -11,7 +11,7 @@ import wave
 import audioop
 import os
 import shutil
-from subprocess import call
+from subprocess import call, Popen
 
 # vars
 chars = string.ascii_uppercase + string.digits
@@ -42,8 +42,8 @@ def process_audio(input_path):
 
   temp = os.path.join(temp_path, os.path.basename(input_path))
 
-  cmd = '../bin/ffmpeg -y -i {} -f wav {} 2> /dev/null'.format(input_path, temp)
-  call(cmd, shell=True)
+  cmd = ['../bin/ffmpeg','-y','-i','{}'.format(input_path),'-f','wav','{}'.format(temp), '2>', '/dev/null']
+  Popen(cmd)
 
   # get properties of the pcm wav file
   seconds, rmsValues = getWAVFileProperties(temp)
