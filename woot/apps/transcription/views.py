@@ -61,7 +61,7 @@ def create_new_job(request):
 							project = P
 
 				if project is not None:
-					job_transcription_set = project.transcriptions.filter(is_available=True)
+					job_transcription_set = project.transcriptions.filter(is_available=True).order_by('utterance')
 					if job_transcription_set.count()!=0:
 						job = project.jobs.create(client=project.client, user=user)
 						job.is_available = False
