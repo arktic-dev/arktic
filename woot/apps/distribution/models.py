@@ -42,12 +42,6 @@ class Client(models.Model):
 		for project in self.projects.filter(is_active=True, is_approved=True):
 			project.update()
 
-	def export(self):
-		count = self.grammars.count()
-		for i,g in enumerate(self.grammars.all()):
-			print('%d/%d: %s' % (i+1, count, str(g)))
-			g.export()
-
 class Project(models.Model):
 	#connections
 	client = models.ForeignKey(Client, related_name='projects')
@@ -76,9 +70,27 @@ class Project(models.Model):
 		self.is_active = (self.jobs.filter(is_active=True).count()!=0 and self.grammars.filter(is_active=True).count()!=0)
 		self.save()
 
-	def export(self):
+	def export(self, users_flag=False):
 		''' Export prepares all of the individual relfiles to be packaged and be available for download. '''
-		pass
+		print('Exporting project {} from client {}...'.format(project_name, client_name))
+
+		# 1. vars
+		number_of_transcriptions = self.transcriptions.count()
+		revisions = Revision.objects.filter(transcription__project=self)
+
+		t_pk = list(set([r.transcription.pk for r in revisions]))
+
+		with open(os.path.join(client_root, '{}.csv'.format(project.name)), 'w+') as csv_file:
+			for i, pk in enumerate(t_pk):
+				transcription = self.transcriptions.get(pk=pk)
+				revision = transcription.revisions.latest()
+				print('Exporting {}/{}...		 '.format(i+1, len(t_pk)), end='\r' if i+1<len(t_pk) else '\n')
+				csv_file.write('{}|{}'.format(os.path.basename(revision.transcription.audio_file.name), revision.utterance))
+
+				if users_flag:
+					csv_file.write('|{}'.format(revision.user.pk))
+
+				csv_file.write('\n')
 
 	def process_words(self):
 		'''

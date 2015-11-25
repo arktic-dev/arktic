@@ -39,8 +39,15 @@ class Command(BaseCommand):
 		make_option('--completed', # option that will appear in cmd
 			action='store_true', # no idea
 			dest='completed', # refer to this in options variable
-			default='', # some default
+			default=False, # some default
 			help='Name of project' # who cares
+		),
+
+		make_option('--users', # option that will appear in cmd
+			action='store_true', # no idea
+			dest='users', # refer to this in options variable
+			default=False, # some default
+			help='Toggle username in export csv' # who cares
 		),
 
 	)
@@ -53,40 +60,19 @@ class Command(BaseCommand):
 		client_name = options['client']
 		client_root = os.path.join(root, client_name)
 		project_name = options['project']
+		include_users = options['users']
 
 		if client_name!='':
 			client = Client.objects.get(name=client_name)
 
 			if project_name!='':
-				print('Exporting project {} from client {}...'.format(project_name, client_name))
 				project = client.projects.get(name=project_name)
-
-				number_of_transcriptions = project.transcriptions.count()
-				revisions = Revision.objects.filter(transcription__project=project)
-
-				t_pk = list(set([r.transcription.pk for r in revisions]))
-
-				with open(os.path.join(client_root, '{}.csv'.format(project.name)), 'w+') as csv_file:
-					for i, pk in enumerate(t_pk):
-						transcription = project.transcriptions.get(pk=pk)
-						revision = transcription.revisions.latest()
-						print('Exporting {}/{}...		 '.format(i+1, len(t_pk)), end='\r' if i+1<len(t_pk) else '\n')
-						csv_file.write('{}|{}\n'.format(os.path.basename(revision.transcription.audio_file.name), revision.utterance))
+				project.export()
 
 			else:
 				print('Exporting all projects from client {}'.format(client_name))
 				for project in client.projects.all():
-					number_of_transcriptions = project.transcriptions.count()
-					revisions = Revision.objects.filter(transcription__project=project)
-
-					t_pk = list(set([r.transcription.pk for r in revisions]))
-
-					with open(os.path.join(client_root, '{}.csv'.format(project.name)), 'w+') as csv_file:
-						for i, pk in enumerate(t_pk):
-							transcription = project.transcriptions.get(pk=pk)
-							revision = transcription.revisions.latest()
-							print('Exporting {}/{}...		 '.format(i+1, len(t_pk)), end='\r' if i+1<len(t_pk) else '\n')
-							csv_file.write('{}|{}\n'.format(os.path.basename(revision.transcription.audio_file.name), revision.utterance))
+					project.export()
 
 		else:
 			print('Listing clients and projects in order of age. Add "--completed" flag to exclude active projects.')
