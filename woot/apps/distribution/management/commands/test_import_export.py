@@ -13,7 +13,7 @@ from apps.users.models import User
 
 # util
 import os
-from os.path import join, basename
+from os.path import join, basename, exists
 import json
 from optparse import make_option
 
@@ -44,14 +44,14 @@ class Command(BaseCommand):
 		for client_name in [f for f in os.listdir(data_root) if '.DS' not in f]:
 			# 2-2. get or create client
 			client, client_created = Client.objects.get_or_create(name=client_name)
-			print('TEST client {}... {}{}'.format(client_name, 'already exists.' if not client_created else 'created.', spacer))
+			print('TEST | client {}... {}{}'.format(client_name, 'already exists.' if not client_created else 'created.', spacer))
 
 			# 2-3. for each project name in client dir:
 			for project_name in [f for f in os.listdir(os.path.join(data_root, client_name)) if os.path.isdir(os.path.join(data_root, client_name, f))]:
 
 				# 2-3. get or create project
 				project, project_created = client.projects.get_or_create(name=project_name)
-				print('TEST client {}, project {}... {}{}'.format(client_name, project_name, 'already exists.' if not project_created else 'created.', spacer))
+				print('TEST | client {}, project {}... {}{}'.format(client_name, project_name, 'already exists.' if not project_created else 'created.', spacer))
 
 				# 2-4. list all files in the project directory and create transcriptions
 				audio_root = os.path.join(data_root, client_name, project_name)
@@ -90,22 +90,24 @@ class Command(BaseCommand):
 								transcription.audio_file = File(open_audio_file)
 								transcription.save()
 
-						print('TEST client {}, project {}, file {}... created ({}/{})'.format(client_name, project_name, audio_file, i+1, len(audio_files)), end='\r' if i<len(audio_files)-1 else '\n')
+						print('TEST | client {}, project {}, file {}... created ({}/{})'.format(client_name, project_name, audio_file, i+1, len(audio_files)), end='\r' if i<len(audio_files)-1 else '\n')
 
 					else:
-						print('TEST client {}, project {}, file {}... already exists. ({}/{})'.format(client_name, project_name, audio_file, i+1, len(audio_files)), end='\r' if i<len(audio_files)-1 else '\n')
+						print('TEST | client {}, project {}, file {}... already exists. ({}/{})'.format(client_name, project_name, audio_file, i+1, len(audio_files)), end='\r' if i<len(audio_files)-1 else '\n')
 
 		# 3. create test user and password
+		print('TEST | creating test user...')
 		test_user = User.objects.create_user('a@b.com', '1970-1-1', 'testpassword')
 
 		# 4. create one job for each project
+		print('TEST | creating jobs...')
 		test_client = Client.objects.get(name='test')
 
 		while Transcription.objects.filter(is_available=True).count() > 0:
 
 			# 1. sort projects by age (newest first), and get a set of transcriptions if they exist
 			project = None
-			for P in Project.objects.all().order_by('date_created'):
+			for P in test_client.projects.all().order_by('date_created'):
 				if P.transcriptions.filter(is_available=True).count()>0 and project is None:
 					if test_user.is_demo:
 						project = P if P.client.is_demo else None
@@ -124,16 +126,19 @@ class Command(BaseCommand):
 
 		# 5. add revisions with utterances
 		for job in test_user.jobs.all():
+			print('TEST | creating revisions and utterances for {}/{}'.format(job.pk, test_user.jobs.count()))
 			for transcription in job.transcriptions.all():
-				revision = transcription.revisions.create(user=test_user, job=job, id_token=generate_id_token('transcription', 'Revision'), utterance=random_string())
+				revision = transcription.revisions.create(client=test_client, project=job.project, user=test_user, job=job, id_token=generate_id_token('transcription', 'Revision'), utterance=random_string())
 				revision.process_words()
 				job.update()
 
 		# 6. export projects
+		print('TEST | exporting projects...')
 		for project in test_client.projects.all():
-			project.export()
+			project.export(join(data_root, test_client.name), users_flag=project.name=='with_relfile')
 
 		# 7. delete database objects but leave original files
+		print('TEST | deleting database objects...')
 		for project in test_client.projects.all():
 			# to permanently remove a project from storage:
 			# - Delete all audio files in the database along with the files that they reference
@@ -153,7 +158,11 @@ class Command(BaseCommand):
 			project.delete()
 
 		# delete client
+		print('TEST | deleting client...')
 		test_client.delete()
 
 		# delete user
+		print('TEST | deleting user...')
 		test_user.delete()
+
+		print('TEST | done.')

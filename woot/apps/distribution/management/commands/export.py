@@ -67,12 +67,12 @@ class Command(BaseCommand):
 
 			if project_name!='':
 				project = client.projects.get(name=project_name)
-				project.export()
+				project.export(client_root, users_flag=include_users)
 
 			else:
 				print('Exporting all projects from client {}'.format(client_name))
 				for project in client.projects.all():
-					project.export()
+					project.export(client_root, users_flag=include_users)
 
 		else:
 			print('Listing clients and projects in order of age. Add "--completed" flag to exclude active projects.')

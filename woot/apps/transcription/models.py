@@ -84,6 +84,8 @@ class Transcription(models.Model):
 
 class Revision(models.Model):
 	#connections
+	client = models.ForeignKey(Client, related_name='revisions')
+	project = models.ForeignKey(Project, related_name='revisions')
 	transcription = models.ForeignKey(Transcription, related_name='revisions')
 	user = models.ForeignKey(User, related_name='revisions')
 	job = models.ForeignKey(Job, related_name='revisions')

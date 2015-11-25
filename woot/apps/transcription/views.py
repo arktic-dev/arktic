@@ -66,7 +66,6 @@ def create_new_job(request):
 						job = project.jobs.create(client=project.client, user=user)
 						job.is_available = False
 						job.id_token = generate_id_token('distribution','Job')
-						user.jobs.add(job)
 						job_transcription_set = job_transcription_set[:settings.NUMBER_OF_TRANSCRIPTIONS_PER_JOB] if len(job_transcription_set)>=settings.NUMBER_OF_TRANSCRIPTIONS_PER_JOB else job_transcription_set
 						job.get_transcription_set(job_transcription_set)
 						job.save()
@@ -92,7 +91,9 @@ def update_revision(request):
 	if request.user.is_authenticated:
 		#get user and update revision utterance
 		transcription = Transcription.objects.get(id_token=request.POST['transcription_id'])
-		revision, created = transcription.revisions.get_or_create(user=User.objects.get(email=request.user),
+		revision, created = transcription.revisions.get_or_create(client=transcription.client,
+																															project=transcription.project,
+																															user=User.objects.get(email=request.user),
 																															job=Job.objects.get(id_token=request.POST['job_id']))
 
 		if created:
