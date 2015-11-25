@@ -13,6 +13,7 @@ from apps.distribution.util import generate_id_token, process_audio
 import os
 from os.path import join
 import json
+from optparse import make_option
 
 # var
 spacer = ' '*10
@@ -20,8 +21,27 @@ spacer = ' '*10
 ### Command
 class Command(BaseCommand):
 
+	make_option('--client', # option that will appear in cmd
+		action='store', # no idea
+		dest='client', # refer to this in options variable
+		default='', # some default
+		help='Name of the client' # who cares
+	),
+
+	make_option('--path', # option that will appear in cmd
+		action='store', # no idea
+		dest='path', # refer to this in options variable
+		default='', # some default
+		help='Path to the ruleset' # who cares
+	),
+
 	args = ''
 	help = ''
 
 	def handle(self, *args, **options):
-		root = settings.DATA_ROOT
+		client_name = options['client']
+		path = options['path']
+
+		client = Client.objects.get(name=client_name)
+		client.ruleset = File(open(path, 'r'))
+		client.save()

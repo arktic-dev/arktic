@@ -23,6 +23,7 @@ class Client(models.Model):
 	name = models.CharField(max_length=255)
 	client_path = models.TextField(max_length=255)
 	is_demo = models.BooleanField(default=False)
+	ruleset = models.FileField(upload_to='rulesets')
 
 	#methods
 	def __str__(self):
@@ -41,6 +42,10 @@ class Client(models.Model):
 		'''
 		for project in self.projects.filter(is_active=True, is_approved=True):
 			project.update()
+
+	def display_ruleset(self):
+		self.ruleset.open()
+		return self.ruleset.read()
 
 class Project(models.Model):
 	#connections

@@ -11,6 +11,7 @@ from django.template import RequestContext
 from apps.pages.forms import LoginForm
 from apps.users.models import User
 from apps.transcription.models import Transcription
+from apps.distribution.models import Client
 
 #util
 import numpy as np
@@ -58,8 +59,13 @@ class StartView(View):
 			return HttpResponseRedirect('/login/')
 
 class FAQView(View):
-	def get(self, request):
-		return render(request, 'pages/faq.html')
+	def get(self, request, client_name):
+		if client_name=='all':
+			clients = Client.objects.all()
+			return render(request, 'pages/faq.html', {'clients':clients})
+		else:
+			client = Client.objects.get(name=client_name)
+			return render(request, 'pages/faq.html', {'client':client})
 
 def logout_view(request):
 	logout(request)

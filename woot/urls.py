@@ -23,7 +23,7 @@ urlpatterns = patterns('',
 	url(r'^logout/$', logout_view),
 	url(r'^$', StartView.as_view()),
 	url(r'^start/$', StartView.as_view()),
-	url(r'^faq/$', FAQView.as_view()),
+	url(r'^faq/(?P<client_name>.+)$', FAQView.as_view()),
 
 	#transcription
 	url(r'^transcription/', include('apps.transcription.urls')),
