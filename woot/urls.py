@@ -15,22 +15,22 @@ admin.autodiscover()
 
 # See: https://docs.djangoproject.com/en/dev/topics/http/urls/
 urlpatterns = patterns('',
-  # Serving media
-  url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': MEDIA_ROOT, 'show_indexes': True }),
+	# Serving media
+	url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': MEDIA_ROOT, 'show_indexes': True }),
 
-  #pages
-  url(r'^login/$', LoginView.as_view()),
-  url(r'^logout/$', logout_view),
-  url(r'^$', StartView.as_view()),
-  url(r'^start/$', StartView.as_view()),
-  url(r'^faq/$', FAQView.as_view()),
+	#pages
+	url(r'^login/$', LoginView.as_view()),
+	url(r'^logout/$', logout_view),
+	url(r'^$', StartView.as_view()),
+	url(r'^start/$', StartView.as_view()),
+	url(r'^faq/$', FAQView.as_view()),
 
-  #transcription
-  url(r'^transcription/', include('apps.transcription.urls')),
-  url(r'^new/', 'apps.transcription.views.create_new_job'),
+	#transcription
+	url(r'^transcription/', include('apps.transcription.urls')),
+	url(r'^new/', 'apps.transcription.views.create_new_job'),
 
-  #admin
-  url(r'^admin/', include(admin.site.urls)),
+	#admin
+	url(r'^admin/', include(admin.site.urls)),
 )
 
 #1. make users

@@ -19,108 +19,108 @@ import json
 
 #class views
 class TranscriptionView(View):
-  def get(self, request, job_id_token):
-    user = request.user
-    if user.is_authenticated():
-      user = User.objects.get(email=user)
+	def get(self, request, job_id_token):
+		user = request.user
+		if user.is_authenticated():
+			user = User.objects.get(email=user)
 
-      job = get_object_or_404(user.jobs, id_token=job_id_token) #does this do 'return HTTP... blah'?
+			job = get_object_or_404(user.jobs, id_token=job_id_token) #does this do 'return HTTP... blah'?
 
-      #transcriptions
-      transcriptions = job.transcriptions.all()
-      for transcription in transcriptions:
-        transcription.set_latest_revision_done_by_current_user(user)
-        transcription.update()
+			#transcriptions
+			transcriptions = job.transcriptions.all()
+			for transcription in transcriptions:
+				transcription.set_latest_revision_done_by_current_user(user)
+				transcription.update()
 
-      #words
-      words = json.dumps([word.content for word in job.project.words.filter(Q(content__contains=' ') | Q(tag=True))])
+			#words
+			words = json.dumps([word.content for word in job.project.words.filter(Q(content__contains=' ') | Q(tag=True))])
 
-      #render
-      return render(request, 'transcription/transcription.html', {'transcriptions':transcriptions,'words':words,'job_id':job.id_token,})
-    else:
-      return HttpResponseRedirect('/start/')
+			#render
+			return render(request, 'transcription/transcription.html', {'transcriptions':transcriptions,'words':words,'job_id':job.id_token,})
+		else:
+			return HttpResponseRedirect('/start/')
 
 #methods
 def create_new_job(request):
-  if request.method == 'GET':
-    user = request.user
-    if user.is_authenticated():
-      #get user object
-      user = User.objects.get(email=user)
+	if request.method == 'GET':
+		user = request.user
+		if user.is_authenticated():
+			#get user object
+			user = User.objects.get(email=user)
 
-      #if there are available transcriptions
-      if Transcription.objects.filter(is_available=True).count()>0:
+			#if there are available transcriptions
+			if Transcription.objects.filter(is_available=True).count()>0:
 
-        # 1. sort projects by age (newest first), and get a set of transcriptions if they exist
-        project = None
-        for P in Project.objects.all().order_by('date_created'):
-          if P.transcriptions.filter(is_available=True).count()>0 and project is None:
-            if user.is_demo:
-              project = P if P.client.is_demo else None
-            else:
-              project = P
+				# 1. sort projects by age (newest first), and get a set of transcriptions if they exist
+				project = None
+				for P in Project.objects.all().order_by('date_created'):
+					if P.transcriptions.filter(is_available=True).count()>0 and project is None:
+						if user.is_demo:
+							project = P if P.client.is_demo else None
+						else:
+							project = P
 
-        if project is not None:
-          job_transcription_set = project.transcriptions.filter(is_available=True)
-          if job_transcription_set.count()!=0:
-            job = project.jobs.create(client=project.client, user=user)
-            job.is_available = False
-            job.id_token = generate_id_token('distribution','Job')
-            user.jobs.add(job)
-            job_transcription_set = job_transcription_set[:settings.NUMBER_OF_TRANSCRIPTIONS_PER_JOB] if len(job_transcription_set)>=settings.NUMBER_OF_TRANSCRIPTIONS_PER_JOB else job_transcription_set
-            job.get_transcription_set(job_transcription_set)
-            job.save()
+				if project is not None:
+					job_transcription_set = project.transcriptions.filter(is_available=True)
+					if job_transcription_set.count()!=0:
+						job = project.jobs.create(client=project.client, user=user)
+						job.is_available = False
+						job.id_token = generate_id_token('distribution','Job')
+						user.jobs.add(job)
+						job_transcription_set = job_transcription_set[:settings.NUMBER_OF_TRANSCRIPTIONS_PER_JOB] if len(job_transcription_set)>=settings.NUMBER_OF_TRANSCRIPTIONS_PER_JOB else job_transcription_set
+						job.get_transcription_set(job_transcription_set)
+						job.save()
 
-            return HttpResponseRedirect('/transcription/' + str(job.id_token))
+						return HttpResponseRedirect('/transcription/' + str(job.id_token))
 
-          else:
-            return HttpResponseRedirect('/start/')
+					else:
+						return HttpResponseRedirect('/start/')
 
-        else:
-          return HttpResponseRedirect('/start/')
+				else:
+					return HttpResponseRedirect('/start/')
 
-      else:
-        return HttpResponseRedirect('/start/')
+			else:
+				return HttpResponseRedirect('/start/')
 
-    else:
-      return HttpResponseRedirect('/login/')
+		else:
+			return HttpResponseRedirect('/login/')
 
 def start_redirect(request):
-  return HttpResponseRedirect('/start/')
+	return HttpResponseRedirect('/start/')
 
 def update_revision(request):
-  if request.user.is_authenticated:
-    #get user and update revision utterance
-    transcription = Transcription.objects.get(id_token=request.POST['transcription_id'])
-    revision, created = transcription.revisions.get_or_create(user=User.objects.get(email=request.user),
-                                                              job=Job.objects.get(id_token=request.POST['job_id']))
+	if request.user.is_authenticated:
+		#get user and update revision utterance
+		transcription = Transcription.objects.get(id_token=request.POST['transcription_id'])
+		revision, created = transcription.revisions.get_or_create(user=User.objects.get(email=request.user),
+																															job=Job.objects.get(id_token=request.POST['job_id']))
 
-    if created:
-      revision.id_token = generate_id_token('transcription', 'Revision')
+		if created:
+			revision.id_token = generate_id_token('transcription', 'Revision')
 
-    #split utterance
-    revision.utterance = request.POST['utterance']
-    revision.save()
+		#split utterance
+		revision.utterance = request.POST['utterance']
+		revision.save()
 
-    #processing
-    revision.process_words()
-    revision.job.update()
+		#processing
+		revision.process_words()
+		revision.job.update()
 
-    return HttpResponse('')
+		return HttpResponse('')
 
 def add_word(request):
-  if request.user.is_authenticated:
-    #get POST vars
-    transcription_id = request.POST['transcription_id']
-    word = request.POST['word']
+	if request.user.is_authenticated:
+		#get POST vars
+		transcription_id = request.POST['transcription_id']
+		word = request.POST['word']
 
-    #vars
-    transcription = Transcription.objects.get(id_token=transcription_id)
-    client = transcription.client
-    if client.words.filter(project=transcription.project, content=word).count()==0 and not (('[' in word and ']' not in word) or (']' in word and '[' not in word)):
-      client.words.create(project=transcription.project, content=word, tag=(('[' in word and ']' in word)))
+		#vars
+		transcription = Transcription.objects.get(id_token=transcription_id)
+		client = transcription.client
+		if client.words.filter(project=transcription.project, content=word).count()==0 and not (('[' in word and ']' not in word) or (']' in word and '[' not in word)):
+			client.words.create(project=transcription.project, content=word, tag=(('[' in word and ']' in word)))
 
-    return HttpResponse('')
+		return HttpResponse('')
 
 '''
 

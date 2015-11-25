@@ -7,15 +7,15 @@
 # To use your own django app use code like this:
 activate_this = '/home/arkaeologic/.virtualenvs/arktic.com/bin/activate_this.py'
 with open(activate_this) as f:
-    code = compile(f.read(), activate_this, 'exec')
-    exec(code, dict(__file__=activate_this))
+		code = compile(f.read(), activate_this, 'exec')
+		exec(code, dict(__file__=activate_this))
 
 import os
 import sys
 
 path = '/home/arkaeologic/arktic/'
 if path not in sys.path:
-    sys.path.append(path)
+		sys.path.append(path)
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'woot.settings.prod'
 os.environ['DB_PWD'] = 'uqnhs77f'

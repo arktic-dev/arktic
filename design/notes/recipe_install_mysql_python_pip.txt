@@ -10,7 +10,7 @@ server:
 5. create db
 6. syncdb
 7. extract: ~$ gunzip < arktic_db.gz | mysql -u arkaeologic -p -h mysql.server 'arkaeologic$arktic'
-  a. quotes around db name
+	a. quotes around db name
 
 done.
 

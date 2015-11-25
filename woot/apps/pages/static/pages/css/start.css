@@ -1,9 +1,9 @@
 #wrapper {
-  width:800px;
+	width:800px;
 }
 
 span.right-label {
-  position:relative;
-  float:right;
-  color:gray;
+	position:relative;
+	float:right;
+	color:gray;
 }

@@ -1,17 +1,17 @@
 1. download directory or archive from ftp
 2. unzip archive
 3. log on to pythonanywhere ftp
-  a. ssh.pythonanywhere.com
-  b. SFTP
-  c. Normal logon
-  d. email me for username and password
+	a. ssh.pythonanywhere.com
+	b. SFTP
+	c. Normal logon
+	d. email me for username and password
 
 4. transfer directory to data directory (currently: /home/arkaeologic/data)
 5. put in correct client directory (/eckoh/) -> (/home/arkaeologic/data/eckoh)
 
 Pythonanywhere
 6. Log on to pythonanywhere
-  a. email for user/pass
+	a. email for user/pass
 
 7. Open a bash shell
 8. Ensure project directory: ~$ cd arktic

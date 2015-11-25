@@ -20,84 +20,84 @@ spacer = ' '*10
 
 ### Command
 class Command(BaseCommand):
-  option_list = BaseCommand.option_list + (
+	option_list = BaseCommand.option_list + (
 
-    make_option('--client', # option that will appear in cmd
-      action='store', # no idea
-      dest='client', # refer to this in options variable
-      default='', # some default
-      help='Name of client' # who cares
-    ),
+		make_option('--client', # option that will appear in cmd
+			action='store', # no idea
+			dest='client', # refer to this in options variable
+			default='', # some default
+			help='Name of client' # who cares
+		),
 
-    make_option('--project', # option that will appear in cmd
-      action='store', # no idea
-      dest='project', # refer to this in options variable
-      default='', # some default
-      help='Name of project' # who cares
-    ),
+		make_option('--project', # option that will appear in cmd
+			action='store', # no idea
+			dest='project', # refer to this in options variable
+			default='', # some default
+			help='Name of project' # who cares
+		),
 
-    make_option('--completed', # option that will appear in cmd
-      action='store_true', # no idea
-      dest='completed', # refer to this in options variable
-      default='', # some default
-      help='Name of project' # who cares
-    ),
+		make_option('--completed', # option that will appear in cmd
+			action='store_true', # no idea
+			dest='completed', # refer to this in options variable
+			default='', # some default
+			help='Name of project' # who cares
+		),
 
-  )
+	)
 
-  args = ''
-  help = ''
+	args = ''
+	help = ''
 
-  def handle(self, *args, **options):
-    root = settings.DATA_ROOT
-    client_name = options['client']
-    client_root = os.path.join(root, client_name)
-    project_name = options['project']
+	def handle(self, *args, **options):
+		root = settings.DATA_ROOT
+		client_name = options['client']
+		client_root = os.path.join(root, client_name)
+		project_name = options['project']
 
-    if client_name!='':
-      client = Client.objects.get(name=client_name)
+		if client_name!='':
+			client = Client.objects.get(name=client_name)
 
-      if project_name!='':
-        print('Exporting project {} from client {}...'.format(project_name, client_name))
-        project = client.projects.get(name=project_name)
+			if project_name!='':
+				print('Exporting project {} from client {}...'.format(project_name, client_name))
+				project = client.projects.get(name=project_name)
 
-        number_of_transcriptions = project.transcriptions.count()
-        revisions = Revision.objects.filter(transcription__project=project)
+				number_of_transcriptions = project.transcriptions.count()
+				revisions = Revision.objects.filter(transcription__project=project)
 
-        t_pk = list(set([r.transcription.pk for r in revisions]))
+				t_pk = list(set([r.transcription.pk for r in revisions]))
 
-        with open(os.path.join(client_root, '{}.csv'.format(project.name)), 'w+') as csv_file:
-          for i, pk in enumerate(t_pk):
-            transcription = project.transcriptions.get(pk=pk)
-            revision = transcription.revisions.latest()
-            print('Exporting {}/{}...     '.format(i+1, len(t_pk)), end='\r' if i+1<len(t_pk) else '\n')
-            csv_file.write('{}|{}\n'.format(os.path.basename(revision.transcription.audio_file.name), revision.utterance))
+				with open(os.path.join(client_root, '{}.csv'.format(project.name)), 'w+') as csv_file:
+					for i, pk in enumerate(t_pk):
+						transcription = project.transcriptions.get(pk=pk)
+						revision = transcription.revisions.latest()
+						print('Exporting {}/{}...		 '.format(i+1, len(t_pk)), end='\r' if i+1<len(t_pk) else '\n')
+						csv_file.write('{}|{}\n'.format(os.path.basename(revision.transcription.audio_file.name), revision.utterance))
 
-      else:
-        print('Exporting all projects from client {}'.format(client_name))
-        for project in client.projects.all():
-          number_of_transcriptions = project.transcriptions.count()
-          revisions = Revision.objects.filter(transcription__project=project)
+			else:
+				print('Exporting all projects from client {}'.format(client_name))
+				for project in client.projects.all():
+					number_of_transcriptions = project.transcriptions.count()
+					revisions = Revision.objects.filter(transcription__project=project)
 
-          t_pk = list(set([r.transcription.pk for r in revisions]))
+					t_pk = list(set([r.transcription.pk for r in revisions]))
 
-          with open(os.path.join(client_root, '{}.csv'.format(project.name)), 'w+') as csv_file:
-            for i, pk in enumerate(t_pk):
-              transcription = project.transcriptions.get(pk=pk)
-              revision = transcription.revisions.latest()
-              print('Exporting {}/{}...     '.format(i+1, len(t_pk)), end='\r' if i+1<len(t_pk) else '\n')
-              csv_file.write('{}|{}\n'.format(os.path.basename(revision.transcription.audio_file.name), revision.utterance))
+					with open(os.path.join(client_root, '{}.csv'.format(project.name)), 'w+') as csv_file:
+						for i, pk in enumerate(t_pk):
+							transcription = project.transcriptions.get(pk=pk)
+							revision = transcription.revisions.latest()
+							print('Exporting {}/{}...		 '.format(i+1, len(t_pk)), end='\r' if i+1<len(t_pk) else '\n')
+							csv_file.write('{}|{}\n'.format(os.path.basename(revision.transcription.audio_file.name), revision.utterance))
 
-    else:
-      print('Listing clients and projects in order of age. Add "--completed" flag to exclude active projects.')
-      print('Nothing will be exported.')
-      for client in Client.objects.all():
-        print('client {}'.format(client.name))
-        for project in client.projects.all():
-          number_of_revisions = Revision.objects.filter(transcription__project=project).count()
-          number_of_transcriptions = project.transcriptions.count()
-          if options['completed']:
-            if number_of_revisions==number_of_transcriptions:
-              print('client {}, project {}, {}/{} completed transcriptions'.format(client.name, project.name, number_of_revisions, number_of_transcriptions))
-          else:
-            print('client {}, project {}, {}/{} completed transcriptions'.format(client.name, project.name, number_of_revisions, number_of_transcriptions))
+		else:
+			print('Listing clients and projects in order of age. Add "--completed" flag to exclude active projects.')
+			print('Nothing will be exported.')
+			for client in Client.objects.all():
+				print('client {}'.format(client.name))
+				for project in client.projects.all():
+					number_of_revisions = Revision.objects.filter(transcription__project=project).count()
+					number_of_transcriptions = project.transcriptions.count()
+					if options['completed']:
+						if number_of_revisions==number_of_transcriptions:
+							print('client {}, project {}, {}/{} completed transcriptions'.format(client.name, project.name, number_of_revisions, number_of_transcriptions))
+					else:
+						print('client {}, project {}, {}/{} completed transcriptions'.format(client.name, project.name, number_of_revisions, number_of_transcriptions))

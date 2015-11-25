@@ -1,18 +1,18 @@
 1. Open shell: ~$ dm shell
 2. Import job model and user model:
-  >>> from apps.distribution.models import Job
-  >>> from apps.users.models import User
+	>>> from apps.distribution.models import Job
+	>>> from apps.users.models import User
 
 3. Get desired jobs:
-  >>> job = Job.objects.get(is_active=True) # could be any condition
-  OR
-  >>> jobs = Job.objects.filter(is_active=True) # GETS A SET
+	>>> job = Job.objects.get(is_active=True) # could be any condition
+	OR
+	>>> jobs = Job.objects.filter(is_active=True) # GETS A SET
 
 4. Get user
-  >>> user = User.objects.get(email=<email>) # or email__contains=<str>
+	>>> user = User.objects.get(email=<email>) # or email__contains=<str>
 
 5. Set user of job
-  >>> job.user = user
-  >>> job.save()
+	>>> job.user = user
+	>>> job.save()
 
 6. Done.

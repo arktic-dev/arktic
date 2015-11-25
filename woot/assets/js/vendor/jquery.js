@@ -1104,7 +1104,7 @@ setDocument = Sizzle.setDocument = function( node ) {
 		// getElementById is not reliable as a find shortcut
 		delete Expr.find["ID"];
 
-		Expr.filter["ID"] =  function( id ) {
+		Expr.filter["ID"] =	function( id ) {
 			var attrId = id.replace( runescape, funescape );
 			return function( elem ) {
 				var node = typeof elem.getAttributeNode !== strundefined && elem.getAttributeNode("id");
@@ -1386,7 +1386,7 @@ Sizzle.matchesSelector = function( elem, expr ) {
 
 	if ( support.matchesSelector && documentIsHTML &&
 		( !rbuggyMatches || !rbuggyMatches.test( expr ) ) &&
-		( !rbuggyQSA     || !rbuggyQSA.test( expr ) ) ) {
+		( !rbuggyQSA		 || !rbuggyQSA.test( expr ) ) ) {
 
 		try {
 			var ret = matches.call( elem, expr );
@@ -1886,7 +1886,7 @@ Expr = Sizzle.selectors = {
 		"empty": function( elem ) {
 			// http://www.w3.org/TR/selectors/#empty-pseudo
 			// :empty is negated by element (1) or content nodes (text: 3; cdata: 4; entity ref: 5),
-			//   but not by others (comment: 8; processing instruction: 7; etc.)
+			//	 but not by others (comment: 8; processing instruction: 7; etc.)
 			// nodeType < 6 works because attributes (2) do not appear as children
 			for ( elem = elem.firstChild; elem; elem = elem.nextSibling ) {
 				if ( elem.nodeType < 6 ) {
@@ -2439,9 +2439,9 @@ compile = Sizzle.compile = function( selector, match /* Internal Use Only */ ) {
 
 /**
  * A low-level selection function that works with Sizzle's compiled
- *  selector functions
+ *	selector functions
  * @param {String|Function} selector A selector or a pre-compiled
- *  selector function built with Sizzle.compile
+ *	selector function built with Sizzle.compile
  * @param {Element} context
  * @param {Array} [results]
  * @param {Array} [seed] A set of elements to match against
@@ -3496,11 +3496,11 @@ var access = jQuery.access = function( elems, fn, key, value, chainable, emptyGe
  */
 jQuery.acceptData = function( owner ) {
 	// Accepts only:
-	//  - Node
-	//    - Node.ELEMENT_NODE
-	//    - Node.DOCUMENT_NODE
-	//  - Object
-	//    - Any
+	//	- Node
+	//		- Node.ELEMENT_NODE
+	//		- Node.DOCUMENT_NODE
+	//	- Object
+	//		- Any
 	/* jshint -W018 */
 	return owner.nodeType === 1 || owner.nodeType === 9 || !( +owner.nodeType );
 };
@@ -3599,14 +3599,14 @@ Data.prototype = {
 		var stored;
 		// In cases where either:
 		//
-		//   1. No key was specified
-		//   2. A string key was specified, but no value provided
+		//	 1. No key was specified
+		//	 2. A string key was specified, but no value provided
 		//
 		// Take the "read" path and allow the get method to determine
 		// which value to return, respectively either:
 		//
-		//   1. The entire cache object
-		//   2. The data stored at the key
+		//	 1. The entire cache object
+		//	 2. The data stored at the key
 		//
 		if ( key === undefined ||
 				((key && typeof key === "string") && value === undefined) ) {
@@ -3620,8 +3620,8 @@ Data.prototype = {
 		// [*]When the key is not a string, or both a key and value
 		// are specified, set or extend (existing objects) with either:
 		//
-		//   1. An object of properties
-		//   2. A key and value
+		//	 1. An object of properties
+		//	 2. A key and value
 		//
 		this.set( owner, key, value );
 
@@ -4503,7 +4503,7 @@ jQuery.event = {
 				body = eventDoc.body;
 
 				event.pageX = original.clientX + ( doc && doc.scrollLeft || body && body.scrollLeft || 0 ) - ( doc && doc.clientLeft || body && body.clientLeft || 0 );
-				event.pageY = original.clientY + ( doc && doc.scrollTop  || body && body.scrollTop  || 0 ) - ( doc && doc.clientTop  || body && body.clientTop  || 0 );
+				event.pageY = original.clientY + ( doc && doc.scrollTop	|| body && body.scrollTop	|| 0 ) - ( doc && doc.clientTop	|| body && body.clientTop	|| 0 );
 			}
 
 			// Add which for click: 1 === left; 2 === middle; 3 === right
@@ -4841,7 +4841,7 @@ jQuery.fn.extend({
 	off: function( types, selector, fn ) {
 		var handleObj, type;
 		if ( types && types.preventDefault && types.handleObj ) {
-			// ( event )  dispatched jQuery.Event
+			// ( event )	dispatched jQuery.Event
 			handleObj = types.handleObj;
 			jQuery( types.delegateTarget ).off(
 				handleObj.namespace ? handleObj.origType + "." + handleObj.namespace : handleObj.origType,
@@ -7536,8 +7536,8 @@ var
 	/* Prefilters
 	 * 1) They are useful to introduce custom dataTypes (see ajax/jsonp.js for an example)
 	 * 2) These are called:
-	 *    - BEFORE asking for a transport
-	 *    - AFTER param serialization (s.data is a string if s.processData is true)
+	 *		- BEFORE asking for a transport
+	 *		- AFTER param serialization (s.data is a string if s.processData is true)
 	 * 3) key is the dataType
 	 * 4) the catchall symbol "*" can be used
 	 * 5) execution will start with transport dataType and THEN continue down to "*" if needed

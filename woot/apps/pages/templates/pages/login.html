@@ -9,28 +9,28 @@
 
 {% block content %}
 <div id="wrapper" class="container">
-    <div id="login-panel">
-        <h1>Arktic</h1>
-        <form id="login-form" method="post">
-            {% csrf_token %}
-            <div class="input-group">
-                <span class="input-group-addon glyphicon glyphicon-user"></span>
-                <input name="email" type="text" class="form-control" placeholder="Username">
-            </div>
-            <div class="input-group">
-                <span class="input-group-addon glyphicon glyphicon-tower"></span>
-                <input name="password" type="password" class="form-control" placeholder="Password">
-            </div>
-            <div class="btn-group">
-                <button type="submit" class="btn btn-default">Login</button>
-                {% if bad_formatting %}
-                <button type="button" class="btn btn-danger">Bad formatting</button>
-                {% endif %}
-                {% if invalid_username_or_password %}
-                <button type="button" class="btn btn-danger">Invalid username or password</button>
-                {% endif %}
-            </div>
-        </form>
-    </div>
+		<div id="login-panel">
+				<h1>Arktic</h1>
+				<form id="login-form" method="post">
+						{% csrf_token %}
+						<div class="input-group">
+								<span class="input-group-addon glyphicon glyphicon-user"></span>
+								<input name="email" type="text" class="form-control" placeholder="Username">
+						</div>
+						<div class="input-group">
+								<span class="input-group-addon glyphicon glyphicon-tower"></span>
+								<input name="password" type="password" class="form-control" placeholder="Password">
+						</div>
+						<div class="btn-group">
+								<button type="submit" class="btn btn-default">Login</button>
+								{% if bad_formatting %}
+								<button type="button" class="btn btn-danger">Bad formatting</button>
+								{% endif %}
+								{% if invalid_username_or_password %}
+								<button type="button" class="btn btn-danger">Invalid username or password</button>
+								{% endif %}
+						</div>
+				</form>
+		</div>
 </div>
 {% endblock %}

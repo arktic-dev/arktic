@@ -1,7 +1,7 @@
 To add a demo client:
 
 1. Make sure that the client to be added is the only new client folder in the data directory. Each
-   client found when running "demo_input" will be made a "is_demo" client.
+	 client found when running "demo_input" will be made a "is_demo" client.
 
 2. With the client in the data directory, run "dm demo_input"
 3. Done.
