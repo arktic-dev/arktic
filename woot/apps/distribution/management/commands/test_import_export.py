@@ -12,6 +12,7 @@ from apps.distribution.util import generate_id_token, process_audio
 
 # util
 import os
+from os.path import join
 import json
 from optparse import make_option
 
@@ -35,4 +36,5 @@ class Command(BaseCommand):
 	help = ''
 
 	def handle(self, *args, **options):
-		
+		# 1. define data root as test directory
+		data_root = join(settings.SITE_ROOT, 'test')
