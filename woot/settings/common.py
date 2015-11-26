@@ -31,6 +31,7 @@ AUTH_USER_MODEL = 'users.User'
 ACCESS_ROOT = join(expanduser('~'),'.djaccess')
 DB_ACCESS = 'arktic_db.json'
 DATA_ACCESS = 'arktic_data.json'
+USER_ACCESS = 'arktic_users.json'
 ########## END PASSWORD CONFIGURATION
 
 
