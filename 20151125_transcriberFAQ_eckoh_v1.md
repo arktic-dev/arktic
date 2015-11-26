@@ -4,22 +4,21 @@
 
 We're currently alternating between two major projects. One is for Camelot (lottery company). This one is for O2 (telecoms company). Knowing this context is helpful for guessing or googling things.
 
-We use "normal" rules/conventions for the Camelot project, as detailed in the normal FAQ at the end of this document. The normal FAQ also applies to the O2 project, but there are also some new spelling rules, shown below. These will probably be updated during the project. 
+We use "normal" rules/conventions for the Camelot project, as detailed in the normal FAQ at the end of this document. The normal FAQ also applies to the O2 project, but there are also some new spelling rules, shown below. These will probably be updated during the project.
 
-Note: We're not correcting software-generated transcriptions for the O2 project; we're writing completely new transcriptions that speech analysts will read carefully. 
+Note: We're not correcting software-generated transcriptions for the O2 project; we're writing completely new transcriptions that speech analysts will read carefully.
 
-So: 
-- Plz be careful with spelling. 
-- Go slowly as you adjust to a new ruleset. 
-- Use [skipped] for long complex utterances and also for those that are too long for our system. If they need to be done after all, I'll do those myself at the end. 
+So:
+- Plz be careful with spelling.
+- Go slowly as you adjust to a new ruleset.
 
 
 ### Spelling Rules (General for O2 project)
 
-- enquiry	NOT inquiry	
-- advisor	NOT adviser	
-- login (noun) 	NOT log-in, log in	
-- log in (verb)	NOT log-in, login	
+- enquiry	NOT inquiry
+- advisor	NOT adviser
+- login (noun) 	NOT log-in, log in
+- log in (verb)	NOT log-in, login
 - broadband		
 - landline		
 - top-up (noun)		
@@ -40,7 +39,7 @@ So:
 - o two world chat	(O2 World Chat)
 - four g	(4G)
 - three g	(3G)
-- sim card	
+- sim card
 - pay as you go
 - pay monthly
 - pay and go
@@ -53,19 +52,12 @@ So:
 - iphone
 - iphone six s plus
 - gigabytes
-- sixty four 
+- sixty four
 - g b 	(gB = gigabytes)
 - h t c		(HTC = a mobile phone manufacturing company)
 - l g g four 	("LG G4")
 - sony xperia z three	(Sony Xperia Z3)
 - apple ipad pro 	(Apple iPad Pro)
-- smartwatch	
+- smartwatch
 - pebble steel	(Pebble Steel - smartwatch)
 - store and share		(O2 Store & Share - save files in the cloud and access from any device)
-
-
-
-
-
-
-

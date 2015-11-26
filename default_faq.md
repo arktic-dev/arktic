@@ -66,7 +66,7 @@ We call the notes in square brackets "tags".
 ok, yeah, yep, nope, uh huh, dunno, wanna, lemme, gimme
 - Type exactly what you hear even if it is ungrammatical or skips or repeats words.
 - Type ~ at the start or end of the utterance where it was cut off by the system
-
+- Use [skipped] for long complex utterances and also for those that are too long for our system. I'll check them all myself at the end. However, this doesn't apply to long complex [side-speech] e.g. you should still transcribe "[side-speech] make a payment".
 
 
 ### NORMAL TRANSCRIPTION RULES
