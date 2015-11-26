@@ -23,6 +23,7 @@ class Client(models.Model):
 	name = models.CharField(max_length=255)
 	client_path = models.TextField(max_length=255)
 	is_demo = models.BooleanField(default=False)
+	has_ruleset = models.BooleanField(default=False)
 	ruleset = models.FileField(upload_to='rulesets')
 
 	#methods

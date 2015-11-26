@@ -21,19 +21,21 @@ spacer = ' '*10
 ### Command
 class Command(BaseCommand):
 
-	make_option('--client', # option that will appear in cmd
-		action='store', # no idea
-		dest='client', # refer to this in options variable
-		default='', # some default
-		help='Name of the client' # who cares
-	),
+	option_list = BaseCommand.option_list + (
+		make_option('--client', # option that will appear in cmd
+			action='store', # no idea
+			dest='client', # refer to this in options variable
+			default='', # some default
+			help='Name of the client' # who cares
+		),
 
-	make_option('--path', # option that will appear in cmd
-		action='store', # no idea
-		dest='path', # refer to this in options variable
-		default='', # some default
-		help='Path to the ruleset' # who cares
-	),
+		make_option('--path', # option that will appear in cmd
+			action='store', # no idea
+			dest='path', # refer to this in options variable
+			default='', # some default
+			help='Path to the ruleset' # who cares
+		),
+	)
 
 	args = ''
 	help = ''
@@ -44,4 +46,5 @@ class Command(BaseCommand):
 
 		client = Client.objects.get(name=client_name)
 		client.ruleset = File(open(path, 'r'))
+		client.has_ruleset = True
 		client.save()

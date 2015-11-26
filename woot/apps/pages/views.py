@@ -60,9 +60,8 @@ class StartView(View):
 
 class FAQView(View):
 	def get(self, request, client_name):
-		if client_name=='all':
-			clients = Client.objects.all()
-			return render(request, 'pages/faq.html', {'clients':clients})
+		if client_name=='default':
+			return render(request, 'pages/faq.html')
 		else:
 			client = Client.objects.get(name=client_name)
 			return render(request, 'pages/faq.html', {'client':client})

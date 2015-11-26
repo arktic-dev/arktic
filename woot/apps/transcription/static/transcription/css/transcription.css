@@ -17,6 +17,12 @@ html {
 	width:800px;
 }
 
+#ruleset-flag {
+	position: fixed;
+	left: 185px;
+	top: 200px;
+}
+
 #interface {
 	position:fixed;
 	top:50%;

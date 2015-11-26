@@ -33,10 +33,10 @@
 												<li><a href="/new/">New Job</a></li>
 										</ul>
 										<ul class="nav navbar-nav">
-												{% if client_name %}
-													<li><a href="/faq/{{client_name}}">FAQ for {{client_name}}</a></li>
+												{% if client %}
+													<li><a href="/faq/{{client.name}}">FAQ</a></li>
 												{% else %}
-													<li><a href="/faq/all">FAQ</a></li>
+													<li><a href="/faq/default">FAQ</a></li>
 												{% endif %}
 										</ul>
 										<ul id="user-dropdown" class="nav navbar-nav navbar-right">

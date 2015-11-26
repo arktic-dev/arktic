@@ -1,22 +1,37 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 
-{% block title %} Transcription rules for {{client}} {% endblock %}
+{% block title %}
+	{% if clients %}
+		Transcription rules for all clients
+	{% else %}
+		Transcription rules for {{client}}
+	{% endif %}
+{% endblock %}
 {% block css %}<link rel="stylesheet" href="{% static 'pages/css/faq.css' %}">{% endblock %}
 
 {% block content %}
 <div id="wrapper" class="container">
-	{% if clients %}
-		{% for client in clients %}
-			<xmp theme="readable" style="display:none;">
+	{% if client %}
+		<h1>Rules for {{client.name}}</h1>
+		<div class="client-markdown">
 			{{client.display_ruleset}}
-			</xmp>
-		{% endfor %}
-	{% else %}
-		<xmp theme="readable" style="display:none;">
-		{{client.display_ruleset}}
-		</xmp>
+		</div>
 	{% endif %}
-	<script src="http://strapdownjs.com/v/0.2/strapdown.js"></script>
+	<h1>Default FAQ</h1>
+	<div class="client-markdown">
+
+	</div>
 </div>
+{% endblock %}
+
+{% block post_main_script %}
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.3.0/showdown.min.js"></script>
+	<script type="text/javascript">
+		var converter = new showdown.Converter();
+		$('.client-markdown').each(function () {
+			var convertedHtml = converter.makeHtml($(this).html());
+			$(this).html(convertedHtml);
+		});
+	</script>
 {% endblock %}

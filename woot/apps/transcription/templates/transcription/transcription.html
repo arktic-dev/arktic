@@ -26,6 +26,9 @@
 		</div>
 
 		<!-- interface -->
+		{% if client.has_ruleset %}
+			<a class="btn btn-info" id="ruleset-flag" href="/faq/{{client.name}}" role="button">Additional rules exist for this project. Please refer to FAQ for details.</a>
+		{% endif %}
 		<div id="interface" class="panel panel-default">
 				<div id="indicators" class="panel">
 						{% for transcription in transcriptions %}

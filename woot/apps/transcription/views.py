@@ -36,7 +36,7 @@ class TranscriptionView(View):
 			words = json.dumps([word.content for word in job.project.words.filter(Q(content__contains=' ') | Q(tag=True))])
 
 			#render
-			return render(request, 'transcription/transcription.html', {'transcriptions':transcriptions,'words':words,'job_id':job.id_token,'client_name':transcription.client.name})
+			return render(request, 'transcription/transcription.html', {'transcriptions':transcriptions,'words':words,'job_id':job.id_token,'client':transcription.client})
 		else:
 			return HttpResponseRedirect('/start/')
 
