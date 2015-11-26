@@ -430,6 +430,9 @@ $(document).ready(function() {
 			} else if (e.keyCode === 77) {
 				e.preventDefault()
 				text = '[mispronunciation]';
+			} else if (e.keyCode === 74) {
+				e.preventDefault()
+				text = '[prompt-echo]';
 			} else if (e.keyCode === 78) {
 				e.preventDefault()
 				text = '[noise]';
