@@ -58,6 +58,7 @@ We call the notes in square brackets "tags".
 
 ### TRANSCRIPTION RULES (SUMMARY)
 
+- If you're not sure/happy about a transcription, email me the filename (don't worry about filling up my inbox). At the end of a batch, I can search for it and check it myself. We go through batches at a rate of about 1/day, so please email it to me as soon as you can, because otherwise I might not correct it before it's sent out to a client. The filename is displayed on the transcription page. It might look similar to this: 20151125073624x91140.wav 
 - Use lower case. Spellings should be in lower case separated by spaces.
 - No punctuation or special symbols except hyphens and apostrophes.
 - No abbreviations unless spoken, even common ones like "mr". Write titles in full.

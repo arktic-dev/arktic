@@ -1,4 +1,3 @@
-### FAQ FOR O2 PROJECT
 
 ### Current Status
 
