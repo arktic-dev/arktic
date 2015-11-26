@@ -60,11 +60,16 @@ class StartView(View):
 
 class FAQView(View):
 	def get(self, request, client_name):
+		# default faq
+		default_faq = ''
+		with open('./default_faq.md') as df:
+			default_faq = df.read()
+
 		if client_name=='default':
-			return render(request, 'pages/faq.html')
+			return render(request, 'pages/faq.html', {'default_faq':default_faq})
 		else:
 			client = Client.objects.get(name=client_name)
-			return render(request, 'pages/faq.html', {'client':client})
+			return render(request, 'pages/faq.html', {'client':client, 'default_faq':default_faq})
 
 def logout_view(request):
 	logout(request)

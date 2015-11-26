@@ -32,7 +32,7 @@ class TranscriptionView(View):
 				transcription.set_latest_revision_done_by_current_user(user)
 				transcription.update()
 
-			#words
+			# words
 			words = json.dumps([word.content for word in job.project.words.filter(Q(content__contains=' ') | Q(tag=True))])
 
 			#render

@@ -14,6 +14,7 @@ from libs.utils import generate_id_token, process_audio
 
 #util
 import os
+from os.path import basename
 from datetime import datetime as dt
 import json
 
@@ -66,6 +67,9 @@ class Transcription(models.Model):
 		#if deactivation condition is satisfied, deactivate transcription
 		self.is_active = not self.deactivation_condition()
 		self.save()
+
+	def audio_file_basename(self):
+		return basename(self.audio_file_name)
 
 	def deactivation_condition(self):
 		''' Has at least one revision with an utterance'''

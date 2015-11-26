@@ -246,7 +246,7 @@ THIRD_PARTY_APPS = (
 	'djcelery',
 
 	# Static file management:
-	'compressor',
+	# 'compressor',
 )
 
 LOCAL_APPS = (

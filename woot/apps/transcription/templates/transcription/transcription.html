@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
-{% load compress %}
 
 {% block css %}
 <link rel="stylesheet" href="{% static 'transcription/css/typeahead.css' %}">
@@ -63,7 +62,7 @@
 										{% endfor %}
 												<div id="now-{{transcription.id_token}}" class="now"></div>
 										</button>
-										<button type="button" class="btn btn-default ninja">{{transcription.grammar_name}}</button>
+										<button id="clipboard" type="button" class="btn btn-default ninja"><input value="{{transcription.audio_file_basename}}" /></button>
 								</div>
 						</div>
 						<div class="panel original-panel">
@@ -202,7 +201,6 @@
 
 <!-- js -->
 {% block post_main_script %}
-{% compress js %}
 <script type="text/javascript">
 var words = {{words|safe}};
 var number_of_transcriptions = {{transcriptions|length}};
@@ -260,5 +258,4 @@ $(document).ready(function() {
 		});
 });
 </script>
-{% endcompress %}
 {% endblock %}

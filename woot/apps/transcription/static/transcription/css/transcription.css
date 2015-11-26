@@ -23,6 +23,25 @@ html {
 	top: 200px;
 }
 
+#clipboard {
+	height: 34px;
+}
+
+#clipboard:hover {
+	background-color: white;
+}
+
+#clipboard:active {
+	background-color: white;
+	box-shadow: none;
+}
+
+#clipboard input {
+	width:200px;
+	border: 0px;
+	outline: none;
+}
+
 #interface {
 	position:fixed;
 	top:50%;
