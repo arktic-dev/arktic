@@ -24,4 +24,6 @@ class Command(BaseCommand):
 			user_data = json.load(json_data)
 
 			for user in user_data:
-				User.objects.create_superuser(user['email'], '1970-1-1', user['pwd'])
+				if User.objects.filter(email=user['email']).count() == 0:
+					print('Creating user with email {}'.format(user['email']))
+					User.objects.create_superuser(user['email'], '1970-1-1', user['pwd'])
