@@ -6,6 +6,7 @@ from django.views.generic import View
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.template import RequestContext
+from django.conf import settings
 
 #local
 from apps.pages.forms import LoginForm
@@ -15,6 +16,8 @@ from apps.distribution.models import Client
 
 #util
 import numpy as np
+import os
+from os.path import join
 
 #classes
 class LoginView(View):
@@ -62,7 +65,7 @@ class FAQView(View):
 	def get(self, request, client_name):
 		# default faq
 		default_faq = ''
-		with open('./default_faq.md') as df:
+		with open(join(settings.SITE_ROOT, 'default_faq.md')) as df:
 			default_faq = df.read()
 
 		if client_name=='default':
