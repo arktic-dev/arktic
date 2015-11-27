@@ -208,10 +208,43 @@
 {% block post_main_script %}
 <script type="text/javascript">
 var words = {{words|safe}};
+var substringMatcher;
 var number_of_transcriptions = {{transcriptions|length}};
 </script>
 <script src="{% static 'transcription/js/transcription.js' %}"></script>
 <script src="{% static 'transcription/js/typeahead.js' %}"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	substringMatcher = function(strs) {
+		return function findMatches(q, cb) {
+			var matches, substringRegex;
+			// an array that will be populated with substring matches
+			matches = [];
+			// regex used to determine if a string contains the substring `q`
+			substrRegex = new RegExp(q, 'i');
+			// iterate through the pool of strings and for any string that
+			// contains the substring `q`, add it to the `matches` array
+			$.each(strs, function(i, str) {
+				if (substrRegex.test(str)) {
+					// the typeahead jQuery plugin expects suggestions to a
+					// JavaScript object, refer to typeahead docs for more info
+					matches.push({ value: str });
+				}
+			});
+			cb(matches);
+		};
+	};
+	$('#typeahead').typeahead({
+		hint: true,
+		highlight: true,
+		minLength: 1
+	},
+	{
+		displayKey: 'value',
+		source: substringMatcher(words)
+	});
+});
+</script>
 <script type="text/javascript">
 var action_register = function (current_id, action_name, current_audio_time) {
 //	 $.post("/transcription/action/", {job_id:$('#job').attr('job_id'),transcription_id:current_id,audio_time:current_audio_time,action_name:action_name,csrfmiddlewaretoken:'{{ csrf_token }}'});
@@ -230,40 +263,9 @@ var add_word = function (current_id, word) {
 }
 var delete_word = function (current_id, word) {
 	$.post("/transcription/delete/", {transcription_id:current_id,word:word,csrfmiddlewaretoken:'{{ csrf_token }}'});
+	words = words.filter(function (lm) { // remove word from "words"
+		lm != word;
+	});
 }
-</script>
-<script type="text/javascript">
-$(document).ready(function() {
-		var substringMatcher = function(strs) {
-			return function findMatches(q, cb) {
-				var matches, substringRegex;
-				// an array that will be populated with substring matches
-				matches = [];
-				// regex used to determine if a string contains the substring `q`
-				substrRegex = new RegExp(q, 'i');
-				// iterate through the pool of strings and for any string that
-				// contains the substring `q`, add it to the `matches` array
-				$.each(strs, function(i, str) {
-					if (substrRegex.test(str)) {
-						// the typeahead jQuery plugin expects suggestions to a
-						// JavaScript object, refer to typeahead docs for more info
-						matches.push({ value: str });
-					}
-				});
-				cb(matches);
-			};
-		};
-		// var states = ["[noise]","[breath noise]","[fragment]","[side speech]","[hesitation]","[unintelligible]","[spanish]","[prompt echo]","[bad audio]","{% for word in words %}{{word.content}}","{% endfor %}"];
-		$('#typeahead').typeahead({
-			hint: true,
-			highlight: true,
-			minLength: 1
-		},
-		{
-			name: 'states',
-			displayKey: 'value',
-			source: substringMatcher(words)
-		});
-});
 </script>
 {% endblock %}

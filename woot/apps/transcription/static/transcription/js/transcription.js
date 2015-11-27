@@ -381,14 +381,12 @@ $(document).ready(function() {
 			var play = $('#play-pause').attr('play');
 			if (play!=='') {
 				var text = $('#typeahead').val();
+				console.log(text);
 				if (text!='undefined' && text!=='') {
 					$('#typeahead').blur();
 					$('#typeahead').focus();
 					$('#typeahead').typeahead('val', '');
 					delete_word(play, text);
-					words = words.filter(function (lm) { // remove word from "words"
-						lm != text;
-					});
 				}
 			}
 		} else if (e.keyCode === 13) { //enter
