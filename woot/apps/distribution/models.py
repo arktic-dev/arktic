@@ -45,8 +45,11 @@ class Client(models.Model):
 			project.update()
 
 	def display_ruleset(self):
-		self.ruleset.open()
-		return self.ruleset.read()
+		if self.ruleset.name:
+			self.ruleset.open()
+			return self.ruleset.read()
+		else:
+			return ''
 
 class Project(models.Model):
 	#connections

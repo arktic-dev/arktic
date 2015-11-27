@@ -15,7 +15,11 @@
 	{% if client %}
 		<h1>Rules for {{client.name}}</h1>
 		<div class="client-markdown">
-			{{client.display_ruleset}}
+			{% if client.display_ruleset %}
+				{{client.display_ruleset}}
+			{% else %}
+				No specific ruleset for this client.
+			{% endif %}
 		</div>
 	{% endif %}
 	<h1>Default FAQ</h1>
