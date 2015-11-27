@@ -123,6 +123,19 @@ def add_word(request):
 
 		return HttpResponse('')
 
+def delete_word(request):
+	if request.user.is_authenticated:
+		transcription_id = request.POST['transcription_id']
+		word_text = request.POST['word']
+
+		transcription = Transcription.objects.get(id_token=transcription_id)
+		client = transcription.client
+
+		word = client.words.get(project=transcription.project, content=word_text)
+		word.delete()
+
+		return HttpResponse('')
+
 '''
 
 http://stackoverflow.com/a/2257449/2127199

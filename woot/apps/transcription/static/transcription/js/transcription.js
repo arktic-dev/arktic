@@ -376,6 +376,21 @@ $(document).ready(function() {
 			if ($('#typeahead').is(':focus') && $('#typeahead').val()!=='') {
 				$('#common').click();
 			}
+
+		} else if (e.ctrlKey && e.keyCode===189) { //ctrl + -
+			var play = $('#play-pause').attr('play');
+			if (play!=='') {
+				var text = $('#typeahead').val();
+				if (text!='undefined' && text!=='') {
+					$('#typeahead').blur();
+					$('#typeahead').focus();
+					$('#typeahead').typeahead('val', '');
+					delete_word(play, text);
+					words = words.filter(function (lm) { // remove word from "words"
+						lm != text;
+					});
+				}
+			}
 		} else if (e.keyCode === 13) { //enter
 				//controlling word copying
 				if ($('#typeahead').is(':focus') && $('#typeahead').val()!=='') {

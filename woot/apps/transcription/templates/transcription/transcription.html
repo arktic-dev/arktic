@@ -228,6 +228,9 @@ var action_register = function (current_id, action_name, current_audio_time) {
 var add_word = function (current_id, word) {
 	$.post("/transcription/add/", {transcription_id:current_id,word:word,csrfmiddlewaretoken:'{{ csrf_token }}'});
 }
+var delete_word = function (current_id, word) {
+	$.post("/transcription/delete/", {transcription_id:current_id,word:word,csrfmiddlewaretoken:'{{ csrf_token }}'});
+}
 </script>
 <script type="text/javascript">
 $(document).ready(function() {
