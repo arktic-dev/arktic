@@ -59,7 +59,7 @@
 										{% endfor %}
 												<div id="now-{{transcription.id_token}}" class="now"></div>
 										</button>
-										<button type="button" class="btn btn-default ninja">grammar</button>
+										<button type="button" class="btn btn-default ninja">Press ctrl+Space to show/hide the shortcuts.</button>
 								</div>
 						</div>
 						<div class="panel original-panel">
@@ -130,19 +130,20 @@
 								</thead>
 								<tbody>
 										<tr><td>~</td><td>A word is cut off at the start or end.</td></tr>
-										<tr><td>(( ))</td><td>enclosing best guess.</td></tr>
-										<tr><td>[breath-noise]</td><td>noticeable sound of inhaling or exhaling.</td></tr>
-										<tr><td>[dtmf]</td><td>the sound(s) of telephone touch tones being keyed in.</td></tr>
-										<tr><td>[fragment]</td><td>word fragment - guess complete word if possible.</td></tr>
-										<tr><td>[hangup]</td><td>any audible hangup noise.</td></tr>
+										<tr><td>( )</td><td>Enclosing best guess.</td></tr>
+										<tr><td>[cough]</td><td>Cough, clear throat, laugh, sneeze.</td></tr>
+										<tr><td>[breath-noise]</td><td>Loud breath, sigh, wind on microphone.</td></tr>
+										<tr><td>[dtmf]</td><td>The sound(s) of telephone touch tones being keyed in.</td></tr>
+										<tr><td>[fragment]</td><td>The caller did not say a complete word. Add this tag directly after the word fragment. Do no guess complete word.</td></tr>
+										<tr><td>[hangup]</td><td>Any audible hangup noise.</td></tr>
 										<tr><td>[hesitation]</td><td>"um", "er", "uh", "uh-huh", "mm-hm", etc.</td></tr>
-										<tr><td>[mispronunciation]</td><td>the previous word was not pronounced in a conventional manner.</td></tr>
-										<tr><td>[noise]</td><td>a sudden, short, reasonably loud noise</td></tr>
-										<tr><td>[pause]</td><td>a significantly long pause of one or more seconds during speech</td></tr>
-										<tr><td>[side-speech]</td><td>coughs, sneezes, noises, any speech by the caller not directed at the system, any intelligible speech from a bystander</td></tr>
-										<tr><td>[loud-side-speech]</td><td>same as side-speech, but loud</td></tr>
-										<tr><td>[unintelligible]</td><td>Use this to mark any speech that you can't understand</td></tr>
-										<tr><td>[prompt-echo]</td><td>speech from the automatic system can be heard in the audio</td></tr>
+										<tr><td>[mispronunciation]</td><td>The caller mispronounced a word. Add this tag directly after the mispronounced word.</td></tr>
+										<tr><td>[noise]</td><td>Loud noise, e.g. door slam, car horn, music.</td></tr>
+										<tr><td>[pause]</td><td>Long pause e.g. 1-2 seconds during speech.</td></tr>
+										<tr><td>[side-speech]</td><td>Any speech by the caller not directed at the system. Any intelligible speech from a bystander. Examples: People talking, background speech, radio, TV, automatic train announcements.</td></tr>
+										<tr><td>[loud-side-speech]</td><td>Same as side-speech, but loud.</td></tr>
+										<tr><td>[unintelligible]</td><td>Use this to mark any speech that you can't understand.</td></tr>
+										<tr><td>[prompt-echo]</td><td>Speech from the automatic system can be heard in the audio.</td></tr>
 								</tbody>
 						</table>
 						<table class="table">
@@ -153,12 +154,12 @@
 								<tbody>
 										<tr><td>[skipped]</td><td>Skip the transcription completely if the caller "rambles", or if the transcription does not fit in our system.</td></tr>
 										<tr><td>[unsure]</td><td>Use this tag to flag a transcription for a senior transcriber to look at.</td></tr>
-										<tr><td>[background-noise]</td><td>noticeable background noise during most or all of the audio item.</td></tr>
-										<tr><td>[bad-audio]</td><td>bad audio quality during most or all of the audio item.</td></tr>
-										<tr><td>[english]</td><td>caller response in English (to a Spanish system).</td></tr>
-										<tr><td>[no-speech]</td><td>the audio item does not contain anything recognisable as speech.</td></tr>
-										<tr><td>[non-native]</td><td>caller has a strong non-native speech dialect or accent.</td></tr>
-										<tr><td>[spanish]</td><td>caller response in Spanish (to an English system).</td></tr>
+										<tr><td>[background-noise]</td><td>Noticeable background noise during most or all of the audio item. also used to note the background hubbub of unintelligible speech in e.g. a cafe or public place.</td></tr>
+										<tr><td>[bad-audio]</td><td>Any audio quality/distortion issues.</td></tr>
+										<tr><td>[english]</td><td>Caller response in English (to a Spanish system).</td></tr>
+										<tr><td>[no-speech]</td><td>The audio item does contain anything recognisable as speech. Nonetheless, [dtmf], [noise], [hangup] and other events should be marked if they occur.</td></tr>
+										<tr><td>[accent]</td><td>Caller has a strong accent or speech dialect.</td></tr>
+										<tr><td>[spanish]</td><td>Caller response in Spanish (to an English system).</td></tr>
 								</tbody>
 						</table>
 				</div>
@@ -179,6 +180,7 @@
 										<tr><td>Tab</td><td>Rewinds the audio by 2 seconds and focuses the autocomplete box.</td></tr>
 										<tr><td>Numbers</td><td>When a number is entered as a word token, it is translated into words: '123' becomes 'one two three'.</td></tr>
 										<tr><td>Backspace</td><td>Normal backspace inside autocomplete box or delete active word token in modified utterance.</td></tr>
+										<tr><td>[cough]</td><td>Y</td></tr>
 										<tr><td>[breath-noise]</td><td>B</td></tr>
 										<tr><td>[dtmf]</td><td>D</td></tr>
 										<tr><td>[fragment]</td><td>F</td></tr>
@@ -197,7 +199,7 @@
 										<tr><td>[bad-audio]</td><td>C</td></tr>
 										<tr><td>[english]</td><td>E</td></tr>
 										<tr><td>[no-speech]</td><td>O</td></tr>
-										<tr><td>[non-native]</td><td>V</td></tr>
+										<tr><td>[accent]</td><td>V</td></tr>
 										<tr><td>[spanish]</td><td>R</td></tr>
 								</tbody>
 						</table>

@@ -1,4 +1,6 @@
 
+### Rules for O2 project
+
 ### Current Status
 
 We're currently alternating between two major projects. One is for Camelot (lottery company). This one is for O2 (telecoms company). Knowing this context is helpful for guessing or googling things.

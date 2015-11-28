@@ -51,14 +51,14 @@ We call the notes in square brackets "tags".
 
 [skipped] = This interaction is too complex to be worth transcribing. The system will never understand it.
 
-[prompt] = The audio contains some or all of a speech system prompt. A prompt is anything the system says to a caller, e.g. "Please say your account number".
+[prompt-echo] = The audio contains some or all of a speech system prompt. A prompt is anything the system says to a caller, e.g. "Please say your account number".
 
 
 
 
 ### TRANSCRIPTION RULES (SUMMARY)
 
-- If you're not sure/happy about a transcription, email me the filename (don't worry about filling up my inbox). At the end of a batch, I can search for it and check it myself. We go through batches at a rate of about 1/day, so please email it to me as soon as you can, because otherwise I might not correct it before it's sent out to a client. The filename is displayed on the transcription page. It might look similar to this: 20151125073624x91140.wav
+- If you're not sure/happy about a transcription, add [unsure] to the end of it.
 - Use lower case. Spellings should be in lower case separated by spaces.
 - No punctuation or special symbols except hyphens and apostrophes.
 - No abbreviations unless spoken, even common ones like "mr". Write titles in full.
@@ -68,7 +68,7 @@ ok, yeah, yep, nope, uh huh, dunno, wanna, lemme, gimme
 - Type exactly what you hear even if it is ungrammatical or skips or repeats words.
 - Type ~ at the start or end of the utterance where it was cut off by the system
 - Use [skipped] for long complex utterances and also for those that are too long for our system. I'll check them all myself at the end. However, this doesn't apply to long complex [side-speech] e.g. you should still transcribe "[side-speech] make a payment".
-- While viewing the transcription page you can use ctrl-space to access the list of shortcuts. 
+- While viewing the transcription page you can use ctrl-space to access the list of shortcuts.
 
 
 ### NORMAL TRANSCRIPTION RULES

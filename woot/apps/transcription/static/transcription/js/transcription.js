@@ -470,6 +470,9 @@ $(document).ready(function() {
 			} else if (e.keyCode === 75) {
 				e.preventDefault()
 				text = '[skipped]';
+			} else if (e.keyCode === 89) {
+				e.preventDefault()
+				text = '[cough]';
 			} else if (e.keyCode === 67) {
 				e.preventDefault()
 				text = '[bad-audio]';
