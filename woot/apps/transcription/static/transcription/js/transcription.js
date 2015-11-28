@@ -484,7 +484,7 @@ $(document).ready(function() {
 				text = '[no-speech]';
 			} else if (e.keyCode === 86) {
 				e.preventDefault()
-				text = '[non-native]';
+				text = '[accent]';
 			} else if (e.keyCode === 82) {
 				e.preventDefault()
 				text = '[spanish]';
