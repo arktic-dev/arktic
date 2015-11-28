@@ -33,7 +33,8 @@ class TranscriptionView(View):
 				transcription.update()
 
 			# words
-			words = json.dumps([word.content for word in job.project.words.filter(Q(content__contains=' ') | Q(tag=True))])
+			# words = json.dumps([word.content for word in job.project.words.filter(Q(content__contains=' ') | Q(tag=True))])
+			words = json.dumps([word.content for word in job.project.words.filter(Q(content__contains=' '))]) # only phrases entered by user
 
 			#render
 			return render(request, 'transcription/transcription.html', {'transcriptions':transcriptions,'words':words,'job_id':job.id_token,'client':transcription.client})
