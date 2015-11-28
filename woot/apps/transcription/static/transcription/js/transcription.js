@@ -452,6 +452,9 @@ $(document).ready(function() {
 			} else if (e.keyCode === 80) {
 				e.preventDefault()
 				text = '[pause]';
+			} else if (e.keyCode === 81) {
+				e.preventDefault()
+				text = '[unintelligible]';
 			} else if (e.keyCode === 83) {
 				e.preventDefault()
 				text = '[side-speech]';
@@ -460,10 +463,13 @@ $(document).ready(function() {
 				text = '[loud-side-speech]';
 			} else if (e.keyCode === 85) {
 				e.preventDefault()
-				text = '[unintelligible]';
+				text = '[unsure]';
 			} else if (e.keyCode === 90) {
 				e.preventDefault()
 				text = '[background-noise]';
+			} else if (e.keyCode === 75) {
+				e.preventDefault()
+				text = '[skipped]';
 			} else if (e.keyCode === 67) {
 				e.preventDefault()
 				text = '[bad-audio]';
