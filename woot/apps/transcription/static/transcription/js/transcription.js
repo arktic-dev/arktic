@@ -437,7 +437,7 @@ $(document).ready(function() {
 			} else if (e.keyCode === 70) {
 				e.preventDefault()
 				text = '[fragment]';
-			} else if (e.keyCode === 65) {
+			} else if (e.keyCode === 86) {
 				e.preventDefault()
 				text = '[hangup]';
 			} else if (e.keyCode === 77) {
@@ -482,7 +482,7 @@ $(document).ready(function() {
 			} else if (e.keyCode === 79) {
 				e.preventDefault()
 				text = '[no-speech]';
-			} else if (e.keyCode === 86) {
+			} else if (e.keyCode === 65) {
 				e.preventDefault()
 				text = '[accent]';
 			} else if (e.keyCode === 82) {

@@ -10,7 +10,7 @@ We use "normal" rules/conventions for the Camelot project, as detailed in the no
 Note: We're not correcting software-generated transcriptions for the O2 project; we're writing completely new transcriptions that speech analysts will read carefully.
 
 So:
-- Plz be careful with spelling.
+- Please be careful with spelling.
 - Go slowly as you adjust to a new ruleset.
 
 The O2 data-gathering system waits for 2 seconds of silence at the end of every utterance. You don't have to listen to this all the way through. Just move to the next utterance when the waveform viewer shows that you've finished this one.
