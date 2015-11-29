@@ -17,7 +17,7 @@ from djcelery import setup_loader
 #celery: https://zapier.com/blog/async-celery-example-why-and-how/
 
 ########## JOBS
-NUMBER_OF_TRANSCRIPTIONS_PER_JOB = 20
+NUMBER_OF_TRANSCRIPTIONS_PER_JOB = 50
 JOB_ID_CHARS = string.ascii_uppercase + string.digits
 JOB_ID_LENGTH = 8
 
