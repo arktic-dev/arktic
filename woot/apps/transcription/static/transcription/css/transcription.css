@@ -44,7 +44,7 @@ html {
 
 #interface {
 	position:fixed;
-	top:50%;
+	top:280px;
 	left:50%;
 	margin-top:-150px;
 	margin-left:-550px;
