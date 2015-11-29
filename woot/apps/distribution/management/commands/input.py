@@ -11,7 +11,7 @@ from apps.distribution.util import generate_id_token, process_audio
 
 # util
 import os
-from os.path import join
+from os.path import join, basename
 import json
 
 # var
