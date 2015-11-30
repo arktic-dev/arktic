@@ -102,12 +102,17 @@ class Command(BaseCommand):
 
 					# total transcriptions
 					user = User.objects.get(email=email)
-					unique_transcriptions = list(set([r.transcription.pk for r in user.revisions.filter(job__project=project)]))
-					unique_completed_transcriptions = len(unique_transcriptions)
+					unique_transcriptions = len(list(set([r.transcription.pk for r in user.revisions.filter(job__project=project)])))
+					latest_revisions = len([r.transcription.revisions.latest().pk for r in user.revisions.filter(job__project=project) if r.transcription.revisions.latest().user==user])
+					total_audio_items = user.jobs.count() * settings.NUMBER_OF_TRANSCRIPTIONS_PER_JOB
+
 					# total transcription time
 					total_transcription_time = time.strftime('%H:%M:%S', time.gmtime(sum([Transcription.objects.get(pk=pk).audio_time for pk in unique_transcriptions])))
 
-					print('		Completed transcriptions: {} ({})'.format(unique_completed_transcriptions, total_transcription_time))
+					print('		Unique transcriptions: {}'.format(unique_transcriptions))
+					print('		Latest revisions: {}'.format(latest_revisions))
+					print('		Total items: {}'.format(total_audio_items))
+					print('		Total audio time: {}'.format(total_transcription_time))
 					print('')
 			else:
 

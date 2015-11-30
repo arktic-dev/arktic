@@ -171,8 +171,14 @@ class Job(models.Model):
 
 		self.active_transcriptions = self.transcriptions.filter(is_active=True).count()
 		if self.active_transcriptions==0:
-			self.is_active = False
-			self.date_completed = timezone.now()
+			if self.project.is_demo: # this should reset the entire job upon completion
+				for transcription in self.transcriptions.filter(is_active=False):
+					transcription.revisions.all().delete()
+					transcription.is_active = True
+					transcription.save()
+			else:
+				self.is_active = False
+				self.date_completed = timezone.now()
 
 		time_taken = 0
 		for transcription in self.transcriptions.filter(is_active=False):
