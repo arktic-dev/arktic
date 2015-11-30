@@ -156,7 +156,8 @@ class Job(models.Model):
 
 		for transcription in job_set:
 			transcription.date_last_requested = timezone.now()
-			transcription.is_available = False
+			if not self.client.is_demo:
+				transcription.is_available = False
 			self.transcriptions.add(transcription)
 			transcription.save()
 
@@ -171,7 +172,7 @@ class Job(models.Model):
 
 		self.active_transcriptions = self.transcriptions.filter(is_active=True).count()
 		if self.active_transcriptions==0:
-			if self.project.is_demo: # this should reset the entire job upon completion
+			if self.client.is_demo: # this should reset the entire job upon completion
 				for transcription in self.transcriptions.filter(is_active=False):
 					transcription.revisions.all().delete()
 					transcription.is_active = True
