@@ -59,7 +59,7 @@ def create_new_job(request):
 						if user.is_demo:
 							project = P if P.client.is_demo else None
 						else:
-							project = P
+							project = P if not P.client.is_demo else None
 
 				if project is not None:
 					job_transcription_set = project.transcriptions.filter(is_available=True).order_by('utterance')
