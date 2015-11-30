@@ -175,6 +175,7 @@ class Job(models.Model):
 				for transcription in self.transcriptions.filter(is_active=False):
 					transcription.revisions.all().delete()
 					transcription.is_active = True
+					transcription.is_available = True
 					transcription.save()
 			else:
 				self.is_active = False
