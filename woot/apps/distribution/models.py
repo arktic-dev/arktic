@@ -28,6 +28,7 @@ class Client(models.Model):
 
 	# counts
 	total_transcriptions = models.IntegerField(default=0)
+	total_audio_time = models.FloatField(default=0.0)
 	active_transcriptions = models.IntegerField(default=0)
 
 	#methods
@@ -69,6 +70,7 @@ class Project(models.Model):
 
 	# counts
 	total_transcriptions = models.IntegerField(default=0)
+	total_audio_time = models.FloatField(default=0.0)
 	active_transcriptions = models.IntegerField(default=0)
 
 	#methods

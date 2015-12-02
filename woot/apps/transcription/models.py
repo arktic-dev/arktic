@@ -66,6 +66,9 @@ class Transcription(models.Model):
 	def update(self):
 		#if deactivation condition is satisfied, deactivate transcription
 		self.is_active = not self.deactivation_condition()
+		if not self.is_active:
+			self.client.active_transcriptions -= 1
+			self.client.save()
 		self.save()
 
 	def audio_file_basename(self):

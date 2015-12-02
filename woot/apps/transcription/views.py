@@ -91,14 +91,19 @@ def start_redirect(request):
 def update_revision(request):
 	if request.user.is_authenticated:
 		#get user and update revision utterance
+		user = User.objects.get(email=request.user)
 		transcription = Transcription.objects.get(id_token=request.POST['transcription_id'])
 		revision, created = transcription.revisions.get_or_create(client=transcription.client,
 																															project=transcription.project,
-																															user=User.objects.get(email=request.user),
+																															user=user,
 																															job=Job.objects.get(id_token=request.POST['job_id']))
 
 		if created:
 			revision.id_token = generate_id_token('transcription', 'Revision')
+
+			# update counts
+			user.completed_revisions += 1
+			user.save()
 
 		#split utterance
 		revision.utterance = request.POST['utterance']

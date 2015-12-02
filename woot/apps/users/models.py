@@ -52,6 +52,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 	# counts
 	completed_revisions = models.IntegerField(default=0)
+	total_audio_time = models.FloatField(default=0.0)
 
 	objects = UserManager()
 

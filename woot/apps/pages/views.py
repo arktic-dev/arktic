@@ -52,12 +52,10 @@ class StartView(View):
 
 			#total remaining transcriptions
 			remaining_transcriptions = Transcription.objects.filter(is_active=True, client__is_demo=user.is_demo).count()
-			transcriptions_done_by_user = len(np.unique([revision.transcription.pk for revision in user.revisions.all()]))
 
 			return render(request, 'pages/start.html', {'user':user,
 																									'active_jobs':active_jobs,
-																									'remaining_transcriptions':remaining_transcriptions,
-																									'transcriptions_done_by_user':transcriptions_done_by_user,})
+																									'remaining_transcriptions':remaining_transcriptions,})
 		else:
 			return HttpResponseRedirect('/login/')
 
