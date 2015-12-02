@@ -41,7 +41,7 @@ class Command(BaseCommand):
 		data_root = join(settings.SITE_ROOT, 'test')
 
 		# 2. perform input
-		for client_name in [f for f in os.listdir(data_root) if '.DS' not in f]:
+		for client_name in [f for f in os.listdir(data_root) if '.DS' not in f and os.path.isdir(os.path.join(data_root, f))]:
 			# 2-2. get or create client
 			client, client_created = Client.objects.get_or_create(name=client_name)
 			print('TEST | client {}... {}{}'.format(client_name, 'already exists.' if not client_created else 'created.', spacer))

@@ -26,6 +26,10 @@ class Client(models.Model):
 	has_ruleset = models.BooleanField(default=False)
 	ruleset = models.FileField(upload_to='rulesets')
 
+	# counts
+	total_transcriptions = models.IntegerField(default=0)
+	active_transcriptions = models.IntegerField(default=0)
+
 	#methods
 	def __str__(self):
 		return self.name
@@ -62,6 +66,10 @@ class Project(models.Model):
 	is_active = models.BooleanField(default=False)
 	project_path = models.TextField(max_length=255)
 	completed_project_file = models.FileField(upload_to='completed_projects')
+
+	# counts
+	total_transcriptions = models.IntegerField(default=0)
+	active_transcriptions = models.IntegerField(default=0)
 
 	#methods
 	def __str__(self):

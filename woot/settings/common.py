@@ -36,6 +36,9 @@ USER_ACCESS = 'arktic_users.json'
 
 
 ########## DATA CONFIGURATION
+# import db # gunzip < woot/db/db.zip | mysql -u arkaeologic -h mysql.server -p 'arkaeologic$arktic'
+# export db # mysqldump -u arkaeologic -h mysql.server -p 'arkaeologic$arktic' | gzip > db.gz
+
 if exists(join(ACCESS_ROOT, DATA_ACCESS)):
 	with open(join(ACCESS_ROOT, DATA_ACCESS), 'r') as data_json:
 		data = json.load(data_json)

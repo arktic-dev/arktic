@@ -49,6 +49,10 @@ class User(AbstractBaseUser, PermissionsMixin):
 	is_active = models.BooleanField(default=True)
 	is_admin = models.BooleanField(default=False)
 	is_demo = models.BooleanField(default=False)
+
+	# counts
+	completed_revisions = models.IntegerField(default=0)
+
 	objects = UserManager()
 
 	#-settings
