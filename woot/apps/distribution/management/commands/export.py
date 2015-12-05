@@ -80,7 +80,7 @@ class Command(BaseCommand):
 			for client in Client.objects.all():
 				print('client {}'.format(client.name))
 				for project in client.projects.all():
-					number_of_revisions = Revision.objects.filter(transcription__project=project).count()
+					number_of_revisions = project.transcriptions.filter(is_active=False).count()
 					number_of_transcriptions = project.transcriptions.count()
 					if options['completed']:
 						if number_of_revisions==number_of_transcriptions:
