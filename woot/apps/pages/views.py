@@ -51,7 +51,7 @@ class StartView(View):
 			active_jobs = user.jobs.filter(is_active=True)
 
 			#total remaining transcriptions
-			remaining_transcriptions = Transcription.objects.filter(is_active=True, client__is_demo=user.is_demo).count()
+			remaining_transcriptions = Transcription.objects.filter(is_available=True, client__is_demo=user.is_demo).count()
 
 			return render(request, 'pages/start.html', {'user':user,
 																									'active_jobs':active_jobs,
