@@ -5,7 +5,7 @@ from django.views.generic import View
 from django.conf import settings
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse, HttpResponseRedirect
-from django.db.models import Q, Max, Min
+from django.db.models import Q, Max, Min, Count
 
 #local
 from apps.users.models import User
@@ -50,7 +50,11 @@ def create_new_job(request):
 			user = User.objects.get(email=user)
 
 			#if there are available transcriptions
-			if Transcription.objects.filter(is_available=True).count()>0:
+			if user.jobs.filter(is_active=True):
+				job = user.jobs.filter(is_active=True)[0]
+
+				return HttpResponseRedirect('/transcription/' + str(job.id_token))
+			elif Transcription.objects.filter(is_available=True).count()>0:
 
 				# 1. sort projects by age (newest first), and get a set of transcriptions if they exist
 				project = None
