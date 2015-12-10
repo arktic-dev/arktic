@@ -50,7 +50,7 @@ def create_new_job(request):
 			user = User.objects.get(email=user)
 
 			#if there are available transcriptions
-			if user.jobs.filter(is_active=True):
+			if user.jobs.filter(is_active=True).exclude(id_token=''):
 				job = user.jobs.filter(is_active=True)[0]
 
 				return HttpResponseRedirect('/transcription/' + str(job.id_token))
