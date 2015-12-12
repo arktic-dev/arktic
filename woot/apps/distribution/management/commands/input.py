@@ -112,5 +112,5 @@ class Command(BaseCommand):
 
 				print('Client: {}'.format(client_name))
 				for project_name in [f for f in os.listdir(join(root, client_name)) if isdir(join(root, client_name, f))]:
-					if (client is not None and client.projects.filter(name=project_name).count()) or client is None:
+					if (client is not None and client.projects.filter(name=project_name).count()==0) or client is None:
 						print('-- Project: {}'.format(project_name))
