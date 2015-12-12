@@ -45,12 +45,12 @@ html {
 
 #interface {
 	position:fixed;
-	top:280px;
+	top:210px;
 	left:50%;
 	margin-top:-150px;
 	margin-left:-550px;
 	height:300px;
-	width:1200px;
+	width:1024px;
 	border:none;
 	-webkit-box-shadow:none;
 	box-shadow:none;
@@ -76,7 +76,7 @@ html {
 }
 
 #typeahead-input-group {
-	top:162px;
+	top:202px;
 	width:500px;
 	left:15px;
 }
