@@ -110,8 +110,7 @@ class Command(BaseCommand):
 				if not Client.objects.filter(name=client_name).count():
 					client = Client.objects.get(name=client_name)
 
-				if (client is not None and not client.projects.count()) or client is None:
-					print('Client: {}'.format(client_name))
-					for project_name in [f for f in os.listdir(join(root, client_name)) if isdir(join(root, client_name, f))]:
-						if (client is not None and not client.projects.filter(name=project_name).count()) or client is None:
-							print('-- Project: {}'.format(project_name))
+				print('Client: {}'.format(client_name))
+				for project_name in [f for f in os.listdir(join(root, client_name)) if isdir(join(root, client_name, f))]:
+					if (client is not None and not client.projects.filter(name=project_name).count()) or client is None:
+						print('-- Project: {}'.format(project_name))
