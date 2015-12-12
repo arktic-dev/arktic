@@ -13,6 +13,7 @@ from apps.distribution.util import generate_id_token, process_audio
 import os
 from os.path import join, basename, exists, isdir
 import json
+from optparse import make_option
 
 # var
 spacer = ' '*10
