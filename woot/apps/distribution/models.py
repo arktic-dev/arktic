@@ -4,6 +4,7 @@
 from django.db import models
 from django.conf import settings
 from django.utils import timezone
+from django.db.models import Count
 
 #local
 from apps.users.models import User
@@ -72,6 +73,7 @@ class Project(models.Model):
 	total_transcriptions = models.IntegerField(default=0)
 	total_audio_time = models.FloatField(default=0.0)
 	active_transcriptions = models.IntegerField(default=0)
+	unexported_transcriptions = models.IntegerField(default=0)
 
 	#methods
 	def __str__(self):
@@ -89,21 +91,27 @@ class Project(models.Model):
 		self.is_active = (self.jobs.filter(is_active=True).count()!=0 and self.grammars.filter(is_active=True).count()!=0)
 		self.save()
 
-	def export(self, root, users_flag=False):
+	def export(self, root, users_flag=False, number_to_export=-1):
 		''' Export prepares all of the individual relfiles to be packaged and be available for download. '''
 		print('Exporting project {} from client {}...'.format(self.name, self.client.name))
 
 		# 1. vars
-		number_of_transcriptions = self.transcriptions.count()
 		revisions = self.revisions.all()
+		current_date = dt.datetime.now().strftime('%Y-%m-%d-%H-%M')
 
-		t_pk = list(set([r.transcription.pk for r in revisions]))
+		t_pks = list(set([r.transcription.pk for r in revisions]))
+		transcriptions_to_export = self.transcriptions.filter(pk__in=t_pks, has_been_exported=False)
+		if number_to_export>-1 and number_to_export<transcriptions_to_export.count():
+			transcriptions_to_export = transcriptions_to_export[:number_to_export]
 
-		with open(os.path.join(root, '{}.csv'.format(self.name)), 'w+') as csv_file:
-			for i, pk in enumerate(t_pk):
-				transcription = self.transcriptions.get(pk=pk)
+		with open(os.path.join(root, '{}_{}_number-{}.csv'.format(self.name, current_date, transcriptions_to_export.count())), 'w+') as csv_file:
+			for i, transcription in enumerate(transcriptions_to_export):
+				transcription.has_been_exported = True
+				transcription.save()
+				self.unexported_transcriptions -= 1
+				self.save()
 				revision = transcription.revisions.latest()
-				print('Exporting {}/{}...		 '.format(i+1, len(t_pk)), end='\r' if i+1<len(t_pk) else '\n')
+				print('Exporting {}/{}...		 '.format(i+1, transcriptions_to_export.count()), end='\r' if i+1<transcriptions_to_export.count() else '\n')
 				csv_file.write('{}|{}'.format(os.path.basename(revision.transcription.audio_file.name), revision.utterance))
 
 				if users_flag:

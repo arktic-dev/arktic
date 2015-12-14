@@ -99,6 +99,11 @@ class Command(BaseCommand):
 						else:
 							print('client {}, project {}, file {}... already exists. ({}/{})'.format(client_name, project_name, audio_file, i+1, len(audio_files)), end='\r' if i<len(audio_files)-1 else '\n')
 
+					project.active_transcriptions = project.transcriptions.filter(is_active=True).count()
+					project.total_transcriptions = project.transcriptions.count()
+					project.unexported_transcriptions = project.transcriptions.count()
+					project.save()
+
 				else:
 					print('Project {}:{} not found in data root.'.format(client_name, project_name))
 

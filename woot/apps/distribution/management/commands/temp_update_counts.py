@@ -37,6 +37,7 @@ class Command(BaseCommand):
 			project.total_transcriptions = project.transcriptions.count()
 			project.total_audio_time = sum([t.audio_time for t in project.transcriptions.all()])
 			project.active_transcriptions = project.transcriptions.filter(is_active=True).count()
+			project.unexported_transcriptions = project.transcriptions.filter(has_been_exported=False).count()
 			project.save()
 
 		for user in User.objects.all():

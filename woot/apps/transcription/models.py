@@ -38,6 +38,7 @@ class Transcription(models.Model):
 	date_created = models.DateTimeField(auto_now_add=True)
 	is_active = models.BooleanField(default=False)
 	is_available = models.BooleanField(default=False)
+	has_been_exported = models.BooleanField(default=False)
 	date_last_requested = models.DateTimeField(auto_now_add=False, null=True)
 	latest_revision_done_by_current_user = models.BooleanField(default=False)
 

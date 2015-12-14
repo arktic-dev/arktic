@@ -6,7 +6,7 @@ from django.conf import settings
 from django.core.files import File
 
 # local
-from apps.distribution.models import Client
+from apps.distribution.models import Project, Client
 from apps.transcription.models import Revision
 from apps.distribution.util import generate_id_token, process_audio
 
@@ -50,6 +50,12 @@ class Command(BaseCommand):
 			help='Toggle username in export csv' # who cares
 		),
 
+		make_option('--number', # option that will appear in cmd
+			action='store', # no idea
+			dest='number', # refer to this in options variable
+			default=-1, # some default
+		),
+
 	)
 
 	args = ''
@@ -61,18 +67,11 @@ class Command(BaseCommand):
 		client_root = os.path.join(root, client_name)
 		project_name = options['project']
 		include_users = options['users']
+		number_to_export = int(options['number'])
 
-		if client_name!='':
-			client = Client.objects.get(name=client_name)
-
-			if project_name!='':
-				project = client.projects.get(name=project_name)
-				project.export(client_root, users_flag=include_users)
-
-			else:
-				print('Exporting all projects from client {}'.format(client_name))
-				for project in client.projects.all():
-					project.export(client_root, users_flag=include_users)
+		if client_name and project_name:
+			project = Project.objects.get(client__name=client_name, name=project_name)
+			project.export(client_root, users_flag=include_users, number_to_export=number_to_export)
 
 		else:
 			print('Listing clients and projects in order of age. Add "--completed" flag to exclude active projects.')
@@ -80,10 +79,9 @@ class Command(BaseCommand):
 			for client in Client.objects.all():
 				print('client {}'.format(client.name))
 				for project in client.projects.all():
-					number_of_revisions = project.transcriptions.filter(is_active=False).count()
-					number_of_transcriptions = project.transcriptions.count()
+					active_transcriptions = project.active_transcriptions
 					if options['completed']:
-						if number_of_revisions==number_of_transcriptions:
-							print('client {}, project {}, {}/{} completed transcriptions'.format(client.name, project.name, number_of_revisions, number_of_transcriptions))
+						if active_transcriptions==0:
+							print('client {}, project {}, {}/{} completed transcriptions, {} not yet exported.'.format(client.name, project.name, project.total_transcriptions-project.active_transcriptions, project.total_transcriptions, project.unexported_transcriptions))
 					else:
-						print('client {}, project {}, {}/{} completed transcriptions'.format(client.name, project.name, number_of_revisions, number_of_transcriptions))
+						print('client {}, project {}, {}/{} completed transcriptions, {} not yet exported.'.format(client.name, project.name, project.total_transcriptions-project.active_transcriptions, project.total_transcriptions, project.unexported_transcriptions))
