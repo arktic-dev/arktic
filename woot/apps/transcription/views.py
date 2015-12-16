@@ -52,9 +52,12 @@ def create_new_job(request):
 			#if there are available transcriptions
 			if user.jobs.filter(is_active=True).exclude(id_token=''):
 				job = user.jobs.filter(is_active=True)[0]
+				job.update()
 
-				return HttpResponseRedirect('/transcription/' + str(job.id_token))
-			elif Transcription.objects.filter(is_available=True).count()>0:
+				if job.is_active:
+					return HttpResponseRedirect('/transcription/' + str(job.id_token))
+
+			if Transcription.objects.filter(is_available=True).count()>0:
 
 				# 1. sort projects by age (newest first), and get a set of transcriptions if they exist
 				project = None
