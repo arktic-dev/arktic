@@ -106,10 +106,12 @@ class Project(models.Model):
 
 		with open(os.path.join(root, '{}_{}_number-{}.csv'.format(self.name, current_date, transcriptions_to_export.count())), 'w+') as csv_file:
 			for i, transcription in enumerate(transcriptions_to_export):
-				transcription.has_been_exported = True
-				transcription.save()
-				self.unexported_transcriptions -= 1
-				self.save()
+				if number_to_export!=-1:
+					transcription.has_been_exported = True
+					transcription.save()
+					self.unexported_transcriptions -= 1
+					self.save()
+					
 				revision = transcription.revisions.latest()
 				print('Exporting {}/{}...		 '.format(i+1, transcriptions_to_export.count()), end='\r' if i+1<transcriptions_to_export.count() else '\n')
 				csv_file.write('{}|{}'.format(os.path.basename(revision.transcription.audio_file.name), revision.utterance))
