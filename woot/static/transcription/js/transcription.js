@@ -376,6 +376,19 @@ $(document).ready(function() {
 			if ($('#typeahead').is(':focus') && $('#typeahead').val()!=='') {
 				$('#common').click();
 			}
+
+		} else if (e.ctrlKey && e.keyCode===189) { //ctrl + -
+			var play = $('#play-pause').attr('play');
+			if (play!=='') {
+				var text = $('#typeahead').val();
+				console.log(text);
+				if (text!='undefined' && text!=='') {
+					$('#typeahead').blur();
+					$('#typeahead').focus();
+					$('#typeahead').typeahead('val', '');
+					delete_word(play, text);
+				}
+			}
 		} else if (e.keyCode === 13) { //enter
 				//controlling word copying
 				if ($('#typeahead').is(':focus') && $('#typeahead').val()!=='') {
@@ -424,28 +437,43 @@ $(document).ready(function() {
 			} else if (e.keyCode === 70) {
 				e.preventDefault()
 				text = '[fragment]';
-			} else if (e.keyCode === 65) {
+			} else if (e.keyCode === 86) {
 				e.preventDefault()
 				text = '[hangup]';
 			} else if (e.keyCode === 77) {
 				e.preventDefault()
 				text = '[mispronunciation]';
+			} else if (e.keyCode === 74) {
+				e.preventDefault()
+				text = '[prompt-echo]';
 			} else if (e.keyCode === 78) {
 				e.preventDefault()
 				text = '[noise]';
 			} else if (e.keyCode === 80) {
 				e.preventDefault()
 				text = '[pause]';
+			} else if (e.keyCode === 81) {
+				e.preventDefault()
+				text = '[unintelligible]';
 			} else if (e.keyCode === 83) {
 				e.preventDefault()
 				text = '[side-speech]';
+			} else if (e.keyCode === 76) {
+				e.preventDefault()
+				text = '[loud-side-speech]';
 			} else if (e.keyCode === 85) {
 				e.preventDefault()
-				text = '[unintelligible]';
+				text = '[unsure]';
 			} else if (e.keyCode === 90) {
 				e.preventDefault()
 				text = '[background-noise]';
+			} else if (e.keyCode === 75) {
+				e.preventDefault()
+				text = '[skipped]';
 			} else if (e.keyCode === 67) {
+				e.preventDefault()
+				text = '[cough]';
+			} else if (e.keyCode === 89) {
 				e.preventDefault()
 				text = '[bad-audio]';
 			} else if (e.keyCode === 69) {
@@ -454,9 +482,9 @@ $(document).ready(function() {
 			} else if (e.keyCode === 79) {
 				e.preventDefault()
 				text = '[no-speech]';
-			} else if (e.keyCode === 86) {
+			} else if (e.keyCode === 65) {
 				e.preventDefault()
-				text = '[non-native]';
+				text = '[accent]';
 			} else if (e.keyCode === 82) {
 				e.preventDefault()
 				text = '[spanish]';

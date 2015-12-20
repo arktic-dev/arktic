@@ -11,20 +11,46 @@ html {
 	border-radius: 0px;
 	-webkit-box-shadow: 0 0px 0px rgba(0,0,0,.05);
 	box-shadow: 0 0px 0px rgba(0,0,0,.05);
+	margin-bottom: 0px;
 }
 
 #wrapper {
 	width:800px;
 }
 
+#ruleset-flag {
+	position: fixed;
+	left: 185px;
+	top: 80px;
+}
+
+#clipboard {
+	height: 34px;
+}
+
+#clipboard:hover {
+	background-color: white;
+}
+
+#clipboard:active {
+	background-color: white;
+	box-shadow: none;
+}
+
+#clipboard input {
+	width:200px;
+	border: 0px;
+	outline: none;
+}
+
 #interface {
 	position:fixed;
-	top:50%;
+	top:210px;
 	left:50%;
 	margin-top:-150px;
 	margin-left:-550px;
 	height:300px;
-	width:1200px;
+	width:1024px;
 	border:none;
 	-webkit-box-shadow:none;
 	box-shadow:none;
@@ -50,7 +76,7 @@ html {
 }
 
 #typeahead-input-group {
-	top:162px;
+	top:202px;
 	width:500px;
 	left:15px;
 }

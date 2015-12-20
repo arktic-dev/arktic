@@ -15,3 +15,7 @@ ol p {
 ul{
 	padding-left:20px;
 }
+
+#wrapper {
+	width:500px;
+}
