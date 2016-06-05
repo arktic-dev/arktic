@@ -26,7 +26,7 @@ class Command(BaseCommand):
 		root = settings.DATA_ROOT
 
 		# 1. for each client name in root:
-		for client_name in [f for f in os.listdir(root) if '.DS' not in f]:
+		for client_name in [f for f in os.listdir(root) if ('.DS' not in f and 'demo' in f)]:
 
 			# 2. get or create client
 			client, client_created = Client.objects.get_or_create(name=client_name)
