@@ -15,7 +15,6 @@ from apps.transcription.models import Transcription
 from apps.distribution.models import Client
 
 #util
-import numpy as np
 import os
 from os.path import join
 

@@ -3,7 +3,7 @@
 #django
 from django.contrib import admin
 from django.conf.urls import patterns, include, url
-from settings.common import MEDIA_ROOT
+from settings.common import MEDIA_ROOT, STATIC_ROOT
 
 #local
 from apps.pages.views import LoginView, StartView, logout_view, FAQView
@@ -17,6 +17,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
 	# Serving media
 	url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': MEDIA_ROOT, 'show_indexes': True }),
+	url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': STATIC_ROOT, 'show_indexes': True }),
 
 	#pages
 	url(r'^login/$', LoginView.as_view()),

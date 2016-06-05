@@ -96,30 +96,34 @@ class Project(models.Model):
 		print('Exporting project {} from client {}...'.format(self.name, self.client.name))
 
 		# 1. vars
-		revisions = self.revisions.all()
+		revisions_to_export = self.revisions.filter(transcription__has_been_exported=False)
 		current_date = dt.datetime.now().strftime('%Y-%m-%d-%H-%M')
 
-		t_pks = list(set([r.transcription.pk for r in revisions]))
-		transcriptions_to_export = self.transcriptions.filter(pk__in=t_pks, has_been_exported=False)
-		if number_to_export>-1 and number_to_export<transcriptions_to_export.count():
-			transcriptions_to_export = transcriptions_to_export[:number_to_export]
+		total_to_export = len(set([r.transcription.pk for r in revisions_to_export]))
+		total_to_export = number_to_export if number_to_export>-1 and total_to_export>number_to_export else total_to_export
 
-		with open(os.path.join(root, '{}_{}_number-{}.csv'.format(self.name, current_date, transcriptions_to_export.count())), 'w+') as csv_file:
-			for i, transcription in enumerate(transcriptions_to_export):
-				if number_to_export!=-1:
+		with open(os.path.join(root, '{}_{}_number-{}.csv'.format(self.name, current_date, total_to_export)), 'w+') as csv_file:
+			total_exported = 0
+			for i, revision in enumerate(revisions_to_export):
+				if revision.pk == revision.transcription.revisions.latest().pk and total_exported!=total_to_export: # if is latest revision
+					total_exported += 1
+					transcription = revision.transcription
 					transcription.has_been_exported = True
 					transcription.save()
 					self.unexported_transcriptions -= 1
 					self.save()
-					
-				revision = transcription.revisions.latest()
-				print('Exporting {}/{}...		 '.format(i+1, transcriptions_to_export.count()), end='\r' if i+1<transcriptions_to_export.count() else '\n')
-				csv_file.write('{}|{}'.format(os.path.basename(revision.transcription.audio_file.name), revision.utterance))
 
-				if users_flag:
-					csv_file.write('|{}'.format(revision.user.email))
+					print('Exporting {} {}/{}...		 '.format(i, total_exported, total_to_export), end='\r' if total_exported<total_to_export else '\n')
 
-				csv_file.write('\n')
+					csv_file.write('{}|{}'.format(os.path.basename(revision.transcription.audio_file.name), revision.utterance))
+
+					if users_flag:
+						csv_file.write('|{}'.format(revision.user.email))
+
+					csv_file.write('\n')
+
+				if total_exported==total_to_export:
+					break
 
 	def process_words(self):
 		'''

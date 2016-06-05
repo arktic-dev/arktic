@@ -66,7 +66,7 @@ The speech system, meanwhile, thinks that the noise is speech and transcribes th
 
 When the scientist compares the two results, he/she sees:
 
-TRANSCRIPTION: help me with something else [noise]  
+TRANSCRIPTION: help me with something else [noise]	
 SYSTEM RESULT: help me with something else delivery
 
 This makes the problem obvious. The scientist can then change the speech system to make it more accurate.
@@ -201,59 +201,59 @@ ok, yeah, yep, nope, uh huh, dunno, wanna, lemme, gimme, innit, ain't
 
 ### 10: NORMAL TRANSCRIPTION RULES
 
-- Use lower case for all transcriptions.  Spelled letters should be in lower case separated by spaces, with no period after them.  
-e.g. "my postcode is c b twelve five a q"  
-NOT: "My postcode is CB12 5AQ."  
-e.g. "my name is isa spelt i s a"  
-NOT: "My name is Isa, spelt I-S-A."  
+- Use lower case for all transcriptions.	Spelled letters should be in lower case separated by spaces, with no period after them.	
+e.g. "my postcode is c b twelve five a q"	
+NOT: "My postcode is CB12 5AQ."	
+e.g. "my name is isa spelt i s a"	
+NOT: "My name is Isa, spelt I-S-A."	
 
-- No punctuation or special symbols except hyphens and apostrophes where these would normally be used.   
-e.g. i'm not sure, i don't know, mother-in-law, self-evident  
-Q: Should I always use hyphens? For example, when a caller says "thirty-first of april" or "twenty-second of may"?  
+- No punctuation or special symbols except hyphens and apostrophes where these would normally be used.	 
+e.g. i'm not sure, i don't know, mother-in-law, self-evident	
+Q: Should I always use hyphens? For example, when a caller says "thirty-first of april" or "twenty-second of may"?	
 A: No. Don't make an effort to use hyphens, generally. For the system programmer, it doesn't help and sometimes hinders.
 
-- Use full words for everything including numbers, dates, amounts etc.  
---- Numbers  
-e.g. "oh", "zero", "nothing" or "nought" - whichever was spoken  
-NOT: "0"  
-e.g. "a hundred" or "one hundred" - whichever was spoken  
-NOT: "100"  
-e.g.  "twenty four double three"  
-NOT: "24 33"  
---- Percentages  
-e.g. "six point oh four percent", "two percent"  
-NOT: 6.04%, 2%  
---- Currency amounts – type all units as words, no symbols like £ or $.  
-e.g. "twelve pounds ten p", "a hundred and five u s dollars"  
-NOT: £12.10, US$105  
---- Dates  
-e.g. "monday january the eighteenth two thousand and twelve"  
+- Use full words for everything including numbers, dates, amounts etc.	
+--- Numbers	
+e.g. "oh", "zero", "nothing" or "nought" - whichever was spoken	
+NOT: "0"	
+e.g. "a hundred" or "one hundred" - whichever was spoken	
+NOT: "100"	
+e.g.	"twenty four double three"	
+NOT: "24 33"	
+--- Percentages	
+e.g. "six point oh four percent", "two percent"	
+NOT: 6.04%, 2%	
+--- Currency amounts – type all units as words, no symbols like £ or $.	
+e.g. "twelve pounds ten p", "a hundred and five u s dollars"	
+NOT: £12.10, US$105	
+--- Dates	
+e.g. "monday january the eighteenth two thousand and twelve"	
 NOT: "Monday, January 18th 2012."
 
-- No abbreviations unless spoken as such, even common ones such as "st" and "dr", and titles.  
-e.g. mister, missus, miss, doctor, reverend, professor  
-NOT: Mr, Mrs, Ms, Dr, Rev, Prof  
-e.g. saint louis street   
-NOT: St Louis St  
-e.g. doctor fosters drive  
-NOT: Dr Fosters Dr  
+- No abbreviations unless spoken as such, even common ones such as "st" and "dr", and titles.	
+e.g. mister, missus, miss, doctor, reverend, professor	
+NOT: Mr, Mrs, Ms, Dr, Rev, Prof	
+e.g. saint louis street	 
+NOT: St Louis St	
+e.g. doctor fosters drive	
+NOT: Dr Fosters Dr	
 
-- Type exactly what you hear even if it is ungrammatical or skips or repeats words.  
-e.g. "ok right so so the code hang on it [hesitation] it’s two one zero five"  
+- Type exactly what you hear even if it is ungrammatical or skips or repeats words.	
+e.g. "ok right so so the code hang on it [hesitation] it’s two one zero five"	
 NOT: "OK, right, sooo the code – hang on – it’s 2105."
 
-- Mispronounced words - spell these correctly but use the [mispronunciation] after the word.  
-Don’t invent spellings to try to represent the way mispronounced words sound.  
-e.g. "i'd like reservations [mispronunciation] oops sorry reservations"  
-NOT: "I'd like reversations, oops sorry, reservations"  
+- Mispronounced words - spell these correctly but use the [mispronunciation] after the word.	
+Don’t invent spellings to try to represent the way mispronounced words sound.	
+e.g. "i'd like reservations [mispronunciation] oops sorry reservations"	
+NOT: "I'd like reversations, oops sorry, reservations"	
 --- Long-drawn-out speech (because of speaker uncertainty) e.g. "yeeees, … well" is transcribed as "yes [mispronunciation] well".
 
-- Caller says "dunno" instead of "don't know".  
---- Transcribe this as "dunno". Speech systems cope with these contractions: dunno, gonna, wanna. However, you should transcribe "don wanna" as "don't [mispronunciation] wanna". The system won't understand new contractions. It only copes with the contractions that someone has programmed into it.  
---- Also, you can use this set of non-dictionary words: ok, yeah, yep, nope, dunno, wanna, lemme, gimme, gonna  
+- Caller says "dunno" instead of "don't know".	
+--- Transcribe this as "dunno". Speech systems cope with these contractions: dunno, gonna, wanna. However, you should transcribe "don wanna" as "don't [mispronunciation] wanna". The system won't understand new contractions. It only copes with the contractions that someone has programmed into it.	
+--- Also, you can use this set of non-dictionary words: ok, yeah, yep, nope, dunno, wanna, lemme, gimme, gonna	
 --- do NOT use: yea, yeap, nopey, duno, wana, leme, gime, gunna
 
-- Someone (who is not the caller) is speaking during some or all of the interaction.  
+- Someone (who is not the caller) is speaking during some or all of the interaction.	
 --- Mark this as [side speech], not [background noise]. For the system, speech is very different to a steady background noise.
 
 
@@ -263,7 +263,7 @@ NOT: "I'd like reversations, oops sorry, reservations"
 
 ### 11: MISCELLANEOUS QUESTIONS AND POINTS
 
-- Q: Should I use "ok" or "okay"?  
+- Q: Should I use "ok" or "okay"?	
 A: "ok", because it's shorter. But don't bother correcting "okay" to "ok".
 
 - Baby noises and dogs barking should be transcribed as [side-speech]. This is because a speech system sometimes finds these confusing and thinks that they are human speech. 
@@ -275,18 +275,18 @@ A: "ok", because it's shorter. But don't bother correcting "okay" to "ok".
 
 - "bout" is often said instead of "about". This should be transcribed as "about [mispronunciation]". Similarly, people often say "cos" or "cause" instead of "because". Again, we write this as "because [mispronunciation]". Logically, these should be fragments, but they are so accepted that we treat them as standard mispronunciations. 
 
-- The caller says "Yeah that'll do".  
-Q: Should I put "Yeah that will [mispronunciation] do"?  
+- The caller says "Yeah that'll do".	
+Q: Should I put "Yeah that will [mispronunciation] do"?	
 A: No. The system can cope with standard grammatical contractions such as "that'll" for "that will".
 
-- Q: Should I correct "nuffin" to "nothing [mispronunciation]"?  
+- Q: Should I correct "nuffin" to "nothing [mispronunciation]"?	
 A: yes.
 
-- The caller says "I'll call ya".  
-Q: How should I transcribe this?  
+- The caller says "I'll call ya".	
+Q: How should I transcribe this?	
 A: "I'll call you [mispronunciation]".
 
-- The caller says "mm-hm" or "uh-huh".  
+- The caller says "mm-hm" or "uh-huh".	
 --- Mark these as [hesitation]. They do actually mean "yes", but the system is never going to able to distinguish these reliably from normal hesitations.
 
 
@@ -302,12 +302,18 @@ You need a good internet connection to use our system. We plan to expand it to h
 Sometimes, not all the audio files load. I find it is best to do the ones I can, then reload, then do the ones that were not loaded the first time.
 
 Ways to improve your connection:
+<<<<<<< HEAD
 
 - Be closer to your wifi router  
 
 - Change the position of your computer (wifi waves vary in intensity within even a single room)  
 
 - Connect to your router with an ethernet cable  
+=======
+1) Be closer to your wifi router	
+2) Change the position of your computer (wifi waves vary in intensity within even a single room)	
+3) Connect to your router with an ethernet cable	
+>>>>>>> d3972676168842f47f69ee1330f38823d3bcbcfd
 
 You can use this website to check your web connection speed. 
 http://www.speedtest.net/
