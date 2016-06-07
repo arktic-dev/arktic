@@ -458,9 +458,6 @@ $(document).ready(function() {
 			} else if (e.keyCode === 83) {
 				e.preventDefault()
 				text = '[side-speech]';
-			} else if (e.keyCode === 76) {
-				e.preventDefault()
-				text = '[loud-side-speech]';
 			} else if (e.keyCode === 85) {
 				e.preventDefault()
 				text = '[unsure]';

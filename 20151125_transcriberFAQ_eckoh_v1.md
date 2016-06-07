@@ -15,8 +15,6 @@ So:
 
 The O2 data-gathering system waits for 2 seconds of silence at the end of every utterance. You don't have to listen to this all the way through. Just move to the next utterance when the waveform viewer shows that you've finished this one.
 
-For O2, we're adding another tag: [loud-side-speech]. This is to indicate, well, [side-speech] that is loud.
-
 ### Spelling Rules (General for O2 project)
 
 - enquiry	NOT inquiry
