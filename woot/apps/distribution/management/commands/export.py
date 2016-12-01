@@ -80,6 +80,7 @@ class Command(BaseCommand):
 			for client in Client.objects.all():
 				print('client {}'.format(client.name))
 				for project in client.projects.all():
+					project.update()
 					active_transcriptions = project.active_transcriptions
 					if options['completed']:
 						if active_transcriptions==0:
