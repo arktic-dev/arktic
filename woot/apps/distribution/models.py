@@ -86,7 +86,7 @@ class Project(models.Model):
 
 		#update status: active, processed
 		self.active_transcriptions = self.transcriptions.filter(is_active=True).count()
-		self.is_active = (self.jobs.filter(is_active=True).count()!=0 and self.grammars.filter(is_active=True).count()!=0)
+		self.is_active = self.jobs.filter(is_active=True).count() != 0
 		self.save()
 
 	def export(self, root, users_flag=False, number_to_export=-1):
