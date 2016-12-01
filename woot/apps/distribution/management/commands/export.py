@@ -71,6 +71,7 @@ class Command(BaseCommand):
 
 		if client_name and project_name:
 			project = Project.objects.get(client__name=client_name, name=project_name)
+			project.update()
 			project.export(client_root, users_flag=include_users, number_to_export=number_to_export)
 
 		else:

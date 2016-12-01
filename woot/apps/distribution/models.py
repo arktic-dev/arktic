@@ -84,10 +84,8 @@ class Project(models.Model):
 		for job in self.jobs.filter(is_active=True):
 			job.update()
 
-		for grammar in self.grammars.filter(is_active=True):
-			grammar.update()
-
 		#update status: active, processed
+		self.active_transcriptions = self.transcriptions.filter(is_active=True).count()
 		self.is_active = (self.jobs.filter(is_active=True).count()!=0 and self.grammars.filter(is_active=True).count()!=0)
 		self.save()
 
