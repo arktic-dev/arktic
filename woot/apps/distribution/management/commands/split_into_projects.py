@@ -6,7 +6,7 @@ from django.conf import settings
 from django.core.files import File
 
 # local
-from apps.distribution.models import Client
+from apps.distribution.models import Client, Project
 from apps.distribution.util import generate_id_token, process_audio
 
 # util
