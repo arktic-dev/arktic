@@ -30,7 +30,7 @@ Use command-f (Mac) or ctrl-f (Windows) to search for specific section titles an
 
 
 
-Email St John with your new question.
+Email StJohn with your new question.
 
 
 
@@ -91,11 +91,11 @@ Our system currently only works for the Google Chrome browser.
 
 Your transcriptions are "saved" (sent to the webserver) when you press enter to move to the next item. Their icon will turn from white to green. 
 
-You need a good internet connection to use our system. We plan to expand it to handle spotty connections, but this is not possible right now. 
+You need a good internet connection to use our system. 
 
 Sometimes, not all the audio files load. I find it is best to do the ones I can, then reload, then do the ones that were not loaded the first time. A spinning orange disc indicates that an item has not been loaded. Please note that often the item is successfully loaded, but the icon does not change from an orange disc to a white tick. It's worth trying to proceed normally through the orange discs. 
 
-I am afraid that occasionally some transcriptions sent to the webserver may be lost in transit. When you press enter at the end of a job to move to the next one, your current job will be reloaded, with the lost transcriptions in white rather than green. This is irritating, but fixing it will also require serious development work. Improving your internet connection will make it easier for more of your transcriptions to reach the webserver. 
+I am afraid that occasionally some transcriptions sent to the webserver may be lost in transit. When you press enter at the end of a job to move to the next one, your current job will be reloaded, with the lost transcriptions in white rather than green. This is irritating, but fixing it would require serious development work. Improving your internet connection will make it easier for more of your transcriptions to reach the webserver. 
 
 Ways to improve your connection:
 
@@ -133,7 +133,7 @@ Internally, the transcriptions are stored in batches of about 2000 items. They a
 - No abbreviations unless spoken, even common ones like "mr". Write titles in full e.g. "mister".
 - Use full words for everything including numbers, dates, amounts etc.
 - Always type dictionary words. Use this set of non-dictionary words:
-ok, yeah, yep, nope, uh huh, dunno, wanna, lemme, gimme, gonna, innit, ain't
+ok, yeah, yep, nope, dunno, wanna, lemme, gimme, gonna, gotta, innit, ain't
 - Type exactly what you hear even if it is ungrammatical or skips or repeats words.
 - While viewing the transcription page you can use ctrl-space to access the list of shortcuts. 
 --- Example shortcut: If you type in numbers by themselves e.g. "123" and press enter, they are expanded to "one two three". 
@@ -172,7 +172,7 @@ NOT: "24 33"
 --- Percentages  
 e.g. "six point oh four percent", "two percent"  
 NOT: 6.04%, 2%  
---- Currency amounts – type all units as words, no symbols like £ or $.  
+--- Currency amounts - type all units as words, no symbols like £ or $.  
 e.g. "twelve pounds ten p", "a hundred and five u s dollars"  
 NOT: £12.10, US$105  
 --- Dates  
@@ -188,14 +188,14 @@ e.g. doctor fosters drive
 NOT: Dr Fosters Dr  
 
 - Type exactly what you hear even if it is ungrammatical or skips or repeats words.  
-e.g. "ok right so [mispronunciation] the code hang on it [hesitation] it’s two one zero five"  
-NOT: "OK, right, sooo the code – hang on – it’s 2105."
+e.g. "ok right so [mispronunciation] the code hang on it [hesitation] it's two one zero five"  
+NOT: "OK, right, sooo the code - hang on - it's 2105."
 
 - Mispronounced words - spell these correctly but use the tag [mispronunciation] after the word.  
-Don’t invent spellings to try to represent the way mispronounced words sound.  
+Don't invent spellings to try to represent the way mispronounced words sound.  
 e.g. "i'd like reservations [mispronunciation] oops sorry reservations"  
 NOT: "I'd like reversations, oops sorry, reservations"  
---- Long-drawn-out speech (because of speaker uncertainty) e.g. "yeeees, … well" is transcribed as "yes [mispronunciation] well".
+--- Long-drawn-out speech (because of speaker uncertainty) e.g. "yeeeess well" is transcribed as "yes [mispronunciation] well".
 
 - Please try to guess word fragments.  
 For example, if someone says  
@@ -306,7 +306,7 @@ If the word is not completely clear, but you can guess it, enclose it with paren
 Caller has a strong accent or speech dialect.
 
 - [background-noise]  
-Any noticeable background noise that continues for a while. 
+Any noticeable background noise that continues for a while. Examples: Music without any singing, machinery humming. 
 
 - [bad-audio]  
 Any audio quality/distortion issues. Examples: Audio fading out (and in), distortion, breaking up of phone line, muffled speech due to bad phone line. Only mark this once per transcription. Ideally, put it at the point where the audio quality first degrades, but this is not crucial. 
@@ -345,10 +345,10 @@ Long pause (e.g. at least 2 seconds) during speech by the caller to the system.
 The audio contains some or all of a speech system prompt. A prompt is anything the system says to a caller, e.g. "Please say your account number". The O2 prompt wording before the recording is (roughly): "To help us make some improvements, in just a few words, please tell us why you are calling today, for example, to top up or to check on an upgrade" There are several different versions. Any other recordings, like TV/train announcements etc should be [side-speech].
 
 - [side-speech]  
-Any speech by the caller not directed at the system. Any intelligible speech from a bystander. Examples: People talking, background speech, radio, TV, automatic train announcements, baby noises, dogs barking, indistinct background hubbub (e.g. coffeeshop noise). 
+Any speech by the caller not directed at the system. Any intelligible speech from a bystander. Examples: People talking, background speech, radio, TV, automatic train announcements, baby noises, dogs barking, indistinct background hubbub (e.g. coffeeshop noise), music with singing. 
 
 - [skipped]  
-Skip the transcription entirely if the caller "rambles" or if the transcription is too long to fit properly on the transcription page. If the item is less than about 15 words and you can't understand it, use the tag [unintelligible]. 
+Skip the transcription entirely if the caller "rambles" for more than 20 words (approximately) or if the transcription is too long to fit properly on the transcription page. If the item is less than about 20 words and you can't understand it, use the tag [unintelligible]. 
 
 - [unintelligible]  
 Use this to mark any speech that you can't understand.
@@ -381,7 +381,7 @@ Transcribing the actual words that are spoken is much more important than gettin
 
 - Please don't use [noise] or [fragment] to transcribe a short segment of speech that can't be understood. Use [unintelligible] instead.
 
-- It is much better to put [unintelligible] than guess unreliably. Use parentheses () around the word if you can guess easily. 
+- It is much better to put [unintelligible] than to guess unreliably. Use parentheses () around the word if you can guess easily. 
 
 - You don't need to put [hesitation] unless the caller actually makes a noise e.g. "uh", "um", "er" etc. If they pause for e.g. 2-3 seconds, put [pause]. However, you only need to use [pause] for the caller, not for other people, so just put "[side-speech]" instead of "[side-speech] [pause] [side-speech]".
 
@@ -397,13 +397,13 @@ Here is a list of things that will save you time, decrease your frustration, and
 
 1) There is never any need to use the same tag twice in a row. If there are multiple consecutive noises in a row, put [noise] once. The same applies to [dtmf], [hesitation], [cough], [breath-noise], [side-speech], and [unintelligible]. For example, "[side-speech] [side-speech] pay a bill" should just be transcribed as "[side-speech] pay a bill". However, "[side-speech] pay a bill [side-speech]" should not be shortened to "[side-speech] pay a bill", as the [side-speech] tags are separated by speech to the system. 
 
-2) Use the auto-complete. It is shared among all transcribers. To add a phrase to the auto-complete, type it into the text box and press ctrl-enter. To delete an entry, type it in (or select it using the auto-complete), and press ctrl-minus. The deletion won't take effect until you reload the page. The auto-complete doesn't handle single words, only phrases. Also, I'm afraid that every time we move to a new batch (about once every 2000 items), the auto-complete is wiped. The auto-complete system needs to be improved, but this will have to be done later. Note: Sometimes a batch is much smaller or larger e.g. 80 or 3000 items. 
+2) Use the auto-complete. It is shared among all transcribers. To add a phrase to the auto-complete, type it into the text box and press ctrl-enter. To delete an entry, type it in (or select it using the auto-complete), and press ctrl-minus. The deletion won't take effect until you reload the page. The auto-complete doesn't handle single words, only phrases. Also, I'm afraid that every time we move to a new batch (about once every 2000 items), the auto-complete is wiped. Note: Sometimes a batch is much smaller or larger e.g. 80 or 3000 items. 
 
 3) If you type in numbers by themselves e.g. "123" and press enter, they are expanded to "one two three". Note that this only works if the text you type in consists only of digits. "123" will work, but "123hello" or "12 york street" will not. 
 
 4) Don't transcribe any side speech that is unrelated to the system. Generally, you can guess whether the caller is talking to someone else or to the system. Mark it as [side-speech].
 
-8) Use [skipped] for anything over about 15 words said directly to the system. The rule of thumb is that if it's taking you 4 times longer than normal to transcribe an item, skip it. If the transcription is too long to fit on our display, skip it. If the item is less than about 15 words and you can't understand it, use the tag [unintelligible]
+8) Use [skipped] for anything over about 20 words said directly to the system. The rule of thumb is that if it's taking you 4-5 times longer than normal to transcribe an item, skip it. If the transcription is too long to fit on our display, skip it. If the item is less than about 20 words and you can't understand it, use the tag [unintelligible]
 
 In general, please do remember that almost everything has a keyboard shortcut. Using these will save you a lot of time.
 
@@ -420,7 +420,7 @@ A: "ok", because it's shorter. But don't bother correcting "okay" to "ok".
 --- The transcription "sort me bill out" is fine, as "me" is an actual word, not just a mispronunciation.  
 --- The "g" is often left off the ending "ing". This is not a problem, as it's very close to the standard pronunciation. So "nothin" can be transcribed as "nothing", rather than "nothing [mispronunciation]". Similarly, when someone shortens "to" to "t" e.g. "going t- the shop", writing "to" without the mispronunciation tag is fine. However, "i fink so" should be transcribed as "i think [mispronunciation] so", as the pronunciation has changed quite a lot. 
 
-- "bout" is often said instead of "about". This should be transcribed as "about [mispronunciation]". Similarly, people often say "cos" or "cause" instead of "because". Again, we write this as "because [mispronunciation]". Logically, these should be fragments, but they are so accepted that we treat them as standard mispronunciations. 
+- "bout" is often said instead of "about". This should be transcribed as "about [mispronunciation]". Similarly, people often say "cos" or "cause" instead of "because". Again, we write this as "because [mispronunciation]". Logically, these should be fragments, but they are so accepted that we treat them as common mispronunciations. 
 
 - The caller says "Yeah that'll do".  
 Q: Should I put "Yeah that will [mispronunciation] do"?  
@@ -435,6 +435,10 @@ A: "I'll call you [mispronunciation]".
 
 - The caller says "mm-hm" or "uh-huh".  
 --- Mark these as [hesitation]. They do actually mean "yes", but the system is never going to able to distinguish these reliably from normal hesitations.
+
+- The caller says "zee" or "zed" to indicate the letter "z".  
+Q: Should I indicate which pronunciation the caller used?  
+A: No. Transcribe both as "z". Someone will train the pronunciation system to handle both pronunciations of "z".
 
 
 
