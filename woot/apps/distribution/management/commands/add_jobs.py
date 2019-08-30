@@ -30,16 +30,27 @@ class Command(BaseCommand):
 		client = Client.objects.get(name=client_name)
 
 		# 1. open failsafe data
-		# 2. group by project and user
-		grouped = {}
+		completed_transcriptions = {}
 		failsafe_path = join(root, 'extraction_0_2019-08-30-09-46_number-2300.csv')
 		with open(failsafe_path, 'r') as failsafe_file:
 			for line in failsafe_file.readlines():
 				tokens = line.rstrip().split('|')
 
-				# 1. identify transcription object
 				transcription_file_name = basename(tokens[0])
-				transcription = client.transcriptions.filter(audio_file__name=transcription_file_name)
+				revision_utterance = tokens[1]
+				user_email = tokens[2]
 
-				if transcription:
-					print(transcription)
+				completed_transcriptions.update({
+					transcription_file_name: {
+						'revision_utterance': revision_utterance,
+						'user_email': user_email,
+					},
+				})
+
+		total = client.transcriptions.count()
+		for i, transcription in enumerate(client.transcriptions.all()):
+			transcription_file_name = basename(transcription.audio_file.name)
+
+			if transcription_file_name in completed_transcriptions:
+				transcription_data = completed_transcriptions[transcription_file_name]
+				print('{}/{}'.format(i+1, total), transcription_file_name, transcription_data)
