@@ -39,7 +39,7 @@ class Command(BaseCommand):
 
 				# 1. identify transcription object
 				transcription_file_name = basename(tokens[0])
-				transcription = client.transcriptions.filter(audio_file_name=transcription_file_name)
+				transcription = client.transcriptions.filter(audio_file__name=transcription_file_name)
 
 				if transcription:
 					print(transcription)
