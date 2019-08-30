@@ -76,9 +76,10 @@ class Command(BaseCommand):
 					if user.email in user_data:
 						transcription_data = user_data[user.email]
 
-						if not project.jobs.filter(client=client, user=user).exists():
-							print('CREATING JOB IN PROJECT {} FOR USER {}'.format(project.name, user.email))
-							job = project.jobs.create(client=client, user=user)
+						print('CREATING JOB IN PROJECT {} FOR USER {}'.format(project.name, user.email))
+						job, job_created = project.jobs.get_or_create(client=client, user=user)
+
+						if job_created:
 							job.is_available = False
 							job.id_token = generate_id_token('distribution','Job')
 
@@ -90,12 +91,13 @@ class Command(BaseCommand):
 							job.get_transcription_set(transcription_set)
 							job.save()
 
-							for transcription_pk, revision_utterance in transcription_data.items():
-								transcription = client.transcriptions.get(pk=transcription_pk)
+						for transcription_pk, revision_utterance in transcription_data.items():
+							transcription = client.transcriptions.get(pk=transcription_pk)
 
-								print('ADDING TRANSCRIPTION {} TO JOB'.format(transcription.pk))
+							print('ADDING TRANSCRIPTION {} TO JOB'.format(transcription.pk))
 
-								revision = transcription.revisions.create(client=client, project=project, job=job)
+							if transcription.is_active:
+								revision = transcription.revisions.create(client=client, project=project, job=job, user=user)
 								revision.id_token = generate_id_token('transcription', 'Revision')
 
 								# update counts
@@ -108,5 +110,5 @@ class Command(BaseCommand):
 								#processing
 								revision.process_words()
 
-							job.update()
-							user.save()
+						job.update()
+						user.save()
