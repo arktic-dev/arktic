@@ -80,20 +80,22 @@ class Command(BaseCommand):
 
 			# 6. if part of a job, create new job under project
 			if not transcription.is_available:
-				job = transcription.job.all()[0]
-				transcription.job.remove(job)
-				job.update()
-				print('JOB', job)
+				job_with_one_transcription = [job for job in transcription.job.all() if job.transcriptions.count() == 1]
+				if not job_with_one_transcription:
+					job = transcription.job.all()[0]
+					transcription.job.remove(job)
+					job.update()
+					print('JOB', job)
 
-				if not transcription.is_active:
-					transcription.has_been_exported = False
-					new_job = grammar_project.jobs.create(client=client, user=job.user)
+					if not transcription.is_active:
+						transcription.has_been_exported = False
+						new_job = grammar_project.jobs.create(client=client, user=job.user)
 
-					revision = transcription.revisions.latest()
-					revision.project = grammar_project
-					revision.job = new_job
-					revision.save()
-					print('REVISION', revision)
+						revision = transcription.revisions.latest()
+						revision.project = grammar_project
+						revision.job = new_job
+						revision.save()
+						print('REVISION', revision)
 
 			transcription.save()
 			grammar_project.total_transcriptions = grammar_project.transcriptions.count()
