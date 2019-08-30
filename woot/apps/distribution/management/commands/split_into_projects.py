@@ -98,9 +98,11 @@ class Command(BaseCommand):
 						print('REVISION', revision)
 
 			transcription.save()
+			print('TRANSCRIPTION SAVED')
 			grammar_project.total_transcriptions = grammar_project.transcriptions.count()
 			grammar_project.unexported_transcriptions = grammar_project.transcriptions.count()
 			grammar_project.save()
+			print('GRAMMAR PROJECT SAVED')
 			grammar_project.update()
 			print('<<<')
 
