@@ -58,9 +58,9 @@ class Command(BaseCommand):
 						})
 
 		# 3. loop over transcriptions
-		for transcription in project.transcriptions.all():
-
-			print('>>>')
+		total = project.transcriptions.count()
+		for i, transcription in enumerate(project.transcriptions.all()):
+			print('>>> ({}/{})'.format(i, total))
 
 			# 4. fetch utterance and relfile_name based on dictionary
 			audio_path = basename(transcription.audio_file.name)
@@ -76,12 +76,26 @@ class Command(BaseCommand):
 			grammar_name = grammar_details['grammar_name']
 			print('PROJECT', grammar_name)
 			# grammar_project, grammar_project_created = client.projects.get_or_create(name=grammar_name)
+			# transcription.project = grammar_project
 
 			# 6. if part of a job, create new job under project
-			if transcription.job.all():
-				print('JOB', transcription.job.all())
-				print('REVISION', transcription.revisions.all())
+			if not transcription.is_available:
+				job = transcription.job.all()[0]
+				# transcription.job.remove(job)
+				# job.update()
+				print('JOB', job)
 
+				if not transcription.is_active:
+					# new_job = grammar_project.jobs.create(client=client, user=job.user)
+
+					revision = transcription.revisions.all()[0]
+					# revision.project = grammar_project
+					# revision.job = new_job
+					# revision.save()
+					print('REVISION', revision)
+					# grammar_project.update()
+
+			# transcription.save()
 			print('<<<')
 
 
