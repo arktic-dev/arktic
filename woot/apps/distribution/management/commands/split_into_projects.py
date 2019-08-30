@@ -96,7 +96,6 @@ class Command(BaseCommand):
 					print('REVISION', revision)
 
 			transcription.save()
-			grammar_project.active_transcriptions = grammar_project.transcriptions.filter(is_active=True).count()
 			grammar_project.total_transcriptions = grammar_project.transcriptions.count()
 			grammar_project.unexported_transcriptions = grammar_project.transcriptions.count()
 			grammar_project.save()
