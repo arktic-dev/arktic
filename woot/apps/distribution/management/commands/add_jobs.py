@@ -8,6 +8,7 @@ from django.core.files import File
 # local
 from apps.distribution.models import Client
 from apps.distribution.util import generate_id_token, process_audio
+from apps.users.models import User
 
 # util
 import os
@@ -47,6 +48,8 @@ class Command(BaseCommand):
 					},
 				})
 
+		grouped_by_project_and_user = {}
+
 		total = client.transcriptions.count()
 		for i, transcription in enumerate(client.transcriptions.all()):
 			transcription_file_name = basename(transcription.audio_file.name)
@@ -54,4 +57,17 @@ class Command(BaseCommand):
 
 			if transcription_file_name_stripped in completed_transcriptions:
 				transcription_data = completed_transcriptions[transcription_file_name_stripped]
-				print('{}/{}'.format(i+1, total), transcription_file_name_stripped, transcription_data)
+				user_email = transcription_data['user_email']
+
+				if transcription.project.name not in grouped_by_project_and_user:
+					grouped_by_project_and_user[transcription.project.name] = {}
+
+				if user_email not in grouped_by_project_and_user[transcription.project.name]:
+					grouped_by_project_and_user[transcription.project.name][user_email] = []
+
+				grouped_by_project_and_user[transcription.project.name][user_email].append({
+					'transcription': transcription.pk,
+					'utterance': transcription_data['revision_utterance'],
+				})
+
+		print(json.dumps(grouped_by_project_and_user, indent=2))
