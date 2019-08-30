@@ -53,5 +53,5 @@ class Command(BaseCommand):
 			transcription_file_name_stripped = splitext(transcription_file_name)[0][:-8] + '.wav'
 
 			if transcription_file_name_stripped in completed_transcriptions:
-				transcription_data = completed_transcriptions[transcription_file_name]
+				transcription_data = completed_transcriptions[transcription_file_name_stripped]
 				print('{}/{}'.format(i+1, total), transcription_file_name_stripped, transcription_data)
