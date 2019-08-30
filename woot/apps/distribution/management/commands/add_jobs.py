@@ -27,6 +27,7 @@ class Command(BaseCommand):
 	def handle(self, *args, **options):
 		root = settings.DATA_ROOT
 		client_name = 'voxgen'
+		client = Client.objects.get(name=client_name)
 
 		# 1. open failsafe data
 		# 2. group by project and user
@@ -38,7 +39,7 @@ class Command(BaseCommand):
 
 				# 1. identify transcription object
 				transcription_file_name = basename(tokens[0])
-				transcription = Client.transcriptions.filter(audio_file_name=transcription_file_name)
+				transcription = client.transcriptions.filter(audio_file_name=transcription_file_name)
 
 				if transcription:
 					print(transcription)
