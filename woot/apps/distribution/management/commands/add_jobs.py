@@ -11,7 +11,7 @@ from apps.distribution.util import generate_id_token, process_audio
 
 # util
 import os
-from os.path import join, basename, exists, isdir
+from os.path import join, basename, exists, isdir, splitext
 import json
 from optparse import make_option
 
@@ -47,12 +47,11 @@ class Command(BaseCommand):
 					},
 				})
 
-		print(completed_transcriptions)
+		total = client.transcriptions.count()
+		for i, transcription in enumerate(client.transcriptions.all()):
+			transcription_file_name = basename(transcription.audio_file.name)
+			transcription_file_name_stripped = splitext(transcription_file_name)[0][:-8] + '.wav'
 
-		# total = client.transcriptions.count()
-		# for i, transcription in enumerate(client.transcriptions.all()):
-		# 	transcription_file_name = basename(transcription.audio_file.name)
-		# 	print('{}/{}'.format(i+1, total), transcription_file_name)
-
-			# if transcription_file_name in completed_transcriptions:
-			# 	transcription_data = completed_transcriptions[transcription_file_name]
+			if transcription_file_name_stripped in completed_transcriptions:
+				transcription_data = completed_transcriptions[transcription_file_name]
+				print('{}/{}'.format(i+1, total), transcription_file_name_stripped, transcription_data)
