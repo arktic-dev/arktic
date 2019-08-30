@@ -47,10 +47,12 @@ class Command(BaseCommand):
 					},
 				})
 
-		total = client.transcriptions.count()
-		for i, transcription in enumerate(client.transcriptions.all()):
-			transcription_file_name = basename(transcription.audio_file.name)
-			print('{}/{}'.format(i+1, total), transcription_file_name)
+		print(completed_transcriptions)
+
+		# total = client.transcriptions.count()
+		# for i, transcription in enumerate(client.transcriptions.all()):
+		# 	transcription_file_name = basename(transcription.audio_file.name)
+		# 	print('{}/{}'.format(i+1, total), transcription_file_name)
 
 			# if transcription_file_name in completed_transcriptions:
 			# 	transcription_data = completed_transcriptions[transcription_file_name]
