@@ -89,7 +89,7 @@ class Command(BaseCommand):
 					transcription.has_been_exported = False
 					new_job = grammar_project.jobs.create(client=client, user=job.user)
 
-					revision = transcription.revisions.all()[0]
+					revision = transcription.revisions.latest()
 					revision.project = grammar_project
 					revision.job = new_job
 					revision.save()
