@@ -59,7 +59,7 @@ class Command(BaseCommand):
 
 		# 3. loop over transcriptions
 		total = project.transcriptions.count()
-		for i, transcription in enumerate(project.transcriptions.all()):
+		for i, transcription in enumerate(project.transcriptions.all()[18071:]):
 			print('>>> ({}/{})'.format(i+1, total))
 
 			# 4. fetch utterance and relfile_name based on dictionary
