@@ -60,7 +60,7 @@ class Command(BaseCommand):
 		# 3. loop over transcriptions
 		total = project.transcriptions.count()
 		for i, transcription in enumerate(project.transcriptions.all()):
-			print('>>> ({}/{})'.format(i, total))
+			print('>>> ({}/{})'.format(i+1, total))
 
 			# 4. fetch utterance and relfile_name based on dictionary
 			audio_path = basename(transcription.audio_file.name)
@@ -70,32 +70,37 @@ class Command(BaseCommand):
 			# 5. set utterance
 			utterance = grammar_details['utterance']
 			print('UTTERANCE', utterance)
-			# transcription.utterance = utterance
+			transcription.utterance = utterance
 
 			# 6. get_or_create new project and set project on transcription
 			grammar_name = grammar_details['grammar_name']
 			print('PROJECT', grammar_name)
-			# grammar_project, grammar_project_created = client.projects.get_or_create(name=grammar_name)
-			# transcription.project = grammar_project
+			grammar_project, grammar_project_created = client.projects.get_or_create(name=grammar_name)
+			transcription.project = grammar_project
 
 			# 6. if part of a job, create new job under project
 			if not transcription.is_available:
 				job = transcription.job.all()[0]
-				# transcription.job.remove(job)
-				# job.update()
+				transcription.job.remove(job)
+				job.update()
 				print('JOB', job)
 
 				if not transcription.is_active:
-					# new_job = grammar_project.jobs.create(client=client, user=job.user)
+					transcription.has_been_exported = False
+					new_job = grammar_project.jobs.create(client=client, user=job.user)
 
 					revision = transcription.revisions.all()[0]
-					# revision.project = grammar_project
-					# revision.job = new_job
-					# revision.save()
+					revision.project = grammar_project
+					revision.job = new_job
+					revision.save()
 					print('REVISION', revision)
-					# grammar_project.update()
 
-			# transcription.save()
+			transcription.save()
+			grammar_project.active_transcriptions = grammar_project.transcriptions.filter(is_active=True).count()
+			grammar_project.total_transcriptions = grammar_project.transcriptions.count()
+			grammar_project.unexported_transcriptions = grammar_project.transcriptions.count()
+			grammar_project.save()
+			grammar_project.update()
 			print('<<<')
 
 
