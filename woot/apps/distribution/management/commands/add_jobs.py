@@ -49,7 +49,6 @@ class Command(BaseCommand):
 				})
 
 		grouped_by_project_and_user = {}
-
 		total = client.transcriptions.count()
 		for i, transcription in enumerate(client.transcriptions.all()):
 			transcription_file_name = basename(transcription.audio_file.name)
@@ -63,11 +62,23 @@ class Command(BaseCommand):
 					grouped_by_project_and_user[transcription.project.name] = {}
 
 				if user_email not in grouped_by_project_and_user[transcription.project.name]:
-					grouped_by_project_and_user[transcription.project.name][user_email] = []
+					grouped_by_project_and_user[transcription.project.name][user_email] = {}
 
-				grouped_by_project_and_user[transcription.project.name][user_email].append({
-					'transcription': transcription.pk,
-					'utterance': transcription_data['revision_utterance'],
+				grouped_by_project_and_user[transcription.project.name][user_email].update({
+					transcription.pk: transcription_data['revision_utterance'],
 				})
 
-		print(json.dumps(grouped_by_project_and_user, indent=2))
+		for project in client.projects.all():
+			if project.name in grouped_by_project_and_user:
+				user_data = grouped_by_project_and_user[project.name]
+
+				for user in User.objects.all():
+					if user.email in user_data:
+						transcription_data = user_data[user.email]
+
+						print('CREATING JOB IN PROJECT {} FOR USER {}'.format(project.name, user.email))
+
+						for transcription_pk, revision_utterance in transcription_data.items():
+							transcription = client.transcriptions.get(pk=transcription_pk)
+
+							print('ADDING TRANSCRIPTION {} TO JOB'.format(transcription.pk))
