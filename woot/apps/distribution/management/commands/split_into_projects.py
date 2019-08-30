@@ -107,7 +107,7 @@ class Command(BaseCommand):
 			grammar_project.update()
 			print('<<<')
 
-			time.sleep(1)
+			time.sleep(0.1)
 
 		# 7. Add revision to new job if necessary
 
