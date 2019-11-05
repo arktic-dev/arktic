@@ -81,10 +81,8 @@ class Command(BaseCommand):
 							audio_rms = json.dumps(rms_values)
 
 							with open(audio_file_path, 'rb') as open_audio_file:
-								print('UTTERANCE', utterance, len(utterance))
-								print('AUDIO FILE PATH', audio_file_path, len(audio_file_path))
 								transcription, transcription_created = project.transcriptions.get_or_create(client=client,
-																																														utterance=utterance,
+																																														utterance=utterance[:255],
 																																														audio_file_name=audio_file_path,
 																																														is_active=True,
 																																														is_available=True)
