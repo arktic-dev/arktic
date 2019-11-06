@@ -24,14 +24,14 @@ class Command(BaseCommand):
 
 	option_list = BaseCommand.option_list + (
 
-		make_option('--client', # option that will appear in cmd
+		make_option('--email', # option that will appear in cmd
 			action='store', # no idea
 			dest='client', # refer to this in options variable
 			default='', # some default
 			help='Name of the experiment to import' # who cares
 		),
 
-		make_option('--project', # option that will appear in cmd
+		make_option('--password', # option that will appear in cmd
 			action='store', # no idea
 			dest='project', # refer to this in options variable
 			default='', # some default
@@ -44,6 +44,14 @@ class Command(BaseCommand):
 	help = ''
 
 	def handle(self, *args, **options):
+
+		user_email = options['email']
+		user_password = options['password']
+
+		if user_email and user_password:
+			user = User.objects.get(email=email)
+			user.set_password(user_password)
+			user.save()
 
 		print('User details ---')
 		print('{} {}'.format(User.objects.count(), 'user' if User.objects.count()==1 else 'users'))
