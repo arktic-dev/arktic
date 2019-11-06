@@ -53,13 +53,14 @@ class Command(BaseCommand):
 			user.set_password(user_password)
 			user.save()
 
-		print('User details ---')
-		print('{} {}'.format(User.objects.count(), 'user' if User.objects.count()==1 else 'users'))
-		for user in User.objects.all():
-			print('---')
-			# email
-			print('Email: {}'.format(user.email))
-			print('\tTotal revisions: {}'.format(user.completed_revisions))
-			print('\tTotal audio time: {}'.format(time.strftime('%H:%M:%S', time.gmtime(user.total_audio_time))))
+		else:
+			print('User details ---')
+			print('{} {}'.format(User.objects.count(), 'user' if User.objects.count()==1 else 'users'))
+			for user in User.objects.all():
+				print('---')
+				# email
+				print('Email: {}'.format(user.email))
+				print('\tTotal revisions: {}'.format(user.completed_revisions))
+				print('\tTotal audio time: {}'.format(time.strftime('%H:%M:%S', time.gmtime(user.total_audio_time))))
+				print('')
 			print('')
-		print('')
