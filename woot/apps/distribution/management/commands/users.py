@@ -26,14 +26,14 @@ class Command(BaseCommand):
 
 		make_option('--email', # option that will appear in cmd
 			action='store', # no idea
-			dest='client', # refer to this in options variable
+			dest='email', # refer to this in options variable
 			default='', # some default
 			help='Name of the experiment to import' # who cares
 		),
 
 		make_option('--password', # option that will appear in cmd
 			action='store', # no idea
-			dest='project', # refer to this in options variable
+			dest='password', # refer to this in options variable
 			default='', # some default
 			help='Name of the series' # who cares
 		),
