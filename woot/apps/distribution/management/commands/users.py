@@ -49,7 +49,7 @@ class Command(BaseCommand):
 		user_password = options['password']
 
 		if user_email and user_password:
-			user = User.objects.get(email=email)
+			user = User.objects.get(email=user_email)
 			user.set_password(user_password)
 			user.save()
 
