@@ -113,7 +113,7 @@ class Project(models.Model):
 
 					print('Exporting {} {}/{}...		 '.format(i, total_exported, total_to_export), end='\r' if total_exported<total_to_export else '\n')
 
-					csv_file.write('{}|{}'.format(os.path.basename(revision.transcription.audio_file.name), revision.utterance))
+					csv_file.write('{}|{}'.format(os.path.basename(revision.transcription.audio_file_name), revision.utterance))
 
 					if users_flag:
 						csv_file.write('|{}'.format(revision.user.email))

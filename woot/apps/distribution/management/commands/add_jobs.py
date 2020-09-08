@@ -112,3 +112,9 @@ class Command(BaseCommand):
 
 						job.update()
 						user.save()
+
+# mysqldump -u arkaeologic -h arkaeologic.mysql.pythonanywhere-services.com -p 'arkaeologic$arktic' > ../db_with_corrections.dat
+
+# mysql -u arkaeologic -h arkaeologic.mysql.pythonanywhere-services.com
+
+# mysql -u arkaeologic -h arkaeologic.mysql.pythonanywhere-services.com -p 'arkaeologic$arktic' < ../db_with_users.dat

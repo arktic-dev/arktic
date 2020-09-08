@@ -10,3 +10,8 @@ migrations/
 bin/ffmpeg
 
 *.csv
+*.cfg
+share/
+bin/
+lib/
+include/
