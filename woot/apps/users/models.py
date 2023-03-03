@@ -23,6 +23,7 @@ class UserManager(BaseUserManager):
 		user = self.model(
 				email=self.normalize_email(email),
 				date_of_birth=date_of_birth,
+				last_login='1970-01-01',
 		)
 
 		user.set_password(password)
