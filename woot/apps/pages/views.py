@@ -21,7 +21,7 @@ from os.path import join
 #classes
 class LoginView(View):
 	def get(self, request):
-		if request.user.is_authenticated():
+		if request.user.is_authenticated:
 			return HttpResponseRedirect('/start/')
 		else:
 			return render(request, 'pages/login.html', {})
@@ -42,7 +42,7 @@ class LoginView(View):
 class StartView(View):
 	def get(self, request):
 		user = request.user
-		if user.is_authenticated():
+		if user.is_authenticated:
 			#get user object
 			user = User.objects.get(email=user)
 

@@ -5,7 +5,6 @@ data/
 __pycache__/
 db
 audio
-migrations/
 
 bin/ffmpeg
 
@@ -15,3 +14,4 @@ share/
 bin/
 lib/
 include/
+*.sqlite3
