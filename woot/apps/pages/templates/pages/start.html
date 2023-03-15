@@ -1,8 +1,18 @@
-{% extends 'base.html' %} {% load static %} {% block title %} Start {{user}} {%
-endblock %} {% block css %}<link
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+  Start {{user}}
+{% endblock %}
+
+{% block css %}
+<link
   rel="stylesheet"
   href="{% static 'pages/css/start.css' %}"
-/>{% endblock %} {% block content %}
+/>
+{% endblock %}
+
+{% block content %}
 <div id="wrapper" class="container">
   <h3>Details</h3>
   <p>User: {{ user.email }}</p>
@@ -24,6 +34,8 @@ endblock %} {% block css %}<link
     {% endfor %}
   </div>
 </div>
-{% endblock %} {% block post_main_script %}
+{% endblock %}
+
+{% block post_main_script %}
 <script src="{% static 'pages/js/start.js' %}"></script>
 {% endblock %}

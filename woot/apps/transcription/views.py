@@ -21,7 +21,7 @@ import json
 class TranscriptionView(View):
 	def get(self, request, job_id_token):
 		user = request.user
-		if user.is_authenticated():
+		if user.is_authenticated:
 			user = User.objects.get(email=user)
 
 			job = get_object_or_404(user.jobs, id_token=job_id_token) #does this do 'return HTTP... blah'?
@@ -45,7 +45,7 @@ class TranscriptionView(View):
 def create_new_job(request):
 	if request.method == 'GET':
 		user = request.user
-		if user.is_authenticated():
+		if user.is_authenticated:
 			#get user object
 			user = User.objects.get(email=user)
 
