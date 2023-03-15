@@ -8,9 +8,9 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
 
 #local
-from apps.distribution.models import Client, Project, Job
-from apps.users.models import User
-from libs.utils import generate_id_token, process_audio
+from woot.apps.distribution.models import Client, Project, Job
+from woot.apps.users.models import User
+from woot.libs.utils import generate_id_token, process_audio
 
 #util
 import os

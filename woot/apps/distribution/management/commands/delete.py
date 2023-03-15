@@ -6,7 +6,7 @@ from django.conf import settings
 from django.core.files import File
 
 # local
-from apps.distribution.models import Client
+from woot.apps.distribution.models import Client
 
 # util
 import os

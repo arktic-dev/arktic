@@ -9,10 +9,10 @@ from django.template import RequestContext
 from django.conf import settings
 
 #local
-from apps.pages.forms import LoginForm
-from apps.users.models import User
-from apps.transcription.models import Transcription
-from apps.distribution.models import Client
+from woot.apps.pages.forms import LoginForm
+from woot.apps.users.models import User
+from woot.apps.transcription.models import Transcription
+from woot.apps.distribution.models import Client
 
 #util
 import os

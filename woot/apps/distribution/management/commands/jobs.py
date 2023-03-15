@@ -6,8 +6,8 @@ from django.conf import settings
 from django.core.files import File
 
 # local
-from apps.distribution.models import Job
-from apps.users.models import User
+from woot.apps.distribution.models import Job
+from woot.apps.users.models import User
 
 # util
 import os

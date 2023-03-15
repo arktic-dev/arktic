@@ -6,10 +6,10 @@ from django.conf import settings
 from django.core.files import File
 
 # local
-from apps.distribution.models import Client
-from apps.transcription.models import Transcription, Revision
-from apps.distribution.util import generate_id_token, process_audio, random_string
-from apps.users.models import User
+from woot.apps.distribution.models import Client
+from woot.apps.transcription.models import Transcription, Revision
+from woot.apps.distribution.util import generate_id_token, process_audio, random_string
+from woot.apps.users.models import User
 
 # util
 import os

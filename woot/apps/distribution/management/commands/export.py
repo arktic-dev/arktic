@@ -6,9 +6,9 @@ from django.conf import settings
 from django.core.files import File
 
 # local
-from apps.distribution.models import Project, Client
-from apps.transcription.models import Revision
-from apps.distribution.util import generate_id_token, process_audio
+from woot.apps.distribution.models import Project, Client
+from woot.apps.transcription.models import Revision
+from woot.apps.distribution.util import generate_id_token, process_audio
 
 # util
 import os

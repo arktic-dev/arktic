@@ -15,7 +15,7 @@ from django.utils.encoding import force_str
 from django.utils.six.moves import input
 from django.utils.text import capfirst
 
-from apps.users.models import User
+from woot.apps.users.models import User
 
 class NotRunningInTTYException(Exception):
 		pass

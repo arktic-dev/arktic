@@ -1,7 +1,7 @@
 1. Open shell: ~$ dm shell
 2. Import job model and user model:
-	>>> from apps.distribution.models import Job
-	>>> from apps.users.models import User
+	>>> from woot.apps.distribution.models import Job
+	>>> from woot.apps.users.models import User
 
 3. Get desired jobs:
 	>>> job = Job.objects.get(is_active=True) # could be any condition

@@ -6,8 +6,8 @@ from django.conf import settings
 from django.core.files import File
 
 # local
-from apps.distribution.models import Client
-from apps.distribution.util import generate_id_token, process_audio
+from woot.apps.distribution.models import Client
+from woot.apps.distribution.util import generate_id_token, process_audio
 
 # util
 import os

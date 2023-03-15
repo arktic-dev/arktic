@@ -10,7 +10,7 @@ To add a demo user:
 
 1. A bit messy at the moment, but just run "dm createsuperuser" as normal.
 2. "dm shell"
-3. "from apps.users.models import User"
+3. "from woot.apps.users.models import User"
 4. "user = User.objects.get(email='<email you just created>')"
 5. "user.is_demo = True"
 6. "user.save()"

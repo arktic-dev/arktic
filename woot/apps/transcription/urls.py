@@ -5,7 +5,7 @@ from django.contrib import admin
 from django.conf.urls import patterns, include, url
 
 #local
-from apps.transcription.views import start_redirect, TranscriptionView, create_new_job, update_revision, add_word, delete_word
+from woot.apps.transcription.views import start_redirect, TranscriptionView, create_new_job, update_revision, add_word, delete_word
 
 #third party
 

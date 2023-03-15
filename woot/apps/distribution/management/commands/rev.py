@@ -6,7 +6,7 @@ from django.conf import settings
 from django.core.files import File
 
 # local
-from apps.transcription.models import Revision
+from woot.apps.transcription.models import Revision
 
 # util
 import os

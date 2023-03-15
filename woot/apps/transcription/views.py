@@ -8,10 +8,10 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.db.models import Q, Max, Min, Count
 
 #local
-from apps.users.models import User
-from apps.distribution.models import Project, Job
-from apps.transcription.models import Transcription, Revision
-from apps.distribution.util import generate_id_token
+from woot.apps.users.models import User
+from woot.apps.distribution.models import Project, Job
+from woot.apps.transcription.models import Transcription, Revision
+from woot.apps.distribution.util import generate_id_token
 
 #util
 import random

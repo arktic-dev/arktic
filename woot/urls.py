@@ -6,7 +6,7 @@ from django.conf.urls import patterns, include, url
 from settings.common import MEDIA_ROOT, STATIC_ROOT
 
 #local
-from apps.pages.views import LoginView, StartView, logout_view, FAQView
+from woot.apps.pages.views import LoginView, StartView, logout_view, FAQView
 
 #third party
 

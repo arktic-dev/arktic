@@ -7,8 +7,8 @@ from django.utils import timezone
 from django.db.models import Count
 
 #local
-from apps.users.models import User
-from libs.utils import generate_id_token
+from woot.apps.users.models import User
+from woot.libs.utils import generate_id_token
 
 #util
 import os
