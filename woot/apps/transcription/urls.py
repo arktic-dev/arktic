@@ -2,7 +2,7 @@
 
 #django
 from django.contrib import admin
-from django.conf.urls import patterns, include, url
+from django.urls import include, path, re_path
 
 #local
 from woot.apps.transcription.views import start_redirect, TranscriptionView, create_new_job, update_revision, add_word, delete_word
@@ -13,11 +13,11 @@ from woot.apps.transcription.views import start_redirect, TranscriptionView, cre
 admin.autodiscover()
 
 # See: https://docs.djangoproject.com/en/dev/topics/http/urls/
-urlpatterns = patterns('',
-	url(r'^$', start_redirect),
-	url(r'^(?P<job_id_token>[A-Z0-9]{8})$', TranscriptionView.as_view()),
-	url(r'^new/$', create_new_job),
-	url(r'^revision/$', update_revision),
-	url(r'^add/$', add_word),
-	url(r'^delete/$', delete_word),
-)
+urlpatterns = [
+	path('', start_redirect),
+	re_path('(?P<job_id_token>[A-Z0-9]{8})', TranscriptionView.as_view()),
+	path('new/', create_new_job),
+	path('revision/', update_revision),
+	path('add/', add_word),
+	path('delete/', delete_word),
+]

@@ -2,11 +2,13 @@
 
 #django
 from django.contrib import admin
-from django.conf.urls import patterns, include, url
-from settings.common import MEDIA_ROOT, STATIC_ROOT
+from django.urls import include, path, re_path
+from woot.settings.common import MEDIA_ROOT, STATIC_ROOT
+from django.views.static import serve
 
 #local
 from woot.apps.pages.views import LoginView, StartView, logout_view, FAQView
+from woot.apps.transcription.views import create_new_job
 
 #third party
 
@@ -14,25 +16,25 @@ from woot.apps.pages.views import LoginView, StartView, logout_view, FAQView
 admin.autodiscover()
 
 # See: https://docs.djangoproject.com/en/dev/topics/http/urls/
-urlpatterns = patterns('',
+urlpatterns = [
 	# Serving media
-	url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': MEDIA_ROOT, 'show_indexes': True }),
-	url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': STATIC_ROOT, 'show_indexes': True }),
+	re_path('media/(?P<path>.*)', serve, {'document_root': MEDIA_ROOT, 'show_indexes': True }),
+	re_path('static/(?P<path>.*)', serve, {'document_root': STATIC_ROOT, 'show_indexes': True }),
 
 	#pages
-	url(r'^login/$', LoginView.as_view()),
-	url(r'^logout/$', logout_view),
-	url(r'^$', StartView.as_view()),
-	url(r'^start/$', StartView.as_view()),
-	url(r'^faq/(?P<client_name>.+)$', FAQView.as_view()),
+	path('login/', LoginView.as_view()),
+	path('logout/', logout_view),
+	path('', StartView.as_view()),
+	path('start/', StartView.as_view()),
+	re_path('faq/(?P<client_name>.+)', FAQView.as_view()),
 
 	#transcription
-	url(r'^transcription/', include('apps.transcription.urls')),
-	url(r'^new/', 'apps.transcription.views.create_new_job'),
+	path('transcription/', include('woot.apps.transcription.urls')),
+	path('new/', create_new_job),
 
 	#admin
-	url(r'^admin/', include(admin.site.urls)),
-)
+	path('admin/', admin.site.urls),
+]
 
 #1. make users
 #2. make jobs
