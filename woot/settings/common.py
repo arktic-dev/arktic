@@ -1,16 +1,12 @@
 """Common settings and globals."""
 
-#django
-
 #util
+from pathlib import Path
 from datetime import timedelta
 from os.path import abspath, basename, dirname, join, normpath, expanduser, exists
 from sys import path
 import string
 import json
-
-#third party
-from djcelery import setup_loader
 
 #mysql: https://github.com/PyMySQL/mysqlclient-python
 #rabbitmq: https://www.rabbitmq.com/man/rabbitmqctl.1.man.html
@@ -27,26 +23,6 @@ TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 ########## AUTH
 AUTH_USER_MODEL = 'users.User'
 
-########## PASSWORD CONFIGURATION
-ACCESS_ROOT = join(expanduser('~'),'.djaccess')
-DB_ACCESS = 'arktic_db.json'
-DATA_ACCESS = 'arktic_data.json'
-USER_ACCESS = 'arktic_users.json'
-########## END PASSWORD CONFIGURATION
-
-
-########## DATA CONFIGURATION
-# import db # gunzip < woot/db/db.zip | mysql -u arkaeologic -h mysql.server -p 'arkaeologic$arktic'
-# export db # mysqldump -u arkaeologic -h mysql.server -p 'arkaeologic$arktic' | gzip > db.gz
-
-if exists(join(ACCESS_ROOT, DATA_ACCESS)):
-	with open(join(ACCESS_ROOT, DATA_ACCESS), 'r') as data_json:
-		data = json.load(data_json)
-
-DATA_ROOT = data['root'] # pun intended
-########## END DATA CONFIGURATION
-
-
 ########## AUDIO CONFIGURATION
 
 NUMBER_OF_AUDIO_FILE_BINS = 100
@@ -62,10 +38,10 @@ ALLOWED_HOSTS = [
 
 ########## PATH CONFIGURATION
 # Absolute filesystem path to the Django project directory:
-DJANGO_ROOT = dirname(dirname(abspath(__file__)))
+DJANGO_ROOT = Path(abspath(__file__)).parent.parent
 
 # Absolute filesystem path to the top-level project folder:
-SITE_ROOT = dirname(DJANGO_ROOT)
+SITE_ROOT = DJANGO_ROOT.parent
 
 # Site name:
 SITE_NAME = basename(DJANGO_ROOT)
@@ -100,12 +76,8 @@ MANAGERS = ADMINS
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
 	'default': {
-		'ENGINE': 'django.db.backends.',
-		'NAME': '',
-		'USER': '',
-		'PASSWORD': '',
-		'HOST': '',
-		'PORT': '',
+		'ENGINE': 'django.db.backends.sqlite3',
+		'NAME': DJANGO_ROOT / 'db.sqlite3',
 	}
 }
 ########## END DATABASE CONFIGURATION
@@ -242,30 +214,22 @@ DJANGO_APPS = (
 	'django.contrib.admindocs',
 )
 
-THIRD_PARTY_APPS = (
-	# Asynchronous task scheduling
-	'djcelery',
-
-	# Static file management:
-	# 'compressor',
-)
-
 LOCAL_APPS = (
 	# Transcription object definition and processing
-	'apps.transcription',
+	'woot.apps.transcription',
 
-	# Client registration and job creation
-	'apps.distribution',
+	# # Client registration and job creation
+	'woot.apps.distribution',
 
-	# Pre-client frontend
-	'apps.pages',
+	# # Pre-client frontend
+	'woot.apps.pages',
 
 	# Augmented auth model
-	'apps.users',
+	'woot.apps.users',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
-INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
+INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS
 ########## END APP CONFIGURATION
 
 
@@ -330,48 +294,9 @@ STATICFILES_FINDERS += (
 ########## END COMPRESSION CONFIGURATION
 
 
-########## CELERY CONFIGURATION
-CELERY_RESULT_BACKEND='djcelery.backends.database:DatabaseBackend'
-
-#: Only add pickle to this list if your broker is secured
-#: from unwanted access (see userguide/security.html)
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
-
-# See: http://celery.readthedocs.org/en/latest/configuration.html#celery-task-result-expires
-CELERY_TASK_RESULT_EXPIRES = timedelta(minutes=30)
-
-# See: http://docs.celeryproject.org/en/master/configuration.html#std:setting-CELERY_CHORD_PROPAGATES
-CELERY_CHORD_PROPAGATES = True
-
-# See: http://celery.github.com/celery/django/
-setup_loader()
-########## END CELERY CONFIGURATION
-
-
 ########## FILE UPLOAD CONFIGURATION
 FILE_UPLOAD_HANDLERS = (
 	'django.core.files.uploadhandler.MemoryFileUploadHandler',
 	'django.core.files.uploadhandler.TemporaryFileUploadHandler',
 )
 ########## END FILE UPLOAD CONFIGURATION
-
-########## DATABASE CONFIGURATION
-# installed mysql-connector-python from pip install git+https://github.com/multiplay/mysql-connector-python
-# load database details from database config file
-if exists(join(ACCESS_ROOT, DB_ACCESS)):
-	with open(join(ACCESS_ROOT, DB_ACCESS), 'r') as db_json:
-		db_data = json.load(db_json)
-
-DATABASES = {
-	'default': {
-		'ENGINE': db_data['backend'],
-		'NAME': db_data['name'],
-		'USER': db_data['user'],
-		'PASSWORD': db_data['pwd'],
-		'HOST': db_data['host'], # Set to empty string for localhost.
-		'PORT': db_data['port'], # Set to empty string for default.
-	}
-}
-########## END DATABASE CONFIGURATION

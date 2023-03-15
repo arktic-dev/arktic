@@ -37,3 +37,42 @@ SERVER_EMAIL = EMAIL_HOST_USER
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 SECRET_KEY = environ.get('SECRET_KEY', SECRET_KEY)
 ########## END SECRET CONFIGURATION
+
+########## PASSWORD CONFIGURATION
+ACCESS_ROOT = join(expanduser('~'),'.djaccess')
+DB_ACCESS = 'arktic_db.json'
+DATA_ACCESS = 'arktic_data.json'
+USER_ACCESS = 'arktic_users.json'
+########## END PASSWORD CONFIGURATION
+
+
+########## DATA CONFIGURATION
+# import db # gunzip < woot/db/db.zip | mysql -u arkaeologic -h mysql.server -p 'arkaeologic$arktic'
+# export db # mysqldump -u arkaeologic -h mysql.server -p 'arkaeologic$arktic' | gzip > db.gz
+
+if exists(join(ACCESS_ROOT, DATA_ACCESS)):
+	with open(join(ACCESS_ROOT, DATA_ACCESS), 'r') as data_json:
+		data = json.load(data_json)
+
+DATA_ROOT = data['root'] # pun intended
+########## END DATA CONFIGURATION
+
+
+########## DATABASE CONFIGURATION
+# installed mysql-connector-python from pip install git+https://github.com/multiplay/mysql-connector-python
+# load database details from database config file
+if exists(join(ACCESS_ROOT, DB_ACCESS)):
+	with open(join(ACCESS_ROOT, DB_ACCESS), 'r') as db_json:
+		db_data = json.load(db_json)
+
+DATABASES = {
+	'default': {
+		'ENGINE': db_data['backend'],
+		'NAME': db_data['name'],
+		'USER': db_data['user'],
+		'PASSWORD': db_data['pwd'],
+		'HOST': db_data['host'], # Set to empty string for localhost.
+		'PORT': db_data['port'], # Set to empty string for default.
+	}
+}
+########## END DATABASE CONFIGURATION
