@@ -23,8 +23,8 @@ import json
 #classes
 class Transcription(models.Model):
 	#connections
-	client = models.ForeignKey(Client, related_name='transcriptions')
-	project = models.ForeignKey(Project, related_name='transcriptions')
+	client = models.ForeignKey(Client, related_name='transcriptions', on_delete=models.CASCADE)
+	project = models.ForeignKey(Project, related_name='transcriptions', on_delete=models.CASCADE)
 	job = models.ManyToManyField(Job, related_name='transcriptions')
 
 	#properties
@@ -92,11 +92,11 @@ class Transcription(models.Model):
 
 class Revision(models.Model):
 	#connections
-	client = models.ForeignKey(Client, related_name='revisions')
-	project = models.ForeignKey(Project, related_name='revisions')
-	transcription = models.ForeignKey(Transcription, related_name='revisions')
-	user = models.ForeignKey(User, related_name='revisions')
-	job = models.ForeignKey(Job, related_name='revisions')
+	client = models.ForeignKey(Client, related_name='revisions', on_delete=models.CASCADE)
+	project = models.ForeignKey(Project, related_name='revisions', on_delete=models.CASCADE)
+	transcription = models.ForeignKey(Transcription, related_name='revisions', on_delete=models.CASCADE)
+	user = models.ForeignKey(User, related_name='revisions', on_delete=models.CASCADE)
+	job = models.ForeignKey(Job, related_name='revisions', on_delete=models.CASCADE)
 
 	#properties
 	id_token = models.CharField(max_length=8)
@@ -142,8 +142,8 @@ class Revision(models.Model):
 
 class Word(models.Model):
 	#connections
-	client = models.ForeignKey(Client, related_name='words', null=True)
-	project = models.ForeignKey(Project, related_name='words')
+	client = models.ForeignKey(Client, related_name='words', null=True, on_delete=models.CASCADE)
+	project = models.ForeignKey(Project, related_name='words', on_delete=models.CASCADE)
 	transcription = models.ManyToManyField(Transcription, related_name='words')
 	revision = models.ManyToManyField(Revision, related_name='words')
 

@@ -59,7 +59,7 @@ class Client(models.Model):
 
 class Project(models.Model):
 	#connections
-	client = models.ForeignKey(Client, related_name='projects')
+	client = models.ForeignKey(Client, related_name='projects', on_delete=models.CASCADE)
 
 	#properties
 	id_token = models.CharField(max_length=8)
@@ -153,9 +153,9 @@ class Project(models.Model):
 
 class Job(models.Model):
 	#connections
-	client = models.ForeignKey(Client, related_name='jobs', null=True)
-	project = models.ForeignKey(Project, related_name='jobs', null=True)
-	user = models.ForeignKey(User, related_name='jobs', null=True)
+	client = models.ForeignKey(Client, related_name='jobs', null=True, on_delete=models.CASCADE)
+	project = models.ForeignKey(Project, related_name='jobs', null=True, on_delete=models.CASCADE)
+	user = models.ForeignKey(User, related_name='jobs', null=True, on_delete=models.CASCADE)
 
 	#properties
 	is_active = models.BooleanField(default=True)
