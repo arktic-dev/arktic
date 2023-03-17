@@ -20,24 +20,21 @@ spacer = ' '*10
 
 ### Command
 class Command(BaseCommand):
-
-	option_list = BaseCommand.option_list + (
-
-		make_option('--client', # option that will appear in cmd
+	def add_arguments(self, parser):
+		parser.add_argument(
+			'--client', # option that will appear in cmd
 			action='store', # no idea
 			dest='client', # refer to this in options variable
 			default='', # some default
 			help='Name of the project to transfer' # who cares
-		),
-
-		make_option('--project', # option that will appear in cmd
+		)
+		parser.add_argument(
+			'--project', # option that will appear in cmd
 			action='store', # no idea
 			dest='project', # refer to this in options variable
 			default='', # some default
 			help='Name of the project to transfer' # who cares
-		),
-
-	)
+		)
 
 	args = ''
 	help = ''

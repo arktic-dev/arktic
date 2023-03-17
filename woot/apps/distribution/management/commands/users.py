@@ -21,24 +21,21 @@ spacer = ' '*10
 
 ### Command
 class Command(BaseCommand):
-
-	option_list = BaseCommand.option_list + (
-
-		make_option('--email', # option that will appear in cmd
+	def add_arguments(self, parser):
+		parser.add_argument(
+			'--email', # option that will appear in cmd
 			action='store', # no idea
 			dest='email', # refer to this in options variable
 			default='', # some default
 			help='Name of the experiment to import' # who cares
-		),
-
-		make_option('--password', # option that will appear in cmd
+		)
+		parser.add_argument(
+			'--password', # option that will appear in cmd
 			action='store', # no idea
 			dest='password', # refer to this in options variable
 			default='', # some default
 			help='Name of the series' # who cares
-		),
-
-	)
+		)
 
 	args = ''
 	help = ''
