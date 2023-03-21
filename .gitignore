@@ -15,3 +15,5 @@ bin/
 lib/
 include/
 *.sqlite3
+*.DS_Store
+temp__data__qsq23qw3/

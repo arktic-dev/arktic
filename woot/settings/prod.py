@@ -54,7 +54,7 @@ if exists(join(ACCESS_ROOT, DATA_ACCESS)):
 	with open(join(ACCESS_ROOT, DATA_ACCESS), 'r') as data_json:
 		data = json.load(data_json)
 
-DATA_ROOT = data['root'] # pun intended
+DATA_ROOT = data['root']
 ########## END DATA CONFIGURATION
 
 

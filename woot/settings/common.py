@@ -1,6 +1,7 @@
 """Common settings and globals."""
 
 #util
+import os
 from pathlib import Path
 from datetime import timedelta
 from os.path import abspath, basename, dirname, join, normpath, expanduser, exists
@@ -108,7 +109,12 @@ USE_TZ = True
 
 ########## MEDIA CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#media-root
-MEDIA_ROOT = normpath(join(DJANGO_ROOT, 'media'))
+MEDIA_ROOT = Path(normpath(join(DJANGO_ROOT, 'media')))
+
+MEDIA_TEMP_ROOT = MEDIA_ROOT / 'temp__data__qsq23qw3'
+
+if not exists(MEDIA_TEMP_ROOT):
+	os.makedirs(MEDIA_TEMP_ROOT)
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#media-url
 MEDIA_URL = '/media/'

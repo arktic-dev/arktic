@@ -65,7 +65,11 @@ class Command(BaseCommand):
 
 						with open(relfile_path, 'r') as open_relfile:
 							# super complicated dictionary comprehension
-							relfile_dictionary = {basename(line.rstrip().split('|')[0]):{'utterance':line.rstrip().split('|')[1], 'path':line.rstrip().split('|')[0]} for line in open_relfile.readlines()}
+							relfile_dictionary = {
+								basename(line.rstrip().split('|')[0]):{'utterance':line.rstrip().split('|')[1], 'path':line.rstrip().split('|')[0]}
+								for line
+								in open_relfile.readlines()
+							}
 
 					for i, audio_file in enumerate(audio_files):
 						if project.transcriptions.filter(audio_file_name='{}'.format(audio_file)).count()==0:
@@ -78,17 +82,19 @@ class Command(BaseCommand):
 							audio_rms = json.dumps(rms_values)
 
 							with open(audio_file_path, 'rb') as open_audio_file:
-								transcription, transcription_created = project.transcriptions.get_or_create(client=client,
-																																														utterance=utterance[:255],
-																																														audio_file_name=audio_file_path,
-																																														is_active=True,
-																																														is_available=True)
+								transcription, transcription_created = project.transcriptions.get_or_create(
+									client=client,
+									utterance=utterance[:255],
+									audio_file_name=audio_file_path,
+									is_active=True,
+									is_available=True,
+								)
 
 								if transcription_created:
 									transcription.id_token = generate_id_token('transcription','Transcription')
 									transcription.audio_time = seconds
 									transcription.audio_rms = audio_rms
-									transcription.audio_file = File(open_audio_file)
+									transcription.audio_file = File(open_audio_file, name=basename(audio_file_path))
 									transcription.save()
 
 							print('client {}, project {}, file {}... created ({}/{})'.format(client_name, project_name, audio_file, i+1, len(audio_files)), end='\r' if i<len(audio_files)-1 else '\n')
