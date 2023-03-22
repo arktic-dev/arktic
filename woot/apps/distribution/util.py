@@ -43,7 +43,7 @@ def process_audio(input_path):
 	temp = os.path.join(temp_path, os.path.basename(input_path))
 
 	# cmd = './bin/ffmpeg -y -i {} -f wav {} 2> /dev/null'.format(input_path, temp)
-	cmd = ['/opt/homebrew/bin/ffmpeg','-y','-i','{}'.format(input_path),'-f','wav','{}'.format(temp)]
+	cmd = ['/bin/ffmpeg','-y','-i','{}'.format(input_path),'-f','wav','{}'.format(temp)]
 	# http://stackoverflow.com/questions/11269575/how-to-hide-output-of-subprocess-in-python-2-7
 	FNULL = open(os.devnull, 'w')
 	p = Popen(cmd, stdout=FNULL, stderr=FNULL)
