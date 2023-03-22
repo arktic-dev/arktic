@@ -38,25 +38,6 @@ SERVER_EMAIL = EMAIL_HOST_USER
 SECRET_KEY = environ.get('SECRET_KEY', SECRET_KEY)
 ########## END SECRET CONFIGURATION
 
-########## PASSWORD CONFIGURATION
-ACCESS_ROOT = join(expanduser('~'),'.djaccess')
-DB_ACCESS = 'arktic_db.json'
-DATA_ACCESS = 'arktic_data.json'
-USER_ACCESS = 'arktic_users.json'
-########## END PASSWORD CONFIGURATION
-
-
-########## DATA CONFIGURATION
-# import db # gunzip < woot/db/db.zip | mysql -u arkaeologic -h mysql.server -p 'arkaeologic$arktic'
-# export db # mysqldump -u arkaeologic -h mysql.server -p 'arkaeologic$arktic' | gzip > db.gz
-
-if exists(join(ACCESS_ROOT, DATA_ACCESS)):
-	with open(join(ACCESS_ROOT, DATA_ACCESS), 'r') as data_json:
-		data = json.load(data_json)
-
-DATA_ROOT = data['root']
-########## END DATA CONFIGURATION
-
 
 ########## DATABASE CONFIGURATION
 # installed mysql-connector-python from pip install git+https://github.com/multiplay/mysql-connector-python
