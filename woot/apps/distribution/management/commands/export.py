@@ -20,43 +20,41 @@ spacer = ' '*10
 
 ### Command
 class Command(BaseCommand):
-	option_list = BaseCommand.option_list + (
-
-		make_option('--client', # option that will appear in cmd
+	def add_arguments(self, parser):
+		parser.add_argument(
+			'--client', # option that will appear in cmd
 			action='store', # no idea
 			dest='client', # refer to this in options variable
 			default='', # some default
-			help='Name of client' # who cares
-		),
-
-		make_option('--project', # option that will appear in cmd
+			help='Name of the project to transfer' # who cares
+		)
+		parser.add_argument(
+			'--project', # option that will appear in cmd
 			action='store', # no idea
 			dest='project', # refer to this in options variable
 			default='', # some default
-			help='Name of project' # who cares
-		),
-
-		make_option('--completed', # option that will appear in cmd
+			help='Name of the project to transfer' # who cares
+		)
+		parser.add_argument(
+			'--completed', # option that will appear in cmd
 			action='store_true', # no idea
 			dest='completed', # refer to this in options variable
 			default=False, # some default
 			help='Name of project' # who cares
-		),
-
-		make_option('--users', # option that will appear in cmd
+		)
+		parser.add_argument(
+			'--users', # option that will appear in cmd
 			action='store_true', # no idea
 			dest='users', # refer to this in options variable
 			default=False, # some default
 			help='Toggle username in export csv' # who cares
-		),
-
-		make_option('--number', # option that will appear in cmd
+		)
+		parser.add_argument(
+			'--number', # option that will appear in cmd
 			action='store', # no idea
 			dest='number', # refer to this in options variable
 			default=-1, # some default
-		),
-
-	)
+		)
 
 	args = ''
 	help = ''
