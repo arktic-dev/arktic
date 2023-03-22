@@ -298,3 +298,25 @@ if exists(join(ACCESS_ROOT, DATA_ACCESS)):
 
 DATA_ROOT = data['root'] if data else SITE_ROOT / 'data'
 ########## END DATA CONFIGURATION
+
+
+########## DATABASE CONFIGURATION
+# installed mysql-connector-python from pip install git+https://github.com/multiplay/mysql-connector-python
+# load database details from database config file
+db_data = None
+if exists(join(ACCESS_ROOT, DB_ACCESS)):
+	with open(join(ACCESS_ROOT, DB_ACCESS), 'r') as db_json:
+		db_data = json.load(db_json)
+
+if db_data is not None:
+	DATABASES = {
+		'default': {
+			'ENGINE': db_data['backend'],
+			'NAME': db_data['name'],
+			'USER': db_data['user'],
+			'PASSWORD': db_data['pwd'],
+			'HOST': db_data['host'], # Set to empty string for localhost.
+			'PORT': db_data['port'], # Set to empty string for default.
+		}
+	}
+########## END DATABASE CONFIGURATION
